@@ -1,17 +1,28 @@
 .logoUser{
     font-size: 4em;
-  
-}
+};
+.formLogin{
+    width: 25vw;
+    background-color: red;
+};
+
+.fondo{
+
+    background-image: url('../img/fondo.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+};
 @media only screen and (min-width: 1025px) {
-  .ws-50 {
-    width: 30%!important;
-  }
+    .ws-50 {
+        width: 30%!important;
+    }
 }
 
 @media only screen and (max-width: 1024px) {
-  .ws-80 {
-    width: 80%!important;
-  }
- 
-}
+    .ws-80 {
+        width: 80%!important;
+    }
 
+}

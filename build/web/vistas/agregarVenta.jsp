@@ -89,9 +89,9 @@
                                             <div class="col-md-12 ">
                                                 <label for="inputEmail4" class="form-label">ID Producto</label>
                                                 <div class="d-flex">
-                                                    <input type="number" class="form-control mx-2" name="idEmpleado" placeholder="Agregar producto"
+                                                    <input type="number" class="form-control mx-2" id="idProd" placeholder="Agregar producto"
                                                            required="">
-                                                    <input type="numer" class="form-control mx-2 w-25" name="idEmpleado" placeholder="cantidad"
+                                                    <input type="numer" class="form-control mx-2 w-25" id="cantidadProd"  placeholder="cantidad"
                                                            required="">
                                                     <input type="button" class=" btn btn-outline-primary" id="aggProducto" value="Agregar">
                                                 </div>
@@ -113,30 +113,8 @@
                                                                     <th scope="col">Accion</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody overflow-x="">
-                                                                <tr>
-                                                                    <th scope="row">1</th>
-                                                                    <td class="w-25">
-                                                                        <img src="https://i.ibb.co/KwJ7DZq/rtx.png" class="img-fluid" alt="quixote">
-                                                                    </td>
-                                                                    <td>RTX 3090 TI </td>
-                                                                    <td>$3000</td>
-                                                                    <td><input type="number" value="2" class="text-center border-0 btn"></td>
-                                                                    <td>$6000</td>
-                                                                    <td><input type="button" class="btn btn-danger" value="Eliminar"></td>
-                                                                </tr>
+                                                            <tbody id="tabla">
 
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td>
-                                                                        <p>Total a pagar <strong>$6000</strong></p>
-                                                                    </td>
-                                                                </tr>
 
                                                             </tbody>
                                                             <tfoot>
@@ -177,12 +155,30 @@
         <script>
 
 //            <%ProductoDAO p = new ProductoDAO();
-                      List<Producto> strList = p.listar();
-               %>
-            const x = [<% for (int i = 0; i < strList.size(); i++) {%>{Nombre :"<%= strList.get(i).getNombre()%>",Precio :"<%= strList.get(i).getPrecio()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>];
-                    console.log(x)
+    List<Producto> strList = p.listar();
+            %>
+            const lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
+            Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecio()%>",
+                    Imagen :"<%= strList.get(i).getFotografia()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
+            ];
+            const btnAgregarProd = document.querySelector('#aggProducto');
+            const idProd = document.querySelector('#idProd');
+            const tabla = document.querySelector('#tabla');
+            const x2 = document.createElement('tr');
+            ;
+            btnAgregarProd.addEventListener('click', () => {
+                const id = document.querySelector('#idProd');
+                const cantidad=document.querySelector('#cantidadProd');
+            
+                const lst = lstProductos.filter((prod) => prod.id === id.value);
+                if (lst.length > 0) {
+                    const prod = lst[0];
 
-
+                    const x = " <tr><th scope='row'>1</th><td class='w-25'> <img src='" + prod.Imagen + "' class='img-fluid' alt='quixote' ></td> <td>" + prod.Nombre +
+                            "</td> <td>$"+prod.Precio+"</td> <td><input type='number' value='"+cantidad.value+"' class='text-center border-0 btn'></td><td>"+(cantidad.value*prod.Precio)+"</td> <td><input type='button' class='btn btn-danger' value='Eliminar' ></td></tr>";
+                    tabla.innerHTML += x;
+                }
+            });
         </script>
 
 

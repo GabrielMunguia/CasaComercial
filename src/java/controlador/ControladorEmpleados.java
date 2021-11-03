@@ -100,6 +100,7 @@ public class ControladorEmpleados extends HttpServlet {
             String fec = request.getParameter("txtFec");
             String tel = request.getParameter("txtTel");
             String dir = request.getParameter("txtDir");
+         System.out.println("dir = " + dir);
             String usu = request.getParameter("txtUsu");
             String pas = request.getParameter("txtPas");
             int car=Integer.parseInt(request.getParameter("txtCargo"));

@@ -77,7 +77,7 @@
 
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">Direccion</label>
-                                <textarea class="form-control" id="floatingTextarea" > <%=em.getDir()%></textarea>
+                                <textarea class="form-control" name="txtDir" id="floatingTextarea" > <%=em.getDir()%></textarea>
 
                             </div>
 
