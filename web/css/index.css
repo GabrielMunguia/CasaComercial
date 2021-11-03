@@ -1,0 +1,17 @@
+.logoUser{
+    font-size: 4em;
+  
+}
+@media only screen and (min-width: 1025px) {
+  .ws-50 {
+    width: 30%!important;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .ws-80 {
+    width: 80%!important;
+  }
+ 
+}
+
