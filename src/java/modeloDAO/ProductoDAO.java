@@ -39,12 +39,10 @@ public class ProductoDAO {
                 p.setNombre(rs.getString("producto"));
                 p.setDescripcion(rs.getString("descripcion"));
                 p.setMarca(rs.getString("marca"));
-                p.setCosto(rs.getDouble("costo"));
-                p.setPrecioContado(rs.getDouble("precioContado"));
-                p.setPrecioCredito(rs.getDouble("precioCredito"));
                 p.setFotografia(rs.getString("fotografia"));
                 p.setStock(rs.getInt("stock"));
                 p.setIdCategoria(rs.getInt("idCategoria"));
+                p.setPrecio(rs.getDouble("precio"));
             
                
                 list.add(p);

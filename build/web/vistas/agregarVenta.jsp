@@ -4,6 +4,9 @@
     Author     : GabrielMunguia
 --%>
 
+<%@page import="modelo.Producto"%>
+<%@page import="java.util.List"%>
+<%@page import="modeloDAO.ProductoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -166,12 +169,21 @@
 
 
 
-
-
                 </div>
             </div>
         </section>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+
+        <script>
+
+//            <%ProductoDAO p = new ProductoDAO();
+                      List<Producto> strList = p.listar();
+               %>
+            const x = [<% for (int i = 0; i < strList.size(); i++) {%>{Nombre :"<%= strList.get(i).getNombre()%>",Precio :"<%= strList.get(i).getPrecio()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>];
+                    console.log(x)
+
+
+        </script>
 
 
 

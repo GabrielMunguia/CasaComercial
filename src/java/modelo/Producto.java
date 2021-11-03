@@ -10,17 +10,16 @@ package modelo;
  * @author GabrielMunguia
  */
 public class Producto {
-      int id;
-      String nombre;
-      String descripcion;
-      String marca;
-      double costo;
-      double precioContado;
-       double precioCredito;
-       String fotografia;
-       int stock;       
-       int idCategoria;
 
+    int id;
+    String nombre;
+    String descripcion;
+    String marca;
+    double precio;
+    String fotografia;
+    int stock;
+    int idCategoria;
+    
     public Producto() {
     }
 
@@ -56,28 +55,12 @@ public class Producto {
         this.marca = marca;
     }
 
-    public double getCosto() {
-        return costo;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setCosto(double costo) {
-        this.costo = costo;
-    }
-
-    public double getPrecioContado() {
-        return precioContado;
-    }
-
-    public void setPrecioContado(double precioContado) {
-        this.precioContado = precioContado;
-    }
-
-    public double getPrecioCredito() {
-        return precioCredito;
-    }
-
-    public void setPrecioCredito(double precioCredito) {
-        this.precioCredito = precioCredito;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public String getFotografia() {
@@ -103,10 +86,6 @@ public class Producto {
     public void setIdCategoria(int idCategoria) {
         this.idCategoria = idCategoria;
     }
-       
-      
-      
-      
-      
-     
+    
+
 }
