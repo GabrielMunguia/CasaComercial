@@ -1,11 +1,12 @@
 export const aside=` 
 
     <div class="logo-details">
-    <a href="Controlador?accion=menuPrincipal" class="d-flex  justify-content-center align-items-center text-decoration-none">
+        <a href="Controlador?accion=menuPrincipal"  class="d-flex  justify-content-center align-items-center text-decoration-none">
        <i class='bx bxl-c-plus-plus icon '></i>
           <div class="logo_name">Comercial</div>
-        <i class='bx bx-menu' id="btn" ></i>
+      
      </a>
+  <i class='bx bx-menu' id="btn" ></i>
     </div>
     <ul class="nav-list px-0  ">
       <li>
@@ -57,36 +58,36 @@ export const aside=`
        <span class="tooltip">Agregar Pago</span>
      </li>
      <li>
-       <a href="#">
+       <a href="ControladorVentas?accion=addVenta">
          <i class='bx bx-folder' ></i>
-         <span class="links_name">File Manager</span>
+         <span class="links_name">Agregar Venta</span>
        </a>
-       <span class="tooltip">Files</span>
+       <span class="tooltip">Agregar Venta</span>
      </li>
      <li>
        <a href="#">
          <i class='bx bx-cart-alt' ></i>
-         <span class="links_name">Order</span>
+         <span class="links_name">Ver Ventas</span>
        </a>
-       <span class="tooltip">Order</span>
+       <span class="tooltip">Ver Ventas</span>
      </li>
      <li>
        <a href="#">
          <i class='bx bx-heart' ></i>
-         <span class="links_name">Saved</span>
+         <span class="links_name">Ver productos</span>
        </a>
-       <span class="tooltip">Saved</span>
+       <span class="tooltip">Ver productos</span>
      </li>
      <li>
        <a href="#">
          <i class='bx bx-cog' ></i>
-         <span class="links_name">Setting</span>
+         <span class="links_name">Agregar Producto</span>
        </a>
-       <span class="tooltip">Setting</span>
+       <span class="tooltip">Agregar Producto</span>
      </li>
      <li class="profile">
          <div class="profile-details">
-     
+           <img src="profile.jpg" alt="profileImg">
            <div class="name_job">
    
            </div>

@@ -93,12 +93,10 @@
   transition: 0s;
 }
 .sidebar li:hover .tooltip{
-    position:relative;
   opacity: 1;
   pointer-events: auto;
   transition: all 0.4s ease;
   top: 50%;
-  z-index:1111;
   transform: translateY(-50%);
 }
 .sidebar.open li .tooltip{
@@ -212,7 +210,7 @@
   font-size: 12px;
 }
 .sidebar .profile #log_out{
-  position: absolute;
+
   top: 50%;
   right: 0;
   transform: translateY(-50%);
