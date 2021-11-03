@@ -1,7 +1,7 @@
 export const aside=` 
 
     <div class="logo-details">
-    <a href="#" class="d-flex  justify-content-center align-items-center text-decoration-none">
+    <a href="Controlador?accion=menuPrincipal" class="d-flex  justify-content-center align-items-center text-decoration-none">
        <i class='bx bxl-c-plus-plus icon '></i>
           <div class="logo_name">Comercial</div>
         <i class='bx bx-menu' id="btn" ></i>
@@ -86,10 +86,9 @@ export const aside=`
      </li>
      <li class="profile">
          <div class="profile-details">
-           <img src="profile.jpg" alt="profileImg">
+     
            <div class="name_job">
-             <div class="name">Prem Shahi</div>
-             <div class="job">Web designer</div>
+   
            </div>
          </div>
          <i class='bx bx-log-out' id="log_out" ></i>

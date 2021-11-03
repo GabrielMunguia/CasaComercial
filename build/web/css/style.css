@@ -253,3 +253,7 @@
     display: none;
   }
 }
+
+.bg-x{
+     background-image: linear-gradient(to right top, #00183d, #0a2a5b, #183c7b, #26509d, #3465c0);
+}

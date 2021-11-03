@@ -99,7 +99,12 @@ public class Controlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+          String acceso="";
+        String action = request.getParameter("accion");
+         if (action.equals("menuPrincipal")) {
+                request.getRequestDispatcher("./vistas/admin.jsp").forward(request, response);
+         }
+        
     }
 
     /**
