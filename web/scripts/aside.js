@@ -85,15 +85,9 @@ export const aside=`
        </a>
        <span class="tooltip">Agregar Producto</span>
      </li>
-     <li class="profile">
-         <div class="profile-details">
-           <img src="profile.jpg" alt="profileImg">
-           <div class="name_job">
    
-           </div>
-         </div>
-         <i class='bx bx-log-out' id="log_out" ></i>
-     </li>
     </ul>
+
+</div>
 
 `;
