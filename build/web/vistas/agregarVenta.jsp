@@ -38,7 +38,7 @@
 
 
 
-                            <form class="row g-3  w-100 mt-2">
+                            <form class="row g-3  w-100 mt-2" action="ControladorFactura">
 
                                 <div class="col-sm-12 ">
                                     <div class="card">
@@ -101,7 +101,7 @@
 
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        <table class="table table-image ">
+                                                        <table class="table table-image  ">
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">#</th>
@@ -129,15 +129,14 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
+                                <input type="hidden" id="lstProdCompra" name="lstProd">
 
 
 
                                 <div class="col-12 mt-2 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary" name="form" value="registroEmpleado">Procesar
-                                        pago</button>
+                                     <input class="btn btn-primary" type="submit"
+                                       name="accion" value="Pagar">
+                                <a
                                 </div>
                             </form>
 
@@ -155,8 +154,8 @@
         <script>
 
 //            <%ProductoDAO p = new ProductoDAO();
-    List<Producto> strList = p.listar();
-            %>
+                  List<Producto> strList = p.listar();
+              %>
             const lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
             Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecio()%>",
                     Imagen :"<%= strList.get(i).getFotografia()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
@@ -165,20 +164,42 @@
             const idProd = document.querySelector('#idProd');
             const tabla = document.querySelector('#tabla');
             const x2 = document.createElement('tr');
-            ;
+            let contador =1;
+            let arrayIdProduCompra=[];
+            const inputHidden=document.querySelector("#lstProdCompra");
+            let btnEliminar;
             btnAgregarProd.addEventListener('click', () => {
                 const id = document.querySelector('#idProd');
-                const cantidad=document.querySelector('#cantidadProd');
-            
+                const cantidad = document.querySelector('#cantidadProd');
                 const lst = lstProductos.filter((prod) => prod.id === id.value);
                 if (lst.length > 0) {
                     const prod = lst[0];
-
-                    const x = " <tr><th scope='row'>1</th><td class='w-25'> <img src='" + prod.Imagen + "' class='img-fluid' alt='quixote' ></td> <td>" + prod.Nombre +
-                            "</td> <td>$"+prod.Precio+"</td> <td><input type='number' value='"+cantidad.value+"' class='text-center border-0 btn'></td><td>"+(cantidad.value*prod.Precio)+"</td> <td><input type='button' class='btn btn-danger' value='Eliminar' ></td></tr>";
+                    arrayIdProduCompra.push({id:prod.id,cantidad:cantidad.value});
+                    const x = " <tr><th scope='row'>"+contador+"</th><td class='w-25'> <img src='" + prod.Imagen + "' class='img-fluid' alt='quixote' ></td> <td>" + prod.Nombre +
+                            "</td> <td>$" + prod.Precio + "</td> <td><input type='number' value='" + cantidad.value + "' class='text-center border-0 btn'></td><td>" + (cantidad.value * prod.Precio) + "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id="+prod.id+" value='Eliminar' ></td></tr>";
                     tabla.innerHTML += x;
+                    contador++;
+                    inputHidden.value=JSON.stringify(arrayIdProduCompra);
+                    
+                    
+                     btnEliminar=document.querySelectorAll('.btnEliminarProd');
+                    for(btn of btnEliminar){
+                        btn.addEventListener('click',()=>{
+                  
+                          arrayIdProduCompra=  arrayIdProduCompra.filter((prod)=>prod.id!==btn.id);
+                          tabla.removeChild(btn.parentNode.parentNode)
+                             console.log(arrayIdProduCompra)
+                             
+                               inputHidden.value=JSON.stringify(arrayIdProduCompra);
+                        })
+                    }
+                     
+                    
                 }
+                
             });
+            
+          
         </script>
 
 

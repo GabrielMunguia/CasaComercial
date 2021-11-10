@@ -17,8 +17,8 @@
         <servlet-class>controlador.ControladorEmpleados</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ControladorVentas</servlet-name>
-        <servlet-class>controlador.ControladorVentas</servlet-class>
+        <servlet-name>ControladorFactura</servlet-name>
+        <servlet-class>controlador.ControladorFactura</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
@@ -37,8 +37,8 @@
         <url-pattern>/ControladorEmpleados</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ControladorVentas</servlet-name>
-        <url-pattern>/ControladorVentas</url-pattern>
+        <servlet-name>ControladorFactura</servlet-name>
+        <url-pattern>/ControladorFactura</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

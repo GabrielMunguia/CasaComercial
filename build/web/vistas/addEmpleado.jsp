@@ -4,6 +4,10 @@
     Author     : HP
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="modelo.Cargo"%>
+<%@page import="java.util.List"%>
+<%@page import="modeloDAO.EmpleadoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -80,10 +84,17 @@
                             <div class="col-md-6 ">
                                 <label for="inputPassword4" class="form-label">Cargo</label>
                                 <select class="form-select" id="inputGroupSelect01" name="txtCar" required>
-                                    <option selected disabled>Seleccione un cargo</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="2">Gerente</option>
-                                    <option value="3">Vendedor</option>
+                    <%
+                    EmpleadoDAO dao=new EmpleadoDAO();
+                    List<Cargo>list=dao.listarCargo();
+                    Iterator<Cargo>iter=list.iterator();
+                    Cargo car=null;
+                    while(iter.hasNext()){
+                        car=iter.next();
+                    %>
+                
+                    <option value="<%= car.getIdCa()%>"><%= car.getCargo()%></option>
+                    <%}%>
                                 </select>
                             </div>
 

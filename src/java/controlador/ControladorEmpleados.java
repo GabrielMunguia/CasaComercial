@@ -80,19 +80,19 @@ public class ControladorEmpleados extends HttpServlet {
             em.setDir(dir);
             em.setUsu(usu);
             em.setPas(pas);
-            em.setIdCar(car);
+            em.setIdCa(car);
             dao.addEmpleado(em);
             acceso=listar;
         }
         else if(action.equalsIgnoreCase("editar")){
-//            request.setAttribute("idEmp",request.getParameter("id"));
+//           request.setAttribute("idEmp",request.getParameter("id"));
             acceso=edit;
         } else if(action.equals("EditarEmpleado")){
             request.setAttribute("idEmp",request.getParameter("id"));
           acceso=edit;
         }
         else if(action.equalsIgnoreCase("Actualizar")){
- try{
+ 
             String nom = request.getParameter("txtNom");
             String dui = request.getParameter("txtDui");
             String nit = request.getParameter("txtNit");
@@ -104,7 +104,7 @@ public class ControladorEmpleados extends HttpServlet {
             String usu = request.getParameter("txtUsu");
             String pas = request.getParameter("txtPas");
             int car=Integer.parseInt(request.getParameter("txtCargo"));
-            int id=Integer.parseInt(request.getParameter("txtid"));
+            id=Integer.parseInt(request.getParameter("txtid"));
             em.setIdEmp(id);
             em.setNom(nom);
             em.setDui(dui);
@@ -115,17 +115,9 @@ public class ControladorEmpleados extends HttpServlet {
             em.setDir(dir);
             em.setUsu(usu);
             em.setPas(pas);
-            em.setIdCar(car);
+            em.setIdCa(car);
             dao.editEmpleado(em);   
- 
-                 System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
- }catch(NumberFormatException e){
-     System.out.println("Error al actualizar"+em.getIdCar());
-     System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-     System.out.println("El error es = " + e);
-         System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
- }
-    acceso=listar;
+            acceso=listar;
         }
         else if(action.equalsIgnoreCase("Eliminar")){
             id=Integer.parseInt(request.getParameter("id"));

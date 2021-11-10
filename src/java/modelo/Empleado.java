@@ -9,7 +9,7 @@ package modelo;
  *
  * @author HP
  */
-public class Empleado {
+public class Empleado extends modelo.Cargo{
     int idEmp;
     String nom;
     String dui;
@@ -20,12 +20,13 @@ public class Empleado {
     String dir;
     String usu;
     String pas;
-    int idCar;
+    
 
     public Empleado() {
     }
 
-    public Empleado(String nom, String dui, String nit, String gen, String fechNa, String tel, String dir, String usu, String pas, int idCar) {
+    public Empleado(int idCa, String cargo, String descri,String nom, String dui, String nit, String gen, String fechNa, String tel, String dir, String usu, String pas) {
+        super(idCa,cargo,descri);
         this.nom = nom;
         this.dui = dui;
         this.nit = nit;
@@ -35,7 +36,7 @@ public class Empleado {
         this.dir = dir;
         this.usu = usu;
         this.pas = pas;
-        this.idCar = idCar;
+        
     }
 
     public int getIdEmp() {
@@ -118,13 +119,7 @@ public class Empleado {
         this.pas = pas;
     }
 
-    public int getIdCar() {
-        return idCar;
-    }
-
-    public void setIdCar(int idCar) {
-        this.idCar = idCar;
-    }
+    
 
     
     

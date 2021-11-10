@@ -58,14 +58,14 @@ export const aside=`
        <span class="tooltip">Agregar Pago</span>
      </li>
      <li>
-       <a href="ControladorVentas?accion=addVenta">
+       <a href="ControladorFactura?accion=addVenta">
          <i class='bx bx-folder' ></i>
          <span class="links_name">Agregar Venta</span>
        </a>
        <span class="tooltip">Agregar Venta</span>
      </li>
      <li>
-       <a href="#">
+       <a href="ControladorFactura?accion=listarFacturas">
          <i class='bx bx-cart-alt' ></i>
          <span class="links_name">Ver Ventas</span>
        </a>

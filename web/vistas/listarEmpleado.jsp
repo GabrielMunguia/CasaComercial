@@ -65,7 +65,7 @@
                     <td class="text-center"><%= em.getTel()%></td>
                     <td class="text-center"><%= em.getDir()%></td>
  
-                    <td class="text-center"><%= em.getIdCar()%></td>
+                    <td class="text-center"><%= em.getIdCa()%></td>
                     <td>
                       <a class="btn btn-warning" href="ControladorEmpleados?accion=EditarEmpleado&id=<%= em.getIdEmp()%>">Editar</a>
 

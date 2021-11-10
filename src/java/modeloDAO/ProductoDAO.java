@@ -52,4 +52,24 @@ public class ProductoDAO {
         }
         return list;
     }
+    
+    public double obtenerPrecio ( int id){
+        double precio=0;
+         ArrayList<Producto> list = new ArrayList<>();
+        String sql = "select * from producto where idProducto="+id;
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+              precio=rs.getDouble("precio");
+            }
+        } catch (Exception e) {
+            System.out.println("XXXXXXXXXXXXX ERROR AL OBTENER EL PRECIO DEL PRODUCTO XXXXXXXXXXXXXXXXXXX");
+            System.out.println("e = " + e);
+        }
+        
+        
+        return precio;
+    }
 }

@@ -1,6 +1,7 @@
 
 package modeloDAO;
 
+import modelo.Cargo;
 import interfaces.CRUDempleado;
 import modelo.Empleado;
 import java.sql.Connection;
@@ -42,7 +43,7 @@ public class EmpleadoDAO implements CRUDempleado{
                 em.setDir(rs.getString("direccion"));
                 em.setUsu(rs.getString("usuario"));
                 em.setPas(rs.getString("password"));
-                em.setIdCar(rs.getInt("idCargo"));
+                em.setIdCa(rs.getInt("idCargo"));
                 list.add(em);
             }
         } catch (SQLException ex) {
@@ -79,7 +80,7 @@ public class EmpleadoDAO implements CRUDempleado{
                 em.setDir(rs.getString("direccion"));
                 em.setUsu(rs.getString("usuario"));
                 em.setPas(rs.getString("password"));
-                em.setIdCar(rs.getInt("idCargo"));
+                em.setIdCa(rs.getInt("idCargo"));
             }
         } catch (Exception e) {
             System.out.println("EL ERROR = " + e);
@@ -90,8 +91,8 @@ public class EmpleadoDAO implements CRUDempleado{
 
     @Override
     public boolean addEmpleado(Empleado emp) {
-        System.out.println(emp.getIdCar());
-        String sql = "insert into empleado(nombre, DUI, NIT, genero, fechaNacimiento, telefono, direccion, usuario, password, idCargo)values('"+emp.getNom()+"','"+emp.getDui()+"', '"+emp.getNit()+"','"+emp.getGen()+"','"+emp.getFechNa()+"','"+emp.getTel()+"','"+emp.getDir()+"','"+emp.getUsu()+"','"+emp.getPas()+"','"+emp.getIdCar()+"')";
+        
+        String sql = "insert into empleado(nombre, DUI, NIT, genero, fechaNacimiento, telefono, direccion, usuario, password, idCargo)values('"+emp.getNom()+"','"+emp.getDui()+"', '"+emp.getNit()+"','"+emp.getGen()+"','"+emp.getFechNa()+"','"+emp.getTel()+"','"+emp.getDir()+"','"+emp.getUsu()+"','"+emp.getPas()+"','"+emp.getIdCa()+"')";
         try{
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -104,7 +105,7 @@ public class EmpleadoDAO implements CRUDempleado{
 
     @Override
     public boolean editEmpleado(Empleado em) {
-        String sql = "update empleado set nombre='"+em.getNom()+"', DUI='"+em.getDui()+"', NIT='"+em.getNit()+"', genero='"+em.getGen()+"', fechaNacimiento='"+em.getFechNa()+"', telefono='"+em.getTel()+"', direccion='"+em.getDir()+"', usuario='"+em.getUsu()+"', password='"+em.getPas()+"', idCargo='"+em.getIdCar()+"'where idEmpleado="+em.getIdEmp();
+        String sql = "update empleado set nombre='"+em.getNom()+"', DUI='"+em.getDui()+"', NIT='"+em.getNit()+"', genero='"+em.getGen()+"', fechaNacimiento='"+em.getFechNa()+"', telefono='"+em.getTel()+"', direccion='"+em.getDir()+"', usuario='"+em.getUsu()+"', password='"+em.getPas()+"', idCargo='"+em.getIdCa()+"'where idEmpleado="+em.getIdEmp();
         try{
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -125,6 +126,28 @@ public class EmpleadoDAO implements CRUDempleado{
         } catch (Exception e) {
         }
             return false;
+    }
+    public List listarCargo() {
+        ArrayList<Cargo>list=new ArrayList<>();
+        String sql="select * from cargo";
+        try{
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                Cargo ca = new Cargo();
+                ca.setIdCa(rs.getInt("idCargo"));
+                ca.setCargo(rs.getString("cargo"));
+                ca.setDescri(rs.getString("descripcion"));
+                
+                list.add(ca);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return list;
     }
     
 }
