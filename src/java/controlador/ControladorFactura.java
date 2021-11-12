@@ -118,6 +118,7 @@ public class ControladorFactura extends HttpServlet {
             f.setFecha(fecha);
            int idFactura= dao.addFactura(f);
             System.out.println("idFactura = " + idFactura);
+            
             if(idFactura!=0){
                  String lst = request.getParameter("lstProd");
             lst = lst.replace("\"", "");
@@ -138,13 +139,19 @@ public class ControladorFactura extends HttpServlet {
                     daoF.addDetalleFactura(f);
                 }
                 
-            }
+            }   request.getSession().setAttribute("exito", "true");
+            acceso = listar;
+              
+            }else{
+                System.out.println("ERROR FALSE");
+               request.getSession().setAttribute("exito", "false");
+                 acceso = add;
             }
 
 
            
 
-            acceso = listar;
+          
 
         }
 

@@ -32,13 +32,18 @@
                 <div class="container-fluid d-flex justify-content-center align-items-center">
 
                     <div id="formContainer">
-                        <div class="container-fluid d-flex justify-content-center align-items-center">
-
-
-
+                        <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
+                            <%
+                                String error = (String) session.getAttribute("exito");
+                                System.out.println("exp = " + error);
+                                if (error == "true") {
+                            %>
+                            <h1>ERROR!!</h1>
+                            <%}%>
 
 
                             <form class="row g-3  w-100 mt-2" action="ControladorFactura" method="POST">
+
 
                                 <div class="col-sm-12 ">
                                     <div class="card">
@@ -90,9 +95,9 @@
                                                 <label for="inputEmail4" class="form-label">ID Producto</label>
                                                 <div class="d-flex">
                                                     <input type="number" class="form-control mx-2" id="idProd" placeholder="Agregar producto"
-                                                           required="">
+                                                           >
                                                     <input type="numer" class="form-control mx-2 w-25" id="cantidadProd"  placeholder="cantidad"
-                                                           required="">
+                                                           >
                                                     <input type="button" class=" btn btn-outline-primary" id="aggProducto" value="Agregar">
                                                 </div>
                                             </div>
@@ -134,77 +139,77 @@
 
 
                                 <div class="col-12 mt-2 d-flex justify-content-end">
-                                     <input class="btn btn-primary" type="submit"
-                                       name="accion" value="Pagar">
-                                <a
-                                </div>
-                            </form>
+                                    <input class="btn btn-primary" type="submit"
+                                           name="accion" value="Pagar">
+                                    <a
+                            </div>
+                        </form>
 
-                        </div>
                     </div>
-
-
-
-
                 </div>
-            </div>
-        </section>
-        <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
 
-        <script>
+
+
+
+            </div>
+        </div>
+    </section>
+    <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+    <script>
 
 //            <%ProductoDAO p = new ProductoDAO();
-                  List<Producto> strList = p.listar();
-              %>
-            const lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
-            Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecio()%>",
-                    Imagen :"<%= strList.get(i).getFotografia()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
-            ];
-            const btnAgregarProd = document.querySelector('#aggProducto');
-            const idProd = document.querySelector('#idProd');
-            const tabla = document.querySelector('#tabla');
-            const x2 = document.createElement('tr');
-            let contador =1;
-            let arrayIdProduCompra="";
-            const inputHidden=document.querySelector("#lstProdCompra");
-            let btnEliminar;
-            btnAgregarProd.addEventListener('click', () => {
-                const id = document.querySelector('#idProd');
-                const cantidad = document.querySelector('#cantidadProd');
-                const lst = lstProductos.filter((prod) => prod.id === id.value);
-                if (lst.length > 0) {
-                    const prod = lst[0];
-                    arrayIdProduCompra+= (prod.id+","+cantidad.value+",");
-                    const x = " <tr><th scope='row'>"+contador+"</th><td class='w-25'> <img src='" + prod.Imagen + "' class='img-fluid' alt='quixote' ></td> <td>" + prod.Nombre +
-                            "</td> <td>$" + prod.Precio + "</td> <td><input type='number' value='" + cantidad.value + "' class='text-center border-0 btn'></td><td>" + (cantidad.value * prod.Precio) + "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id="+prod.id+" value='Eliminar' ></td></tr>";
-                    tabla.innerHTML += x;
-                    contador++;
-                    inputHidden.value=JSON.stringify(arrayIdProduCompra);
-                     console.log(arrayIdProduCompra);
-                    
-                     btnEliminar=document.querySelectorAll('.btnEliminarProd');
-                    for(btn of btnEliminar){
-                        btn.addEventListener('click',()=>{
-                  
-                          arrayIdProduCompra=  arrayIdProduCompra.filter((prod)=>prod.id!==btn.id);
-                          tabla.removeChild(btn.parentNode.parentNode)
-                             console.log(arrayIdProduCompra)
-                             
-                               inputHidden.value=arrayIdProduCompra;
-                              
-                        })
-                    }
-                     
-                    
+    List<Producto> strList = p.listar();
+        %>
+        const lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
+        Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecio()%>",
+                Imagen :"<%= strList.get(i).getFotografia()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
+        ];
+        console.log(lstProductos);
+        const btnAgregarProd = document.querySelector('#aggProducto');
+        const idProd = document.querySelector('#idProd');
+        const tabla = document.querySelector('#tabla');
+        const x2 = document.createElement('tr');
+        let contador = 1;
+        let arrayIdProduCompra = "";
+        const inputHidden = document.querySelector("#lstProdCompra");
+        let btnEliminar;
+        btnAgregarProd.addEventListener('click', () => {
+            const id = document.querySelector('#idProd');
+            const cantidad = document.querySelector('#cantidadProd');
+            const lst = lstProductos.filter((prod) => prod.id === id.value);
+            if (lst.length > 0) {
+                const prod = lst[0];
+                arrayIdProduCompra += (prod.id + "," + cantidad.value + ",");
+                const x = " <tr><th scope='row'>" + contador + "</th><td class='w-25'> <img src='" + prod.Imagen + "' class='img-fluid' alt='quixote' ></td> <td>" + prod.Nombre +
+                        "</td> <td>$" + prod.Precio + "</td> <td><input type='number' value='" + cantidad.value + "' class='text-center border-0 btn'></td><td>" + (cantidad.value * prod.Precio) + "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id=" + prod.id + " value='Eliminar' ></td></tr>";
+                tabla.innerHTML += x;
+                contador++;
+                inputHidden.value = JSON.stringify(arrayIdProduCompra);
+                console.log(arrayIdProduCompra);
+
+                btnEliminar = document.querySelectorAll('.btnEliminarProd');
+                for (btn of btnEliminar) {
+                    btn.addEventListener('click', () => {
+
+                        arrayIdProduCompra = arrayIdProduCompra.filter((prod) => prod.id !== btn.id);
+                        tabla.removeChild(btn.parentNode.parentNode)
+                        console.log(arrayIdProduCompra)
+
+                        inputHidden.value = arrayIdProduCompra;
+
+                    })
                 }
-                
-            });
-            
-          
-        </script>
+
+
+            }
+
+        });
+
+
+    </script>
 
 
 
 
-    </body>
+</body>
 </html>

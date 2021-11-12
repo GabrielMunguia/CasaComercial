@@ -7,6 +7,7 @@ import modelo.Pago;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import static java.time.Instant.now;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Conexion;
@@ -62,8 +63,9 @@ public class PagoDAO implements PagoCRUD{
 
     @Override
     public boolean agregarPago(Pago p) {
-       String sql="insert into pago(idFactura, montoPagado, fechaHora)values('"+p.getIdFactura()+"','"+p.getMontoPagado()+"','"+p.getFechaHora()+"')";
-        try {
+       String sql="insert into pago(idFactura, montoPagado, fechaHora)values('"+p.getIdFactura()+"',"+p.getMontoPagado()+",now())";
+        System.out.println("sql = " + sql);
+       try {
             con=cn.getConnection();
             ps=con.prepareStatement(sql);
             ps.executeUpdate();
