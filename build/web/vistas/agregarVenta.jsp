@@ -297,7 +297,7 @@ const aggBtnEliminar=()=>{
         arrayIdProduCompra=arrayAux2+"";
  inputHidden.value = JSON.stringify(arrayIdProduCompra);
  
-         tabla.removeChild(e.target.parentNode.parentNode)
+         tabla.removeChild(e.target.parentNode.parentNode);
 
 
          });
@@ -315,7 +315,8 @@ const procesarCambiosCantidad=()=>{
     
     const inputsCantidad=document.querySelectorAll('.input-cantidad');
     for(input of inputsCantidad){
-        input.addEventListener('change',()=>{
+        input.addEventListener('change',(e)=>{
+     
              let arrayAux=arrayIdProduCompra.split(',');
        let encontrado=false;
        let arrayAux2=[];
@@ -323,7 +324,7 @@ const procesarCambiosCantidad=()=>{
            if(i%2==0){
              
       
-              if (arrayAux[i]==input.getAttribute("idinput")){
+              if (arrayAux[i]==e.target.getAttribute("idinput")){
                   encontrado=true;
                   arrayAux2.push( arrayAux[i]);
               }else{
@@ -331,7 +332,7 @@ const procesarCambiosCantidad=()=>{
               }
            }else{
                if(encontrado){
-                   arrayAux2.push(input.value);
+                   arrayAux2.push(e.target.value);
                }else{
                        arrayAux2.push( arrayAux[i]);
                }
@@ -341,12 +342,12 @@ const procesarCambiosCantidad=()=>{
        
         arrayIdProduCompra=arrayAux2+"";
  inputHidden.value = JSON.stringify(arrayIdProduCompra);
- 
-   const precio=input.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$","");
-   const subTotal=input.parentElement.parentElement.querySelector(".subTotal");
-subTotal.textContent="$"+(parseFloat(precio)*parseInt(parseInt(input.value)));
+
+   const precio=e.target.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$","");
+   const subTotal=e.target.parentElement.parentElement.querySelector(".subTotal");
+subTotal.textContent="$"+(parseFloat(precio)*parseInt(parseInt(e.target.value)));
             
-        })
+        });
     }
     
 }
