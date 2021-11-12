@@ -15,13 +15,12 @@ public class Producto {
     String nombre;
     String descripcion;
     String marca;
-    double precio;
-    String fotografia;
+    double precioContado;
+    double precioCredito;
+    double costo;
     int stock;
+    String fotografia;
     int idCategoria;
-    
-    public Producto() {
-    }
 
     public int getId() {
         return id;
@@ -55,20 +54,28 @@ public class Producto {
         this.marca = marca;
     }
 
-    public double getPrecio() {
-        return precio;
+    public double getPrecioContado() {
+        return precioContado;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setPrecioContado(double precioContado) {
+        this.precioContado = precioContado;
     }
 
-    public String getFotografia() {
-        return fotografia;
+    public double getPrecioCredito() {
+        return precioCredito;
     }
 
-    public void setFotografia(String fotografia) {
-        this.fotografia = fotografia;
+    public void setPrecioCredito(double precioCredito) {
+        this.precioCredito = precioCredito;
+    }
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
     }
 
     public int getStock() {
@@ -79,6 +86,14 @@ public class Producto {
         this.stock = stock;
     }
 
+    public String getFotografia() {
+        return fotografia;
+    }
+
+    public void setFotografia(String fotografia) {
+        this.fotografia = fotografia;
+    }
+
     public int getIdCategoria() {
         return idCategoria;
     }
@@ -86,6 +101,5 @@ public class Producto {
     public void setIdCategoria(int idCategoria) {
         this.idCategoria = idCategoria;
     }
-    
 
 }

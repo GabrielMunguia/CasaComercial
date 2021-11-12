@@ -4,6 +4,9 @@
     Author     : GabrielMunguia
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="modelo.MetodoPago"%>
+<%@page import="modeloDAO.MetodoPagoDAO"%>
 <%@page import="modelo.Producto"%>
 <%@page import="java.util.List"%>
 <%@page import="modeloDAO.ProductoDAO"%>
@@ -33,13 +36,7 @@
 
                     <div id="formContainer">
                         <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
-                            <%
-                                String error = (String) session.getAttribute("exito");
-                                System.out.println("exp = " + error);
-                                if (error == "true") {
-                            %>
-                            <h1>ERROR!!</h1>
-                            <%}%>
+                    
 
 
                             <form class="row g-3  w-100 mt-2" action="ControladorFactura" method="POST">
@@ -67,8 +64,17 @@
                                             <div class="col-md-6 ">
                                                 <label for="inputPassword4" class="form-label">Metodo de pago</label>
                                                 <select id="metodoPago" class="form-select" name="metodoPago" required="">
-                                                    <option value="1" selected="">Efectivo</option>
-                                                    <option value="2">Tarjeta</option>
+                                        <%
+                    MetodoPagoDAO dao=new MetodoPagoDAO();
+                    List<MetodoPago>list=dao.listarMetodosPago();
+                    Iterator<MetodoPago>iter=list.iterator();
+                    MetodoPago m=null;
+                    while(iter.hasNext()){
+                        m=iter.next();
+                    %>
+                
+                    <option value="<%= m.getIdMetodoPago()%>"><%= m.getMetodo()%></option>
+                    <%}%>
 
 
                                                 </select>
@@ -161,49 +167,148 @@
     List<Producto> strList = p.listar();
         %>
         const lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
-        Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecio()%>",
+        Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecioContado()%>",
                 Imagen :"<%= strList.get(i).getFotografia()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
         ];
-        console.log(lstProductos);
-        const btnAgregarProd = document.querySelector('#aggProducto');
-        const idProd = document.querySelector('#idProd');
-        const tabla = document.querySelector('#tabla');
-        const x2 = document.createElement('tr');
-        let contador = 1;
-        let arrayIdProduCompra = "";
-        const inputHidden = document.querySelector("#lstProdCompra");
-        let btnEliminar;
-        btnAgregarProd.addEventListener('click', () => {
-            const id = document.querySelector('#idProd');
-            const cantidad = document.querySelector('#cantidadProd');
-            const lst = lstProductos.filter((prod) => prod.id === id.value);
-            if (lst.length > 0) {
-                const prod = lst[0];
-                arrayIdProduCompra += (prod.id + "," + cantidad.value + ",");
-                const x = " <tr><th scope='row'>" + contador + "</th><td class='w-25'> <img src='" + prod.Imagen + "' class='img-fluid' alt='quixote' ></td> <td>" + prod.Nombre +
-                        "</td> <td>$" + prod.Precio + "</td> <td><input type='number' value='" + cantidad.value + "' class='text-center border-0 btn'></td><td>" + (cantidad.value * prod.Precio) + "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id=" + prod.id + " value='Eliminar' ></td></tr>";
-                tabla.innerHTML += x;
-                contador++;
-                inputHidden.value = JSON.stringify(arrayIdProduCompra);
-                console.log(arrayIdProduCompra);
+       console.log(lstProductos);
+const btnAgregarProd = document.querySelector("#aggProducto");
+const idProd = document.querySelector("#idProd");
+const tabla = document.querySelector("#tabla");
+const x2 = document.createElement("tr");
+let contador = 1;
+let arrayIdProduCompra = "";
+const inputHidden = document.querySelector("#lstProdCompra");
+let btnEliminar;
+btnAgregarProd.addEventListener("click", () => {
+   const id = document.querySelector("#idProd");
+   const cantidad = document.querySelector("#cantidadProd");
+   const lst = lstProductos.filter((prod) => prod.id === id.value);
+   if (lst.length > 0) {
+      const prod = lst[0];
+       let arrayAux=arrayIdProduCompra.split(',');
+       let encontrado=false;
+       let arrayAux2=[];
+       let x=false;
+       if(arrayAux.length>1){
+             for(let i=0;i<arrayAux.length;i++){
+         
+               
+           if(i%2==0){
+      
+             
+              if (arrayAux[i]==prod.id){
+                  encontrado=true;
+                  x=true;
+              }
+               arrayAux2.push( arrayAux[i]);
+           }else{
+               if(encontrado){
+                     arrayAux2.push(parseInt(arrayAux[i]) +parseInt(cantidad.value));
+                        const input= obtenerInput(prod.id);
+                        input.value=parseInt(arrayAux[i]) +parseInt(cantidad.value);
+                        const precio=input.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$","");
+                        const subTotal=input.parentElement.parentElement.querySelector(".subTotal");
+                        
+                        subTotal.textContent=(parseFloat(precio)*parseInt(parseInt(arrayAux[i]) +parseInt(cantidad.value)));
+                          console.log(parseFloat(precio)*parseInt(cantidad.value))
+     
+                 encontrado=false;
+  
+               }else{
+                       arrayAux2.push( arrayAux[i]);
+               }
+           }
+           
+       }
+//       console.log(arrayAux2);
+       
+        arrayIdProduCompra=arrayAux2+"";
+         inputHidden.value = JSON.stringify(arrayIdProduCompra);
+       }
+       if(!x){
+               arrayIdProduCompra += prod.id + "," + cantidad.value + ",";
+//      console.log(arrayIdProduCompra);
+      const x =
+         " <tr><th scope='row'>" +
+         contador +
+         "</th><td class='w-25'> <img src='" +
+         prod.Imagen +
+         "' class='img-fluid' alt='quixote' ></td> <td>" +
+         prod.Nombre +
+         "</td> <td class='precioProd'>$" +
+         prod.Precio +
+         "</td> <td><input type='number'  idInput='"+ prod.id+"' value='" +
+         cantidad.value +
+         "' class='text-center border-0 btn input-cantidad'></td><td class='subTotal'>" +
+         cantidad.value * prod.Precio +
+         "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id=" +
+         prod.id +
+         " value='Eliminar' ></td></tr>";
+      tabla.innerHTML += x;
+      contador++;
+      inputHidden.value = JSON.stringify(arrayIdProduCompra);
+       }
+              
+       
+//       console.log(arrayAux2);
+  
+      
+      aggBtnEliminar();
+   }
+});
 
-                btnEliminar = document.querySelectorAll('.btnEliminarProd');
-                for (btn of btnEliminar) {
-                    btn.addEventListener('click', () => {
+const aggBtnEliminar=()=>{
+    
+      btnEliminar = document.querySelectorAll(".btnEliminarProd");
+      for (btn of btnEliminar) {
+     
+         btn.addEventListener("click", (e) => {
+      
+        let arrayAux=arrayIdProduCompra.split(',');
+       let encontrado=false;
+       let arrayAux2=[];
+            for(let i=0;i<arrayAux.length;i++){
+         
+               
+           if(i%2==0){
+      
+             
+              if (arrayAux[i]==e.target.id){
+     
+                  encontrado=true;
+                   console.log("SE ENCONTRO LA COINCIDENCIA");
+              }else{
+                  console.log("se agrego " + arrayAux[i]);
+                 arrayAux2.push( arrayAux[i]);
+              }
+           }else{
+               if(encontrado){
+                 encontrado=false;
+                    console.log("SE ENCONTRO LA CANITDAD DE PAR");
+               }else{
+                     console.log("se agrego " + arrayAux[i]);
+                       arrayAux2.push( arrayAux[i]);
+               }
+           }
+           
+       }
+        arrayIdProduCompra=arrayAux2+"";
+ inputHidden.value = JSON.stringify(arrayIdProduCompra);
+ 
+         tabla.removeChild(e.target.parentNode.parentNode)
 
-                        arrayIdProduCompra = arrayIdProduCompra.filter((prod) => prod.id !== btn.id);
-                        tabla.removeChild(btn.parentNode.parentNode)
-                        console.log(arrayIdProduCompra)
 
-                        inputHidden.value = arrayIdProduCompra;
+         });
+     };
+}
 
-                    })
-                }
-
-
-            }
-
-        });
+const obtenerInput=(id)=>{
+    const inputs =document.querySelectorAll('.input-cantidad');
+    console.log(inputs);
+    return Object.values(inputs).filter((inp)=>inp.getAttribute("idinput"))[0];
+   
+    
+};
 
 
     </script>

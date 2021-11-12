@@ -64,7 +64,7 @@
                                 <td>
                                     <a class="btn btn-warning" href="ControladorEmpleados?accion=EditarEmpleado&id=<%= f.getId()%>">Editar</a>
 
-                                    <a class="btn btn-danger" href="ControladorEmpleados?accion=eliminar&id=<%=f.getId()%>">Eliminar</a>
+                                    <a class="btn btn-danger" href="ControladorFactura?accion=eliminar&id=<%=f.getId()%>">Eliminar</a>
                                 </td>
                             </tr>
                             <%}%>

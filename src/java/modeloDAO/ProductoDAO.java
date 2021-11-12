@@ -24,6 +24,8 @@ public class ProductoDAO {
     PreparedStatement ps;
     ResultSet rs;
     int r = 0;
+    
+
 
     public List listar() {
 
@@ -42,7 +44,9 @@ public class ProductoDAO {
                 p.setFotografia(rs.getString("fotografia"));
                 p.setStock(rs.getInt("stock"));
                 p.setIdCategoria(rs.getInt("idCategoria"));
-                p.setPrecio(rs.getDouble("precio"));
+                p.setCosto(rs.getDouble("costo"));
+                p.setPrecioContado(rs.getDouble("precioContado"));
+                p.setPrecioCredito(rs.getDouble("precioCredito"));
             
                
                 list.add(p);
@@ -62,7 +66,7 @@ public class ProductoDAO {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-              precio=rs.getDouble("precio");
+              precio=rs.getDouble("precioContado");
             }
         } catch (Exception e) {
             System.out.println("XXXXXXXXXXXXX ERROR AL OBTENER EL PRECIO DEL PRODUCTO XXXXXXXXXXXXXXXXXXX");

@@ -47,6 +47,17 @@ public class FacturaDAO {
 
         return total;
     }
+        public boolean eliminar(int id){
+         String sql="delete from factura where idFactura="+id;
+        try {
+            con=cn.getConnection();
+            ps=con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al eliminar :"+e);
+        }
+        return false;
+    }
 
     public List listarFacturas() {
          ArrayList<Factura>list2 = new ArrayList<>();

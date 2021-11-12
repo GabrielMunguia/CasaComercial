@@ -63,28 +63,9 @@ public class ControladorFactura extends HttpServlet {
         } else if (action.equals("addVenta")) {
             acceso = add;
 
-        } else if (action.equals("Pagar")) {
-            int idCliente = Integer.parseInt(request.getParameter("idClienteFactura"));
-            String fecha = request.getParameter("fechaFactura");
-            int idEmpleado = Integer.parseInt(request.getParameter("idEmpleado"));
-            int metodoPago = Integer.parseInt(request.getParameter("metodoPago"));
-            String X = request.getParameter("lstProd");
-            f.setIdCliente(idCliente);
-            f.setIdEmpleado(idEmpleado);
-            f.setIdMetodoPago(metodoPago);
-            f.setFecha(fecha);
-            System.out.println("PROCESO");
-            dao.addFactura(f);
-
-//            X = X.replace("\"", "");
-//            String[] res = X.split(",");
-//            
-//            for (int i = 0; i < res.length; i++) {
-//                if (i % 2 == 0) {
-//                    System.out.println("ES PAR");
-//                } else {
-//                }
-//            }
+        } else if (action.equals("eliminar")) {
+              int id = Integer.parseInt(request.getParameter("id"));
+              dao.eliminar(id);
             acceso = listar;
 
         }
@@ -120,6 +101,8 @@ public class ControladorFactura extends HttpServlet {
             System.out.println("idFactura = " + idFactura);
             
             if(idFactura!=0){
+                
+   
                  String lst = request.getParameter("lstProd");
             lst = lst.replace("\"", "");
             String[] res = lst.split(",");
