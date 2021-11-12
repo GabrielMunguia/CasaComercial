@@ -38,7 +38,7 @@
 
 
 
-                            <form class="row g-3  w-100 mt-2" action="ControladorFactura">
+                            <form class="row g-3  w-100 mt-2" action="ControladorFactura" method="POST">
 
                                 <div class="col-sm-12 ">
                                     <div class="card">
@@ -61,7 +61,7 @@
                                             </div>
                                             <div class="col-md-6 ">
                                                 <label for="inputPassword4" class="form-label">Metodo de pago</label>
-                                                <select id="metodoPago" class="form-select" required="">
+                                                <select id="metodoPago" class="form-select" name="metodoPago" required="">
                                                     <option value="1" selected="">Efectivo</option>
                                                     <option value="2">Tarjeta</option>
 
@@ -165,7 +165,7 @@
             const tabla = document.querySelector('#tabla');
             const x2 = document.createElement('tr');
             let contador =1;
-            let arrayIdProduCompra=[];
+            let arrayIdProduCompra="";
             const inputHidden=document.querySelector("#lstProdCompra");
             let btnEliminar;
             btnAgregarProd.addEventListener('click', () => {
@@ -174,13 +174,13 @@
                 const lst = lstProductos.filter((prod) => prod.id === id.value);
                 if (lst.length > 0) {
                     const prod = lst[0];
-                    arrayIdProduCompra.push({id:prod.id,cantidad:cantidad.value});
+                    arrayIdProduCompra+= (prod.id+","+cantidad.value+",");
                     const x = " <tr><th scope='row'>"+contador+"</th><td class='w-25'> <img src='" + prod.Imagen + "' class='img-fluid' alt='quixote' ></td> <td>" + prod.Nombre +
                             "</td> <td>$" + prod.Precio + "</td> <td><input type='number' value='" + cantidad.value + "' class='text-center border-0 btn'></td><td>" + (cantidad.value * prod.Precio) + "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id="+prod.id+" value='Eliminar' ></td></tr>";
                     tabla.innerHTML += x;
                     contador++;
                     inputHidden.value=JSON.stringify(arrayIdProduCompra);
-                    
+                     console.log(arrayIdProduCompra);
                     
                      btnEliminar=document.querySelectorAll('.btnEliminarProd');
                     for(btn of btnEliminar){
@@ -190,7 +190,8 @@
                           tabla.removeChild(btn.parentNode.parentNode)
                              console.log(arrayIdProduCompra)
                              
-                               inputHidden.value=JSON.stringify(arrayIdProduCompra);
+                               inputHidden.value=arrayIdProduCompra;
+                              
                         })
                     }
                      

@@ -28,6 +28,7 @@ public class ClienteDAO implements ClienteCRUD{
             rs = ps.executeQuery();
             
             while(rs.next()){
+                System.out.println("empleado");
                 Cliente c = new Cliente();
                 c.setIdCliente(rs.getInt("idCliente"));
                 c.setNombre(rs.getString("nombre"));

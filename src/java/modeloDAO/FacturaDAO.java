@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Conexion;
@@ -48,32 +49,53 @@ public class FacturaDAO {
     }
 
     public List listarFacturas() {
-        ArrayList<Factura> list = new ArrayList<>();
-        String sql = "select * from factura";
-        try {
+         ArrayList<Factura>list2 = new ArrayList<>();
+        String sql = "SELECT * FROM factura";
+        try{
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-
-            while (rs.next()) {
-                Factura fac = new Factura();
-                fac.setId(rs.getInt("idFactura"));
-                fac.setIdCliente(rs.getInt("idCliente"));
-                fac.setIdEmpleado(rs.getInt("idEmpleado"));
-                fac.setIdMetodoPago(rs.getInt("idMetodoPago"));
-                fac.setFecha(rs.getString("fecha"));
-                fac.setTotal(getTotal(rs.getInt("idFactura")));
-                list.add(fac);
+            
+            while(rs.next()){
+           
+             Factura c = new Factura();
+                c.setId(rs.getInt("idFactura"));
+                c.setIdCliente(rs.getInt("idCliente"));
+                c.setIdEmpleado(rs.getInt("idEmpleado"));
+                c.setIdMetodoPago(rs.getInt("idMetodoPago"));
+                c.setFecha(rs.getString("fecha"));
+//                c.setTotal(getTotal(rs.getInt("idFactura")));
+                list2.add(c);
+            
             }
-        } catch (SQLException ex) {
-            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXX ERROR AL LISTAR LAS FACTURAS XXXXXXXXXXXXXXXXXXX");
-
-            System.out.println("ex = " + ex);
+        }catch(Exception e){  
+            System.out.println("e = " + e);
         }
-
-        return list;
+        return list2;
     }
     
+    
+    
+    
+    
+       public int addFactura(Factura f) {
+        
+        String sql = "insert into factura(fecha, idCliente, idEmpleado, idMetodoPago)values('"+f.getFecha()+"','"+f.getIdCliente()+"','"+f.getIdEmpleado()+"', '"+f.getIdMetodoPago()+"')";
+        try{
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps.executeUpdate();
+            rs=ps.getGeneratedKeys();
+            if(rs.next()){
+                String id = rs.getString(1);
+                return Integer.parseInt(id);
+              
+            }
+        }catch(Exception e){
+            System.out.println(" ERROR AL INSETAR FACTURA = " +  e);
+        }
+        return 0;
+    }
 
 
 }
