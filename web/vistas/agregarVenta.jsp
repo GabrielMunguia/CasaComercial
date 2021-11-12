@@ -205,11 +205,12 @@ btnAgregarProd.addEventListener("click", () => {
                if(encontrado){
                      arrayAux2.push(parseInt(arrayAux[i]) +parseInt(cantidad.value));
                         const input= obtenerInput(prod.id);
+                        console.log(input)
                         input.value=parseInt(arrayAux[i]) +parseInt(cantidad.value);
                         const precio=input.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$","");
                         const subTotal=input.parentElement.parentElement.querySelector(".subTotal");
                         
-                        subTotal.textContent=(parseFloat(precio)*parseInt(parseInt(arrayAux[i]) +parseInt(cantidad.value)));
+                        subTotal.textContent="$"+(parseFloat(precio)*parseInt(parseInt(arrayAux[i]) +parseInt(cantidad.value)));
                           console.log(parseFloat(precio)*parseInt(cantidad.value))
      
                  encontrado=false;
@@ -239,7 +240,7 @@ btnAgregarProd.addEventListener("click", () => {
          prod.Precio +
          "</td> <td><input type='number'  idInput='"+ prod.id+"' value='" +
          cantidad.value +
-         "' class='text-center border-0 btn input-cantidad'></td><td class='subTotal'>" +
+         "' class='text-center border-0 btn input-cantidad'></td><td class='subTotal'>$" +
          cantidad.value * prod.Precio +
          "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id=" +
          prod.id +
@@ -254,6 +255,7 @@ btnAgregarProd.addEventListener("click", () => {
   
       
       aggBtnEliminar();
+      procesarCambiosCantidad();
    }
 });
 
@@ -305,10 +307,50 @@ const aggBtnEliminar=()=>{
 const obtenerInput=(id)=>{
     const inputs =document.querySelectorAll('.input-cantidad');
     console.log(inputs);
-    return Object.values(inputs).filter((inp)=>inp.getAttribute("idinput"))[0];
-   
-    
+    console.log(id)
+    return Object.values(inputs).filter((inp)=>inp.getAttribute("idinput")==id)[0];
 };
+
+const procesarCambiosCantidad=()=>{
+    
+    const inputsCantidad=document.querySelectorAll('.input-cantidad');
+    for(input of inputsCantidad){
+        input.addEventListener('change',()=>{
+             let arrayAux=arrayIdProduCompra.split(',');
+       let encontrado=false;
+       let arrayAux2=[];
+            for(let i=0;i<arrayAux.length;i++){
+           if(i%2==0){
+             
+      
+              if (arrayAux[i]==input.getAttribute("idinput")){
+                  encontrado=true;
+                  arrayAux2.push( arrayAux[i]);
+              }else{
+                 arrayAux2.push( arrayAux[i]);
+              }
+           }else{
+               if(encontrado){
+                   arrayAux2.push(input.value);
+               }else{
+                       arrayAux2.push( arrayAux[i]);
+               }
+           }
+           
+       }
+       
+        arrayIdProduCompra=arrayAux2+"";
+ inputHidden.value = JSON.stringify(arrayIdProduCompra);
+ 
+   const precio=input.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$","");
+   const subTotal=input.parentElement.parentElement.querySelector(".subTotal");
+subTotal.textContent="$"+(parseFloat(precio)*parseInt(parseInt(input.value)));
+            
+        })
+    }
+    
+}
+
 
 
     </script>
