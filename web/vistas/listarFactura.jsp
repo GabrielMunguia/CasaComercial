@@ -59,7 +59,7 @@
                                 <td class="text-center"><%= f.getFecha()%></td>
                                 <td class="text-center"><%= f.getIdCliente()%></td>
                                 <td class="text-center"><%= f.getIdEmpleado()%></td>
-                                <td class="text-center"><%= f.getTotal()%></td>
+                                <td class="text-center">$<%= f.getTotal()%></td>
 
                                 <td>
                                     <a class="btn btn-warning" href="ControladorEmpleados?accion=EditarEmpleado&id=<%= f.getId()%>">Editar</a>
