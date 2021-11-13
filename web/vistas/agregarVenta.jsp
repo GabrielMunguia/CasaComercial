@@ -166,11 +166,15 @@
 //            <%ProductoDAO p = new ProductoDAO();
     List<Producto> strList = p.listar();
         %>
-        const lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
+        let lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
         Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecioContado()%>",
-                Imagen :"<%= strList.get(i).getFotografia()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
+                Imagen :"<%= strList.get(i).getFotografia()%>",
+                Stock :"<%= strList.get(i).getStock()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
         ];
-       console.log(lstProductos);
+        lstProductos=lstProductos.filter((prod)=>prod.Stock>0);
+        console.log(lstProductos);
+       
+      
 const btnAgregarProd = document.querySelector("#aggProducto");
 const idProd = document.querySelector("#idProd");
 const tabla = document.querySelector("#tabla");
@@ -205,7 +209,6 @@ btnAgregarProd.addEventListener("click", () => {
                if(encontrado){
                      arrayAux2.push(parseInt(arrayAux[i]) +parseInt(cantidad.value));
                         const input= obtenerInput(prod.id);
-                        console.log(input)
                         input.value=parseInt(arrayAux[i]) +parseInt(cantidad.value);
                         const precio=input.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$","");
                         const subTotal=input.parentElement.parentElement.querySelector(".subTotal");
@@ -238,7 +241,7 @@ btnAgregarProd.addEventListener("click", () => {
          prod.Nombre +
          "</td> <td class='precioProd'>$" +
          prod.Precio +
-         "</td> <td><input type='number'  idInput='"+ prod.id+"' value='" +
+         "</td> <td><input type='number' max='"+prod.Stock+"'idInput='"+ prod.id+"' value='" +
          cantidad.value +
          "' class='text-center border-0 btn input-cantidad'></td><td class='subTotal'>$" +
          cantidad.value * prod.Precio +
