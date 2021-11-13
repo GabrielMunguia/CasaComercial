@@ -61,10 +61,10 @@
                                 <td class="text-center"><%= f.getIdEmpleado()%></td>
                                 <td class="text-center">$<%= f.getTotal()%></td>
 
-                                <td>
-                                    <a class="btn btn-warning" href="ControladorEmpleados?accion=EditarEmpleado&id=<%= f.getId()%>">Editar</a>
-
-                                    <a class="btn btn-danger" href="ControladorFactura?accion=eliminar&id=<%=f.getId()%>">Eliminar</a>
+                                <td class="d-flex  justify-content-center align-items-center">
+                                    <a class="btn btn-warning " href="ControladorEmpleados?accion=EditarEmpleado&id=<%= f.getId()%>">Editar</a>
+                                    <a class="btn btn-danger mx-2" href="ControladorFactura?accion=eliminar&id=<%=f.getId()%>">Eliminar</a>
+                                    <a class="btn btn-dark" href="ControladorEmpleados?accion=VerMas&id=<%= f.getId()%>">Ver mas</a>
                                 </td>
                             </tr>
                             <%}%>
