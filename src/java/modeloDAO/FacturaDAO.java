@@ -28,25 +28,7 @@ public class FacturaDAO {
     Factura f = new Factura();
     ProductoDAO pdao = new ProductoDAO();
 
-    public double getTotal(int id) {
-        ArrayList<Factura> list = new ArrayList<>();
-        double total = 0;
-        String sql = "select * from detallefactura where idFactura=" + id;
-        try {
-            con = cn.getConnection();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
 
-            while (rs.next()) {
-                total += (rs.getInt("cantidad") * pdao.obtenerPrecio(rs.getInt("idProducto"))) - rs.getDouble("descuento");
-            }
-        } catch (SQLException ex) {
-            System.out.println("XXXXXXXXXXXX ERROR AL OBTENER EL TOTAL DE LA VENTA XXXXXXXXXXXXXXXX");
-            System.out.println("ex = " + ex);
-        }
-
-        return total;
-    }
         public boolean eliminar(int id){
          String sql="delete from factura where idFactura="+id;
         try {
@@ -75,6 +57,7 @@ public class FacturaDAO {
                 c.setIdEmpleado(rs.getInt("idEmpleado"));
                 c.setIdMetodoPago(rs.getInt("idMetodoPago"));
                 c.setFecha(rs.getString("fecha"));
+                c.setTotal(rs.getDouble("total"));
 //                c.setTotal(getTotal(rs.getInt("idFactura")));
                 list2.add(c);
             

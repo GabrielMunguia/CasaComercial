@@ -17,7 +17,11 @@ public class Factura {
     int idEmpleado;
     int idMetodoPago;
     double total;
+    
 
+    public Factura() {
+
+    }
     public double getTotal() {
         return total;
     }
@@ -26,8 +30,6 @@ public class Factura {
         this.total = total;
     }
 
-    public Factura() {
-    }
 
     public int getId() {
         return id;

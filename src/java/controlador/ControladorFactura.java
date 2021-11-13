@@ -22,15 +22,15 @@ import modeloDAO.FacturaDAO;
  * @author GabrielMunguia
  */
 public class ControladorFactura extends HttpServlet {
-
+    
     String add = "./vistas/agregarVenta.jsp";
     String listar = "./vistas/listarFactura.jsp";
     Factura f = new Factura();
     FacturaDAO dao = new FacturaDAO();
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -45,31 +45,31 @@ public class ControladorFactura extends HttpServlet {
             out.println("</html>");
         }
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String acceso = "";
         class lstProd {
-
+            
             int id;
             int cantidad;
-
+            
         }
         String action = request.getParameter("accion");
         if (action.equals("listarFacturas")) {
-
+            
             acceso = listar;
         } else if (action.equals("addVenta")) {
             acceso = add;
-
+            
         } else if (action.equals("eliminar")) {
-              int id = Integer.parseInt(request.getParameter("id"));
-              dao.eliminar(id);
+            int id = Integer.parseInt(request.getParameter("id"));
+            dao.eliminar(id);
             acceso = listar;
-
+            
         }
-
+        
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request, response);
     }
@@ -92,52 +92,47 @@ public class ControladorFactura extends HttpServlet {
             String fecha = request.getParameter("fechaFactura");
             int idEmpleado = Integer.parseInt(request.getParameter("idEmpleado"));
             int metodoPago = Integer.parseInt(request.getParameter("metodoPago"));
-
+            
             f.setIdCliente(idCliente);
             f.setIdEmpleado(idEmpleado);
             f.setIdMetodoPago(metodoPago);
             f.setFecha(fecha);
-           int idFactura= dao.addFactura(f);
+            f.setTotal(0);
+            int idFactura = dao.addFactura(f);
             System.out.println("idFactura = " + idFactura);
             
-            if(idFactura!=0){
+            if (idFactura != 0) {
                 
-   
-                 String lst = request.getParameter("lstProd");
-            lst = lst.replace("\"", "");
-            String[] res = lst.split(",");
-           DetalleFactura  f=new DetalleFactura();
-               f.setIdFactura(idFactura);
-               f.setDescuento(0);
-            DetalleFacturaDAO daoF= new DetalleFacturaDAO();
-             
-            for (int i = 0; i < res.length; i++) {
-           
-              
-                if (i % 2 == 0) {
-                    f.setIdProducto(Integer.parseInt(res[i]));
-    
-                } else {
-                     f.setCantidad(Integer.parseInt(res[i]));
-                    daoF.addDetalleFactura(f);
+                String lst = request.getParameter("lstProd");
+                lst = lst.replace("\"", "");
+                String[] res = lst.split(",");
+                DetalleFactura f = new DetalleFactura();
+                f.setIdFactura(idFactura);
+                f.setDescuento(0);
+                DetalleFacturaDAO daoF = new DetalleFacturaDAO();
+                
+                for (int i = 0; i < res.length; i++) {
+                    
+                    if (i % 2 == 0) {
+                        f.setIdProducto(Integer.parseInt(res[i]));
+                        
+                    } else {
+                        f.setCantidad(Integer.parseInt(res[i]));
+                        daoF.addDetalleFactura(f);
+                    }
+                    
                 }
+                request.getSession().setAttribute("exito", "true");
+                acceso = listar;
                 
-            }   request.getSession().setAttribute("exito", "true");
-            acceso = listar;
-              
-            }else{
+            } else {
                 System.out.println("ERROR FALSE");
-               request.getSession().setAttribute("exito", "false");
-                 acceso = add;
+                request.getSession().setAttribute("exito", "false");
+                acceso = add;
             }
-
-
-           
-
-          
-
+            
         }
-
+        
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request, response);
     }
