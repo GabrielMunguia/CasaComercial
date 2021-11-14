@@ -36,7 +36,7 @@ public class FacturaDAO {
             ps=con.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
-            System.out.println("Error al eliminar :"+e);
+            System.out.println("Error al eliminar factura :"+e);
         }
         return false;
     }

@@ -28,5 +28,19 @@ public class DetalleFacturaDAO {
         }
         return false;
     }
+           
+              public boolean eliminar(int id){
+         String sql="delete from detallefactura where idFactura="+id;
+        try {
+            con=cn.getConnection();
+            ps=con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error al eliminar  detalle factura:"+e);
+        }
+        return false;
+    }
+           
+           
   
 }

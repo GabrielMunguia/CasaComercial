@@ -65,6 +65,8 @@ public class ControladorFactura extends HttpServlet {
             
         } else if (action.equals("eliminar")) {
             int id = Integer.parseInt(request.getParameter("id"));
+            DetalleFacturaDAO dao2= new DetalleFacturaDAO();
+            dao2.eliminar(id);
             dao.eliminar(id);
             acceso = listar;
             
