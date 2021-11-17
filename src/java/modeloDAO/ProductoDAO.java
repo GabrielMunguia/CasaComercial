@@ -47,7 +47,7 @@ public class ProductoDAO {
                 p.setCosto(rs.getDouble("costo"));
                 p.setPrecioContado(rs.getDouble("precioContado"));
                 p.setPrecioCredito(rs.getDouble("precioCredito"));
-            
+               
                
                 list.add(p);
             }
@@ -76,4 +76,36 @@ public class ProductoDAO {
         
         return precio;
     }
+    
+        public List listarProdVenta(int id) {
+
+        ArrayList<Producto> list = new ArrayList<>();
+        String sql = "select * from producto as p,detalleFactura as df where p.idProducto=df.idProducto and df.idFactura="+id;
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Producto p = new Producto();
+                p.setId(rs.getInt("idProducto"));
+                p.setNombre(rs.getString("producto"));
+                p.setDescripcion(rs.getString("descripcion"));
+                p.setMarca(rs.getString("marca"));
+                p.setFotografia(rs.getString("fotografia"));
+                p.setStock(rs.getInt("stock"));
+                p.setIdCategoria(rs.getInt("idCategoria"));
+                p.setCosto(rs.getDouble("costo"));
+                p.setPrecioContado(rs.getDouble("precioContado"));
+                p.setPrecioCredito(rs.getDouble("precioCredito"));
+                p.setCantidad(rs.getInt("cantidad"));
+            
+               
+                list.add(p);
+            }
+        } catch (Exception e) {
+            System.out.println("Errr en listar productos de factura");
+        }
+        return list;
+    }
+    
 }

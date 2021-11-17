@@ -53,10 +53,7 @@
                                                 <label for="inputEmail4" class="form-label">ID Cliente</label>
                                                 <input type="number" class="form-control" name="idClienteFactura" required="">
                                             </div>
-                                            <div class="col-md-6">
-                                                <label for="inputEmail4" class="form-label">Fecha</label>
-                                                <input type="date" class="form-control" name="fechaFactura" required="">
-                                            </div>
+
                                             <div class="col-md-6">
                                                 <label for="inputEmail4" class="form-label">ID Empleado</label>
                                                 <input type="number" class="form-control" name="idEmpleado" required="">
@@ -282,6 +279,14 @@ btnAgregarProd.addEventListener("click", () => {
       
       aggBtnEliminar();
       procesarCambiosCantidad();
+   }else{
+                          Swal.fire({
+  title: 'Error!',
+  text: 'El producto no se encuentra disponible',
+  icon: 'error',
+ confirmButtonColor:'red',
+  confirmButtonText: 'OK'
+});
    }
 });
 

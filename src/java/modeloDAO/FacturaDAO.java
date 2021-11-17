@@ -58,7 +58,6 @@ public class FacturaDAO {
                 c.setIdMetodoPago(rs.getInt("idMetodoPago"));
                 c.setFecha(rs.getString("fecha"));
                 c.setTotal(rs.getDouble("total"));
-//                c.setTotal(getTotal(rs.getInt("idFactura")));
                 list2.add(c);
             
             }
@@ -74,7 +73,7 @@ public class FacturaDAO {
     
        public int addFactura(Factura f) {
         
-        String sql = "insert into factura(fecha, idCliente, idEmpleado, idMetodoPago)values('"+f.getFecha()+"','"+f.getIdCliente()+"','"+f.getIdEmpleado()+"', '"+f.getIdMetodoPago()+"')";
+        String sql = "insert into factura(fecha, idCliente, idEmpleado, idMetodoPago)values(now(),'"+f.getIdCliente()+"','"+f.getIdEmpleado()+"', '"+f.getIdMetodoPago()+"')";
         try{
             con = cn.getConnection();
             ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
@@ -90,6 +89,27 @@ public class FacturaDAO {
         }
         return 0;
     }
+       
+       public double getTotalFactura(int id){
+            String sql = "SELECT * FROM factura where idFactura="+id;
+        try{
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+           
+       
+                f.setTotal(rs.getDouble("total"));
+                
+             
+            
+            }
+        }catch(Exception e){  
+            System.out.println("e = " + e);
+        }
+        return f.getTotal();
+       }
 
 
 }

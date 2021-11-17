@@ -21,6 +21,15 @@ public class Producto {
     int stock;
     String fotografia;
     int idCategoria;
+    int cantidad;
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 
     public int getId() {
         return id;

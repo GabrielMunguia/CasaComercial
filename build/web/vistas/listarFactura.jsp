@@ -30,8 +30,8 @@
             <div>
                 <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
                     <h1 class="m-3"> Lista de Facturas</h1>
-                
-     <table class="table table-bordered ">
+
+                    <table class="table table-bordered ">
                         <thead>
                             <tr>
                                 <th class="text-center">Numero factura</th>
@@ -39,7 +39,7 @@
                                 <th class="text-center">Id cliente</th>
                                 <th class="text-center">Id Empleado</th>
                                 <th class="text-center">Total</th>
-                                  <th class="text-center">Acciones</th>
+                                <th class="text-center">Acciones</th>
 
                             </tr>
                         </thead>
@@ -62,9 +62,9 @@
                                 <td class="text-center">$<%= f.getTotal()%></td>
 
                                 <td class="d-flex  justify-content-center align-items-center">
-                                    <a class="btn btn-warning " href="ControladorEmpleados?accion=EditarEmpleado&id=<%= f.getId()%>">Editar</a>
-                                    <a class="btn btn-danger mx-2" href="ControladorFactura?accion=eliminar&id=<%=f.getId()%>">Eliminar</a>
-                                    <a class="btn btn-dark" href="ControladorEmpleados?accion=VerMas&id=<%= f.getId()%>">Ver mas</a>
+                                    <button class="btn btn-danger mx-2 btnEliminar">Elminar </button>
+                                    <a  class="d-none" href="ControladorFactura?accion=eliminar&id=<%=f.getId()%>">Eliminar</a>
+                                    <a class="btn btn-dark" href="ControladorFactura?accion=detalleFactura&id=<%= f.getId()%>">Ver detalle</a>
                                 </td>
                             </tr>
                             <%}%>
@@ -77,11 +77,64 @@
 
 
 
-        
-            </div>
+
+                </div>
         </section>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+        <script>
+
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const botonesEliminar = document.querySelectorAll('.btnEliminar');
+                for (btn of  botonesEliminar) {
+                    btn.addEventListener('click', (e) => {
+                        const link = e.target.parentNode.querySelector('.d-none');
+                        Swal.fire({
+                            title: 'Estas seguro de eliminarlo?',
+                            text: "Este cambio eliminara por completo la factura",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, borralo!'
+
+                        }).then((result) => {
+                            console.log(result)
+                            if (result.isConfirmed) {
+                                Swal.fire(
+                                        'Eliminado!',
+                                        'La factura se elimino correctamente',
+                                        'success'
+                                        ).then((result) => {
+
+
+                                    link.click();
+
+
+                                })
+
+
+                            }
+
+
+                        })
+
+
+
+
+                    });
+                }
+
+
+            });
+
+
+
+
+
+        </script>
 
 
 
