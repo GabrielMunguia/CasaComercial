@@ -65,8 +65,8 @@ public class ControladorFactura extends HttpServlet {
             
         } else if (action.equals("eliminar")) {
             int id = Integer.parseInt(request.getParameter("id"));
-            DetalleFacturaDAO dao2= new DetalleFacturaDAO();
-            dao2.eliminar(id);
+            DetalleFacturaDAO daoDetalleFactura= new DetalleFacturaDAO();
+            daoDetalleFactura.eliminar(id);
             dao.eliminar(id);
             acceso = listar;
             
@@ -124,12 +124,12 @@ public class ControladorFactura extends HttpServlet {
                     }
                     
                 }
-                request.getSession().setAttribute("exito", "true");
-                acceso = listar;
+                request.setAttribute("exito", "true");
+                acceso = add;
                 
             } else {
                 System.out.println("ERROR FALSE");
-                request.getSession().setAttribute("exito", "false");
+                request.setAttribute("exito", "false");
                 acceso = add;
             }
             

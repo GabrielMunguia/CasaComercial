@@ -160,8 +160,31 @@
             </div>
         </div>
     </section>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
     <script>
+        
+        let error=<%=request.getAttribute("exito")%>
+        console.log(error);
+       if(error===false){
+                   Swal.fire({
+  title: 'Error!',
+  text: 'Porfavor verifique los datos',
+  icon: 'error',
+ confirmButtonColor:'red',
+  confirmButtonText: 'OK'
+});
+           
+       }else if(error==true){
+           Swal.fire({
+  icon: 'success',
+  title: 'Se registro correctamente',
+  showConfirmButton: false,
+  timer: 1500
+})
+       }
+        
+
 
 //            <%ProductoDAO p = new ProductoDAO();
     List<Producto> strList = p.listar();

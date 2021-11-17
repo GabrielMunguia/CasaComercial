@@ -85,6 +85,14 @@ export const aside=`
        </a>
        <span class="tooltip">Agregar Producto</span>
      </li>
+
+      <li>
+       <a href="#">
+         <i class='bx bx-cog' ></i>
+         <span class="links_name">Cerrar sesion</span>
+       </a>
+       <span class="tooltip">Cerrar sesion</span>
+     </li>
    
     </ul>
 
