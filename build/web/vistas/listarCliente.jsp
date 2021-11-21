@@ -37,7 +37,7 @@
            <div>
                <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
   <h1 class="m-3"> Lista de Clientes</h1>
-                   <table class="table table-bordered">
+                   <table class="table table-bordered table-hover table-striped">
                        <thead>
                            <tr>
                                <th class="text-center">ID</th>
@@ -49,6 +49,7 @@
                                <th class="text-center">ACCIONES</th>
                            </tr>
                        </thead>
+                         <tbody>
                        <%
                            ClienteDAO dao = new ClienteDAO();
                            List<Cliente> list = dao.listarCliente();
@@ -57,7 +58,7 @@
                            while (iter.hasNext()) {
                                c = iter.next();
                        %>
-                       <tbody>
+                     
                            <tr>
                                <td class="text-center"><%= c.getIdCliente()%></td>
                                <td class="text-center"><%= c.getNombre()%></td>

@@ -36,7 +36,7 @@
 
                     <div id="formContainer">
                         <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
-                    
+
 
 
                             <form class="row g-3  w-100 mt-2" action="ControladorFactura" method="POST">
@@ -61,17 +61,17 @@
                                             <div class="col-md-6 ">
                                                 <label for="inputPassword4" class="form-label">Metodo de pago</label>
                                                 <select id="metodoPago" class="form-select" name="metodoPago" required="">
-                                        <%
-                    MetodoPagoDAO dao=new MetodoPagoDAO();
-                    List<MetodoPago>list=dao.listarMetodosPago();
-                    Iterator<MetodoPago>iter=list.iterator();
-                    MetodoPago m=null;
-                    while(iter.hasNext()){
-                        m=iter.next();
-                    %>
-                
-                    <option value="<%= m.getIdMetodoPago()%>"><%= m.getMetodo()%></option>
-                    <%}%>
+                                                    <%
+                                                        MetodoPagoDAO dao = new MetodoPagoDAO();
+                                                        List<MetodoPago> list = dao.listarMetodosPago();
+                                                        Iterator<MetodoPago> iter = list.iterator();
+                                                        MetodoPago m = null;
+                                                        while (iter.hasNext()) {
+                                                            m = iter.next();
+                                                    %>
+
+                                                    <option value="<%= m.getIdMetodoPago()%>"><%= m.getMetodo()%></option>
+                                                    <%}%>
 
 
                                                 </select>
@@ -126,6 +126,17 @@
 
                                                             </tbody>
                                                             <tfoot>
+                                                                                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td>   <p>Total a pagar <strong>$<span id="total">0.00</span></strong></p></td>
+                                                                    <td>
+                                                                      
+                                                                    </td>
+                                                                </tr>
 
                                                             </tfoot>
 
@@ -160,27 +171,27 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
     <script>
-        
-        let error=<%=request.getAttribute("exito")%>
+
+        let error =<%=request.getAttribute("exito")%>
         console.log(error);
-       if(error===false){
-                   Swal.fire({
-  title: 'Error!',
-  text: 'Porfavor verifique los datos',
-  icon: 'error',
- confirmButtonColor:'red',
-  confirmButtonText: 'OK'
-});
-           
-       }else if(error==true){
-           Swal.fire({
-  icon: 'success',
-  title: 'Se registro correctamente',
-  showConfirmButton: false,
-  timer: 1500
-})
-       }
-        
+        if (error === false) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Porfavor verifique los datos',
+                icon: 'error',
+                confirmButtonColor: 'red',
+                confirmButtonText: 'OK'
+            });
+
+        } else if (error == true) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Se registro correctamente',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+
 
 
 //            <%ProductoDAO p = new ProductoDAO();
@@ -188,200 +199,217 @@
         %>
         let lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
         Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecioContado()%>",
-                Imagen :"<%= strList.get(i).getFotografia()%>",
+        Imagen :"<%= strList.get(i).getFotografia()%>",
                 Stock :"<%= strList.get(i).getStock()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
         ];
-        lstProductos=lstProductos.filter((prod)=>prod.Stock>0);
+        lstProductos = lstProductos.filter((prod) => prod.Stock > 0);
         console.log(lstProductos);
-       
-      
-const btnAgregarProd = document.querySelector("#aggProducto");
-const idProd = document.querySelector("#idProd");
-const tabla = document.querySelector("#tabla");
-const x2 = document.createElement("tr");
-let contador = 1;
-let arrayIdProduCompra = "";
-const inputHidden = document.querySelector("#lstProdCompra");
-let btnEliminar;
-btnAgregarProd.addEventListener("click", () => {
-   const id = document.querySelector("#idProd");
-   const cantidad = document.querySelector("#cantidadProd");
-   const lst = lstProductos.filter((prod) => prod.id === id.value);
-   if (lst.length > 0) {
-      const prod = lst[0];
-       let arrayAux=arrayIdProduCompra.split(',');
-       let encontrado=false;
-       let arrayAux2=[];
-       let x=false;
-       if(arrayAux.length>1){
-             for(let i=0;i<arrayAux.length;i++){
-         
-               
-           if(i%2==0){
-      
-             
-              if (arrayAux[i]==prod.id){
-                  encontrado=true;
-                  x=true;
-              }
-               arrayAux2.push( arrayAux[i]);
-           }else{
-               if(encontrado){
-                     arrayAux2.push(parseInt(arrayAux[i]) +parseInt(cantidad.value));
-                        const input= obtenerInput(prod.id);
-                        input.value=parseInt(arrayAux[i]) +parseInt(cantidad.value);
-                        const precio=input.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$","");
-                        const subTotal=input.parentElement.parentElement.querySelector(".subTotal");
-                        
-                        subTotal.textContent="$"+(parseFloat(precio)*parseInt(parseInt(arrayAux[i]) +parseInt(cantidad.value)));
-                          console.log(parseFloat(precio)*parseInt(cantidad.value))
-     
-                 encontrado=false;
-  
-               }else{
-                       arrayAux2.push( arrayAux[i]);
-               }
-           }
-           
-       }
-//       console.log(arrayAux2);
-       
-        arrayIdProduCompra=arrayAux2+"";
-         inputHidden.value = JSON.stringify(arrayIdProduCompra);
-       }
-       if(!x){
-               arrayIdProduCompra += prod.id + "," + cantidad.value + ",";
-//      console.log(arrayIdProduCompra);
-      const x =
-         " <tr><th scope='row'>" +
-         contador +
-         "</th><td class='w-25'> <img src='" +
-         prod.Imagen +
-         "' class='img-fluid' alt='quixote' ></td> <td>" +
-         prod.Nombre +
-         "</td> <td class='precioProd'>$" +
-         prod.Precio +
-         "</td> <td><input type='number' max='"+prod.Stock+"'idInput='"+ prod.id+"' value='" +
-         cantidad.value +
-         "' class='text-center border-0 btn input-cantidad'></td><td class='subTotal'>$" +
-         cantidad.value * prod.Precio +
-         "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id=" +
-         prod.id +
-         " value='Eliminar' ></td></tr>";
-      tabla.innerHTML += x;
-      contador++;
-      inputHidden.value = JSON.stringify(arrayIdProduCompra);
-       }
-              
-       
-//       console.log(arrayAux2);
-  
-      
-      aggBtnEliminar();
-      procesarCambiosCantidad();
-   }else{
-                          Swal.fire({
-  title: 'Error!',
-  text: 'El producto no se encuentra disponible',
-  icon: 'error',
- confirmButtonColor:'red',
-  confirmButtonText: 'OK'
-});
-   }
-});
-
-const aggBtnEliminar=()=>{
-    
-      btnEliminar = document.querySelectorAll(".btnEliminarProd");
-      for (btn of btnEliminar) {
-     
-         btn.addEventListener("click", (e) => {
-      
-        let arrayAux=arrayIdProduCompra.split(',');
-       let encontrado=false;
-       let arrayAux2=[];
-            for(let i=0;i<arrayAux.length;i++){
-         
-               
-           if(i%2==0){
-      
-             
-              if (arrayAux[i]==e.target.id){
-     
-                  encontrado=true;
-                   console.log("SE ENCONTRO LA COINCIDENCIA");
-              }else{
-                  console.log("se agrego " + arrayAux[i]);
-                 arrayAux2.push( arrayAux[i]);
-              }
-           }else{
-               if(encontrado){
-                 encontrado=false;
-                    console.log("SE ENCONTRO LA CANITDAD DE PAR");
-               }else{
-                     console.log("se agrego " + arrayAux[i]);
-                       arrayAux2.push( arrayAux[i]);
-               }
-           }
-           
-       }
-        arrayIdProduCompra=arrayAux2+"";
- inputHidden.value = JSON.stringify(arrayIdProduCompra);
- 
-         tabla.removeChild(e.target.parentNode.parentNode);
-
-
-         });
-     };
-}
-
-const obtenerInput=(id)=>{
-    const inputs =document.querySelectorAll('.input-cantidad');
-    console.log(inputs);
-    console.log(id)
-    return Object.values(inputs).filter((inp)=>inp.getAttribute("idinput")==id)[0];
-};
-
-const procesarCambiosCantidad=()=>{
-    
-    const inputsCantidad=document.querySelectorAll('.input-cantidad');
-    for(input of inputsCantidad){
-        input.addEventListener('change',(e)=>{
-     
-             let arrayAux=arrayIdProduCompra.split(',');
-       let encontrado=false;
-       let arrayAux2=[];
-            for(let i=0;i<arrayAux.length;i++){
-           if(i%2==0){
-             
-      
-              if (arrayAux[i]==e.target.getAttribute("idinput")){
-                  encontrado=true;
-                  arrayAux2.push( arrayAux[i]);
-              }else{
-                 arrayAux2.push( arrayAux[i]);
-              }
-           }else{
-               if(encontrado){
-                   arrayAux2.push(e.target.value);
-               }else{
-                       arrayAux2.push( arrayAux[i]);
-               }
-           }
-           
-       }
-       
-        arrayIdProduCompra=arrayAux2+"";
- inputHidden.value = JSON.stringify(arrayIdProduCompra);
-
-   const precio=e.target.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$","");
-   const subTotal=e.target.parentElement.parentElement.querySelector(".subTotal");
-subTotal.textContent="$"+(parseFloat(precio)*parseInt(parseInt(e.target.value)));
+const calcularTotal=()=>{
+      const total=document.querySelector('#total');
+            let numTotal=0;
+            const subTotales=document.querySelectorAll('.subTotal');
             
-        });
-    }
-    
+            for(sub of subTotales){
+             const subt=parseFloat(sub.textContent.replace('$',''));
+             numTotal+=subt;
+            }
+           total.textContent=numTotal;
 }
+
+        const btnAgregarProd = document.querySelector("#aggProducto");
+        const idProd = document.querySelector("#idProd");
+        const tabla = document.querySelector("#tabla");
+        tabla.addEventListener('DOMNodeInserted',()=>{
+          calcularTotal();
+            
+        })
+        const x2 = document.createElement("tr");
+        let contador = 1;
+        let arrayIdProduCompra = "";
+        const inputHidden = document.querySelector("#lstProdCompra");
+        let btnEliminar;
+        btnAgregarProd.addEventListener("click", () => {
+            const id = document.querySelector("#idProd");
+            const cantidad = document.querySelector("#cantidadProd");
+            const lst = lstProductos.filter((prod) => prod.id === id.value);
+            if (lst.length > 0) {
+                const prod = lst[0];
+                let arrayAux = arrayIdProduCompra.split(',');
+                let encontrado = false;
+                let arrayAux2 = [];
+                let x = false;
+                if (arrayAux.length > 1) {
+                    for (let i = 0; i < arrayAux.length; i++) {
+
+
+                        if (i % 2 == 0) {
+
+
+                            if (arrayAux[i] == prod.id) {
+                                encontrado = true;
+                                x = true;
+                            }
+                            arrayAux2.push(arrayAux[i]);
+                        } else {
+                            if (encontrado) {
+                                arrayAux2.push(parseInt(arrayAux[i]) + parseInt(cantidad.value));
+                                const input = obtenerInput(prod.id);
+                                input.value = parseInt(arrayAux[i]) + parseInt(cantidad.value);
+                                const precio = input.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$", "");
+                                const subTotal = input.parentElement.parentElement.querySelector(".subTotal");
+
+                                subTotal.textContent = "$" + (parseFloat(precio) * parseInt(parseInt(arrayAux[i]) + parseInt(cantidad.value)));
+                               
+
+                                encontrado = false;
+
+                            } else {
+                                arrayAux2.push(arrayAux[i]);
+                            }
+                        }
+
+                    }
+//       console.log(arrayAux2);
+
+                    arrayIdProduCompra = arrayAux2 + "";
+                    inputHidden.value = JSON.stringify(arrayIdProduCompra);
+                }
+                if (!x) {
+                    arrayIdProduCompra += prod.id + "," + cantidad.value + ",";
+//      console.log(arrayIdProduCompra);
+                    const x =
+                            " <tr><th scope='row'>" +
+                            contador +
+                            "</th><td class='w-25'> <img src='" +
+                            prod.Imagen +
+                            "' class='img-fluid' alt='quixote' ></td> <td>" +
+                            prod.Nombre +
+                            "</td> <td class='precioProd'>$" +
+                            prod.Precio +
+                            "</td> <td><input type='number' max='" + prod.Stock + "'idInput='" + prod.id + "' value='" +
+                            cantidad.value +
+                            "' class='text-center border-0 btn input-cantidad'></td><td class='subTotal'>$" +
+                            cantidad.value * prod.Precio +
+                            "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id=" +
+                            prod.id +
+                            " value='Eliminar' ></td></tr>";
+                    tabla.innerHTML += x;
+                    contador++;
+                    inputHidden.value = JSON.stringify(arrayIdProduCompra);
+                }
+
+
+//       console.log(arrayAux2);
+
+
+                aggBtnEliminar();
+                procesarCambiosCantidad();
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'El producto no se encuentra disponible',
+                    icon: 'error',
+                    confirmButtonColor: 'red',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+
+        const aggBtnEliminar = () => {
+
+            btnEliminar = document.querySelectorAll(".btnEliminarProd");
+            for (btn of btnEliminar) {
+
+                btn.addEventListener("click", (e) => {
+                    
+
+                    let arrayAux = arrayIdProduCompra.split(',');
+                    let encontrado = false;
+                    let arrayAux2 = [];
+                    for (let i = 0; i < arrayAux.length; i++) {
+
+
+                        if (i % 2 == 0) {
+
+
+                            if (arrayAux[i] == e.target.id) {
+
+                                encontrado = true;
+                                console.log("SE ENCONTRO LA COINCIDENCIA");
+                            } else {
+                                console.log("se agrego " + arrayAux[i]);
+                                arrayAux2.push(arrayAux[i]);
+                            }
+                        } else {
+                            if (encontrado) {
+                                encontrado = false;
+                                console.log("SE ENCONTRO LA CANITDAD DE PAR");
+                            } else {
+                                console.log("se agrego " + arrayAux[i]);
+                                arrayAux2.push(arrayAux[i]);
+                            }
+                        }
+
+                    }
+                    arrayIdProduCompra = arrayAux2 + "";
+                    inputHidden.value = JSON.stringify(arrayIdProduCompra);
+
+                    tabla.removeChild(e.target.parentNode.parentNode);
+                      calcularTotal();
+
+
+                });
+            }
+            ;
+        }
+
+        const obtenerInput = (id) => {
+            const inputs = document.querySelectorAll('.input-cantidad');
+            console.log(inputs);
+            console.log(id)
+            return Object.values(inputs).filter((inp) => inp.getAttribute("idinput") == id)[0];
+        };
+
+        const procesarCambiosCantidad = () => {
+
+            const inputsCantidad = document.querySelectorAll('.input-cantidad');
+            for (input of inputsCantidad) {
+                input.addEventListener('change', (e) => {
+
+                    let arrayAux = arrayIdProduCompra.split(',');
+                    let encontrado = false;
+                    let arrayAux2 = [];
+                    for (let i = 0; i < arrayAux.length; i++) {
+                        if (i % 2 == 0) {
+
+
+                            if (arrayAux[i] == e.target.getAttribute("idinput")) {
+                                encontrado = true;
+                                arrayAux2.push(arrayAux[i]);
+                            } else {
+                                arrayAux2.push(arrayAux[i]);
+                            }
+                        } else {
+                            if (encontrado) {
+                                arrayAux2.push(e.target.value);
+                            } else {
+                                arrayAux2.push(arrayAux[i]);
+                            }
+                        }
+
+                    }
+
+                    arrayIdProduCompra = arrayAux2 + "";
+                    inputHidden.value = JSON.stringify(arrayIdProduCompra);
+
+                    const precio = e.target.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$", "");
+                    const subTotal = e.target.parentElement.parentElement.querySelector(".subTotal");
+                    subTotal.textContent = "$" + (parseFloat(precio) * parseInt(parseInt(e.target.value)));
+
+                });
+            }
+
+        }
 
 
 

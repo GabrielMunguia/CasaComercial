@@ -29,7 +29,7 @@
                 <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
                     <h1 class="m-3"> Lista de empleados</h1>
                 
-                          <table class="table table-bordered ">
+                          <table class="table table-striped table-bordered table-hover ">
             <thead>
                 <tr>
                     <th class="text-center">ID</th>
@@ -44,6 +44,7 @@
                     <th class="text-center">ACCIONES</th>
                 </tr>
             </thead>
+               <tbody>
             <%
                     EmpleadoDAO dao=new EmpleadoDAO();
                     List<Empleado>list=dao.listarEmpleado();
@@ -54,7 +55,7 @@
             %>
             
             
-            <tbody>
+         
                 <tr>
                     <td class="text-center"><%= em.getIdEmp()%></td>
                     <td class="text-center"><%= em.getNom()%></td>

@@ -30,70 +30,71 @@
     </head>
     <body>
         <div id="dash" class="sidebar open overflow-scroll">
-            h1
-            adasdasd
+
         </div>
         <section class="home-section bg-white">
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center">
+                <div class="container-fluid d-flex justify-content-center align-items-center px-5">
 
 
-                    <div class="container">
-            <h1>Pagos</h1>
-            <a class="btn btn-success" href="ControladorPago?accion=add">Agregar Nuevo</a>
-            <br>
-            <br>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th class="text-center">ID PAGO</th>
-                        <th class="text-center">ID FACTURA</th>
-                        <th class="text-center">MONTO PAGADO</th>
-                        <th class="text-center">FECHA/HORA</th>
-                    </tr>
-                </thead>
-                <%
-                    PagoDAO dao=new PagoDAO();
-                    List<Pago>list=dao.listarPago();
-                    Iterator<Pago>iter=list.iterator();
-                    Pago p=null;
-                    while(iter.hasNext()){
-                        p=iter.next();
-                %>
-                <tbody>
-                    <tr>
-                        <td class="text-center"><%= p.getIdPago()%></td>
-                        <td class="text-center"><%= p.getIdFactura()%></td>
-                        <td class="text-center"><%= p.getMontoPagado()%></td>
-                        <td><%= p.getFechaHora()%></td>
-                        <td class="text-center">
-                            <a class="btn btn-warning" href="ControladorPago?accion=editar&id=<%= p.getIdPago()%>">Editar</a>
-                            <a class="btn btn-danger" href="ControladorPago?accion=eliminar&id=<%= p.getIdPago()%>">Eliminar</a>
-                        </td>
-                    </tr>
-                    <%}%>
-                </tbody>
-            </table>
-        </div>
+                    <div class=" w-100">
+                        <h1>Pagos</h1>
+                        <a class="btn btn-success" href="ControladorPago?accion=add">Agregar Nuevo</a>
+                        <br>
+                        <br>
+                        <table class="table table-striped table-hover  table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">ID PAGO</th>
+                                    <th class="text-center">ID FACTURA</th>
+                                    <th class="text-center">MONTO PAGADO</th>
+                                    <th class="text-center">FECHA/HORA</th>
+                                    <th class="text-center">ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    PagoDAO dao = new PagoDAO();
+                                    List<Pago> list = dao.listarPago();
+                                    Iterator<Pago> iter = list.iterator();
+                                    Pago p = null;
+                                    while (iter.hasNext()) {
+                                        p = iter.next();
+                                %>
 
-
-
-
+                                <tr>
+                                    <td class="text-center"><%= p.getIdPago()%></td>
+                                    <td class="text-center"><%= p.getIdFactura()%></td>
+                                    <td class="text-center"><%= p.getMontoPagado()%></td>
+                                    <td><%= p.getFechaHora()%></td>
+                                    <td class="text-center">
+                                        <a class="btn btn-warning" href="ControladorPago?accion=editar&id=<%= p.getIdPago()%>">Editar</a>
+                                        <a class="btn btn-danger" href="ControladorPago?accion=eliminar&id=<%= p.getIdPago()%>">Eliminar</a>
+                                    </td>
+                                </tr>
+                                <%}%>
+                            </tbody>
+                        </table>
                     </div>
 
 
 
 
-
-
                 </div>
+
+
+
+
+
+
             </div>
-        </section>
-        <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+        </div>
+    </section>
+    <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
 
 
 
 
-    </body>
+</body>
 </html>

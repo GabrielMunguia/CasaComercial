@@ -31,7 +31,7 @@
                 <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
                     <h1 class="m-3"> Lista de Facturas</h1>
 
-                    <table class="table table-bordered ">
+                    <table class="table table-bordered table-striped ">
                         <thead>
                             <tr>
                                 <th class="text-center">Numero factura</th>
@@ -43,6 +43,7 @@
 
                             </tr>
                         </thead>
+                          <tbody>
                         <%
                             FacturaDAO dao = new FacturaDAO();
                             List<Factura> list = dao.listarFacturas();
@@ -53,14 +54,13 @@
                         %>
 
 
-                        <tbody>
+                      
                             <tr>
                                 <td class="text-center"><%= f.getId()%></td>
                                 <td class="text-center"><%= f.getFecha()%></td>
                                 <td class="text-center"><%= f.getIdCliente()%></td>
                                 <td class="text-center"><%= f.getIdEmpleado()%></td>
                                 <td class="text-center">$<%= f.getTotal()%></td>
-
                                 <td class="d-flex  justify-content-center align-items-center">
                                     <button class="btn btn-danger mx-2 btnEliminar">Elminar </button>
                                     <a  class="d-none" href="ControladorFactura?accion=eliminar&id=<%=f.getId()%>">Eliminar</a>

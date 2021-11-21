@@ -80,7 +80,7 @@ public class ProductoDAO {
         public List listarProdVenta(int id) {
 
         ArrayList<Producto> list = new ArrayList<>();
-        String sql = "select * from producto as p,detalleFactura as df where p.idProducto=df.idProducto and df.idFactura="+id;
+        String sql = "select * from producto as p,detallefactura as df where p.idProducto=df.idProducto and df.idFactura="+id;
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -104,6 +104,7 @@ public class ProductoDAO {
             }
         } catch (Exception e) {
             System.out.println("Errr en listar productos de factura");
+            System.out.println("e = " + e);
         }
         return list;
     }

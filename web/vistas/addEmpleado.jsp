@@ -31,11 +31,11 @@
         <section class="home-section bg-white ">
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
+                <div class="container-fluid d-flex justify-content-center align-items-center flex-column m-2">
 
                     <div class="card w-100">
-                        <div class="card-header">
-                            <strong>Agregar Empleado</strong>
+                        <div class="card-header  ">
+                            <strong class="fs-4" >Agregar Empleado</strong>
                         </div>
                         <form class="row g-3 mb-3  px-1" action='ControladorEmpleados'
                               class='bg-white   p-2 mt-5 rounded ws-80 ws-50 d-flex flex-column justify-content-center align-items-center'

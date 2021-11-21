@@ -86,6 +86,7 @@ public class FacturaDAO {
             }
         }catch(Exception e){
             System.out.println(" ERROR AL INSETAR FACTURA = " +  e);
+            System.out.println("e = " + e);
         }
         return 0;
     }
