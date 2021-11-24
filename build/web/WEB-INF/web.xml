@@ -20,6 +20,10 @@
         <servlet-name>ControladorFactura</servlet-name>
         <servlet-class>controlador.ControladorFactura</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorCreditos</servlet-name>
+        <servlet-class>controlador.ControladorCreditos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>ControladorFactura</servlet-name>
         <url-pattern>/ControladorFactura</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorCreditos</servlet-name>
+        <url-pattern>/ControladorCreditos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

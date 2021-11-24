@@ -30,8 +30,7 @@
     </head>
     <body>
         <div id="dash" class="sidebar open overflow-scroll">
-            h1
-            adasdasd
+    
         </div>
         <section class="home-section bg-white">
 

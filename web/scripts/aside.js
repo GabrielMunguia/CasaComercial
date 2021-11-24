@@ -43,6 +43,20 @@ export const aside=`
        </a>
        <span class="tooltip">Agregar Cliente</span>
      </li>
+   <li>
+       <a href="ControladorCreditos?accion=addCredito">
+         <i class='bx bx-folder' ></i>
+         <span class="links_name">Agregar Credito</span>
+       </a>
+       <span class="tooltip">Agregar Venta</span>
+     </li>
+  <li>
+       <a href="ControladorCreditos?accion=listar">
+         <i class='bx bx-folder' ></i>
+         <span class="links_name">Ver Creditos</span>
+       </a>
+       <span class="tooltip">Ver Creditos</span>
+     </li>
      <li>
        <a  href="ControladorPago?accion=listarPago">
          <i class='bx bx-chat' ></i>
@@ -57,6 +71,7 @@ export const aside=`
        </a>
        <span class="tooltip">Agregar Pago</span>
      </li>
+
      <li>
        <a href="ControladorFactura?accion=addVenta">
          <i class='bx bx-folder' ></i>

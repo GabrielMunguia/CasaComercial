@@ -23,17 +23,17 @@ public class PagoDAO implements PagoCRUD{
     @Override
     public List listarPago() {
         ArrayList<Pago>list=new ArrayList<>();
-        String sql="select * from pago";
+        String sql="select * from Abonos";
         try {
             con=cn.getConnection();
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
             while(rs.next()){
                 Pago p=new Pago();
-                p.setIdPago(rs.getInt("idPago"));
-                p.setIdFactura(rs.getInt("idFactura"));
-                p.setMontoPagado(rs.getDouble("montoPagado"));
-                p.setFechaHora(rs.getString("fechaHora"));
+                p.setIdPago(rs.getInt("idAbono"));
+                p.setIdFactura(rs.getInt("idCredito"));
+                p.setMontoPagado(rs.getDouble("monto"));
+                p.setFechaHora(rs.getString("fecha"));
                 list.add(p);
             }
         } catch (Exception e) {
