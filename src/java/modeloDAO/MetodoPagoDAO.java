@@ -49,4 +49,23 @@ public class MetodoPagoDAO {
         
         return list;
     }
+        
+        public String getNombreMetodoPago(int id){
+            String nom="";
+            String sql="SELECT * FROM `metodopago` WHERE idMetodoPago="+id;
+            System.out.println("sql = " + sql);
+             try{
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+               nom=rs.getString("metodo");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener  el metodo de pago : "+ex);
+          
+        }
+            return nom;
+        }
 }

@@ -6,6 +6,15 @@ public class Pago {
     int idFactura;
     double montoPagado;
     String fechaHora;
+
+    public int getIdmetodoPago() {
+        return idmetodoPago;
+    }
+
+    public void setIdmetodoPago(int idmetodoPago) {
+        this.idmetodoPago = idmetodoPago;
+    }
+    int idmetodoPago;
     
     public Pago(){
         

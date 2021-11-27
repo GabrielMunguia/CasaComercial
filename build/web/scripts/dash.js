@@ -2,12 +2,22 @@
 
 //Agregando aside 
 import {aside} from './aside.js';
+import {vendedorDashBoard} from './vendedorDashBoard.js';
 
 document.addEventListener("DOMContentLoaded",()=>{
   const div=document.querySelector("#dash");
-  div.innerHTML=aside;
-   console.log(div)
-   
+  const vendedor=document.querySelector("#vendedor");
+  console.log(div);
+  console.log(vendedor)
+  if(div){
+      
+      div.innerHTML=aside;
+  }
+  if(vendedor){
+       vendedor.innerHTML=vendedorDashBoard;
+  }
+  
+  
   let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");
   let searchBtn = document.querySelector(".bx-search");
@@ -15,22 +25,22 @@ document.addEventListener("DOMContentLoaded",()=>{
   closeBtn.addEventListener("click", ()=>{
     sidebar.classList.toggle("open");
  
-    menuBtnChange();//calling the function(optional)
+    menuBtnChange();
   });
 
-  searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+  searchBtn.addEventListener("click", ()=>{ 
     sidebar.classList.toggle("open");
     
-    menuBtnChange(); //calling the function(optional)
+    menuBtnChange(); 
   });
 
-  // following are the code to change sidebar button(optional)
+ 
   function menuBtnChange() {
    if(sidebar.classList.contains("open")){
       
-     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+     closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
    }else {
-     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+     closeBtn.classList.replace("bx-menu-alt-right","bx-menu");
    }
   }
 });

@@ -181,7 +181,7 @@
     List<Producto> strList = p.listar();
         %>
         let lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
-        Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecioContado()%>",
+        Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecioCredito()%>",
         Imagen :"<%= strList.get(i).getFotografia()%>",
                 Stock :"<%= strList.get(i).getStock()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
         ];

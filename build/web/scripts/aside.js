@@ -58,7 +58,7 @@ export const aside=`
        <span class="tooltip">Ver Creditos</span>
      </li>
      <li>
-       <a  href="ControladorPago?accion=listarPago">
+       <a  href="ControladorPago?accion=verPagos">
          <i class='bx bx-chat' ></i>
          <span class="links_name">Ver pagos</span>
        </a>

@@ -3,6 +3,7 @@
     Created on : 10-04-2021, 03:05:28 PM
     Author     : GabrielMunguia
 --%>
+<%@page import="modelo.Usuario"%>
 <%@page import="modelo.Cliente"%>
 <%@page import="modeloDAO.ClienteDAO"%>
 <%@page import="modeloDAO.ClienteDAO"%>
@@ -29,7 +30,30 @@
 
     </head>
     <body >
-        <div id="dash" class="sidebar open overflow-scroll ">
+
+        <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "dash";
+                }
+                break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-x ">
@@ -38,12 +62,12 @@
                 <div class="container-fluid d-flex justify-content-center align-items-center">
                     <div class="d-flex w-100 justify-content-around mt-5">
                         <div class="  bg-dark p-2">
-                          <canvas id="myChart" width="500" height="200"></canvas>
+                            <canvas id="myChart" width="500" height="200"></canvas>
                         </div>
-                         <div class="bg-dar  bg-dark p-2">
-                          <canvas id="myChart2" width="500" height="200"></canvas>
+                        <div class="bg-dar  bg-dark p-2">
+                            <canvas id="myChart2" width="500" height="200"></canvas>
                         </div>
-                        
+
                     </div>
 
 
@@ -54,64 +78,64 @@
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
         <script src="./scripts/Chart.min.js" />
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  const labels = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-];
-const data = {
-  labels: labels,
-  datasets: [{
-    label: 'My First dataset',
-    backgroundColor: 'rgb(255, 99, 132)',
-    borderColor: 'rgb(255, 99, 132)',
-    data: [0, 10, 5, 2, 20, 30, 45],
-  }]
-};
-const config = {
-  type: 'line',
-  data: data,
-  options: {}
-};
-const myChart = new Chart(
-    document.getElementById('myChart'),
-    config
-  );
-  const config2 = {
-  type: 'doughnut',
-  data: data,
-};
-const data2 = {
-  labels: [
-    'Red',
-    'Blue',
-    'Yellow'
-  ],
-  datasets: [{
-    label: 'My First Dataset',
-    data: [300, 50, 100],
-    backgroundColor: [
-      'rgb(255, 99, 132)',
-      'rgb(54, 162, 235)',
-      'rgb(255, 205, 86)'
-    ],
-    hoverOffset: 4
-  }]
-  
- 
-};
-   const myChart2 = new Chart(
-    document.getElementById('myChart2'),
-    config2
-  );
-  
-  
-</script>
- 
+        <script>
+            const labels = [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+            ];
+            const data = {
+                labels: labels,
+                datasets: [{
+                        label: 'My First dataset',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: [0, 10, 5, 2, 20, 30, 45],
+                    }]
+            };
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            const myChart = new Chart(
+                    document.getElementById('myChart'),
+                    config
+                    );
+            const config2 = {
+                type: 'doughnut',
+                data: data,
+            };
+            const data2 = {
+                labels: [
+                    'Red',
+                    'Blue',
+                    'Yellow'
+                ],
+                datasets: [{
+                        label: 'My First Dataset',
+                        data: [300, 50, 100],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                    }]
+
+
+            };
+            const myChart2 = new Chart(
+                    document.getElementById('myChart2'),
+                    config2
+                    );
+
+
+        </script>
+
 
 
 

@@ -15,7 +15,9 @@
     background-size: cover;
     height: 100vh;
 };
-
+.dataTables_wrapper{
+    background-color: red
+}
 *{
   margin: 0;
   padding: 0;
@@ -25,6 +27,7 @@
 .scrolly{
       overflow-y: scroll !important;
 }
+
 .sidebar{
   position: fixed;
   left: 0;
@@ -271,3 +274,4 @@
 .bg-x{
     background-color:#1e1e2f;
 }
+

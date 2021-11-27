@@ -20,17 +20,7 @@ public class Controlador extends HttpServlet {
 
     UsuarioDAO dao = new UsuarioDAO();
     Usuario usr = new Usuario();
-    int r;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -41,48 +31,28 @@ public class Controlador extends HttpServlet {
 
             HttpSession session = request.getSession();
 
-            System.out.println("Ingresarrr");
-            String x = (String) session.getAttribute("login");
-            if (x == "true") {
-                System.out.println("TRUEEEE");
-                request.getRequestDispatcher("./vistas/admin.jsp").forward(request, response);
-                return;
-            }
-
             String usuario = request.getParameter("usuario");
             String password = request.getParameter("password");
-            usr.setUsuario(usuario);
-            usr.setPassword(password);
+            usr = dao.validar(usuario, password);
 
-            r = dao.validar(usr);
-            System.out.println(r);
+            if (usr.getIdCargo() != 0) {
+                session.setAttribute("login", usr);
+            }
 
-            if (r >= 1) {
+            if (session.getAttribute("login") != null) {
 
-                if (r == 1) {
+                Usuario activo = (Usuario) session.getAttribute("login");
+                if (activo.getIdCargo() != 0) {
 
-                    session.setAttribute("login", "true");
+                            request.getRequestDispatcher("./vistas/admin.jsp").forward(request, response);
 
-                    request.getRequestDispatcher("./vistas/admin.jsp").forward(request, response);
                 }
 
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-
             } else {
-                System.out.println("Error tipo empleado");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+                System.out.println("null");
+                request.getRequestDispatcher("./index.jsp").forward(request, response);
             }
-        } else if (accion.equals("aggEmpleado")) {
-           
-              
-               
 
-    
-        }else if (accion.equals("ver productos")) {
-           
-             request.getRequestDispatcher("./vistas/admin.jsp").forward(request, response);
-        
-             
         }
 
     }
@@ -99,12 +69,12 @@ public class Controlador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          String acceso="";
+        String acceso = "";
         String action = request.getParameter("accion");
-         if (action.equals("menuPrincipal")) {
-                request.getRequestDispatcher("./vistas/admin.jsp").forward(request, response);
-         }
-        
+        if (action.equals("menuPrincipal")) {
+            request.getRequestDispatcher("./vistas/admin.jsp").forward(request, response);
+        }
+
     }
 
     /**

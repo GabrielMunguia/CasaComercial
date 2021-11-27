@@ -3,6 +3,8 @@
     Created on : 10-04-2021, 03:05:28 PM
     Author     : GabrielMunguia
 --%>
+<%@page import="modelo.MetodoPago"%>
+<%@page import="modeloDAO.MetodoPagoDAO"%>
 <%@page import="modelo.Cliente"%>
 <%@page import="modeloDAO.ClienteDAO"%>
 <%@page import="modeloDAO.ClienteDAO"%>
@@ -47,10 +49,25 @@
                                 Monto:<br>
                                 <input class="form-control" type="text"
                                        name="txtMonto"><br>
-                                Fecha:<br>
-                                <input class="form-control"
-                                       type="datetime-local"
-                                       name="txtFecha"><br>
+                               
+                                <label for="inputPassword4" class="form-label">Metodo de pago</label>
+                                                <select id="metodoPago" class="form-select" name="metodoPago" required="">
+                                                    <%
+                                                        MetodoPagoDAO dao = new MetodoPagoDAO();
+                                                        List<MetodoPago> list = dao.listarMetodosPago();
+                                                        Iterator<MetodoPago> iter = list.iterator();
+                                                        MetodoPago m = null;
+                                                        while (iter.hasNext()) {
+                                                            m = iter.next();
+                                                    %>
+
+                                                    <option value="<%= m.getIdMetodoPago()%>"><%= m.getMetodo()%></option>
+                                                    <%}%>
+
+
+                                                </select>
+                                
+                                <br>
                                 <input class="btn btn-primary" type="submit"
                                        name="accion" value="Agregar">
                                 <a
@@ -68,6 +85,58 @@
             </div>
         </section>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+       
+   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+
+        let exito =<%=request.getAttribute("exito")%>
+        let pagado =<%=request.getAttribute("pagado")%>
+        let debe =<%=request.getAttribute("debe")%>
+         let factura =<%=request.getAttribute("factura")%>
+     
+        if (exito == false) {
+             if (pagado == true) {
+                  Swal.fire({
+                title: 'Error!',
+                text: 'El credito ya esta cancelado',
+                icon: 'error',
+                confirmButtonColor: 'red',
+                confirmButtonText: 'OK'
+            });
+                 
+             }else{
+                  Swal.fire({
+                title: 'Error!',
+                text: 'El pago excede el monto a deber : $'+debe,
+                icon: 'error',
+                confirmButtonColor: 'red',
+                confirmButtonText: 'OK'
+            });
+            
+            
+             }
+           
+
+        } else if (exito == true) {
+           
+            
+            if(factura==true){
+                Swal.fire({
+                icon: 'success',
+                title: 'Se registro el pago, y se emitio la factura',
+                showConfirmButton: true,
+                
+            })
+            }else{
+                 Swal.fire({
+                icon: 'success',
+                title: 'Se registro correctamente',
+                showConfirmButton: true,
+               
+            })
+            }
+        }
+        </script>
 
 
 

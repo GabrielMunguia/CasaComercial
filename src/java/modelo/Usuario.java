@@ -13,6 +13,17 @@ public class Usuario {
    
     String usuario;
     String password;
+    int idCargo;
+
+    public int getIdCargo() {
+        return idCargo;
+    }
+
+    public void setIdCargo(int idCargo) {
+        this.idCargo = idCargo;
+    }
+
+
 
   
 

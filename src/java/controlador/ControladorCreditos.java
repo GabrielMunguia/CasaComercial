@@ -13,13 +13,14 @@ import modelo.DetalleFactura;
 import modeloDAO.CreditoDAO;
 import modeloDAO.DetalleCreditoDAO;
 import modeloDAO.DetalleFacturaDAO;
+import modeloDAO.PagoDAO;
 import modeloDAO.ProductoDAO;
 
 public class ControladorCreditos extends HttpServlet {
     
     String add = "./vistas/agregarCredito.jsp";
     String listar = "./vistas/listarCreditos.jsp";
-    String detalleFactura = "./vistas/detalleFactura.jsp";
+    String detalleCredito = "./vistas/detalleCredito.jsp";
     CreditoDAO dao = new CreditoDAO();
     Credito f = new Credito();
     
@@ -43,14 +44,15 @@ public class ControladorCreditos extends HttpServlet {
         } else if (action.equals("eliminar")) {
             int id = Integer.parseInt(request.getParameter("id"));        
             DetalleCreditoDAO d = new DetalleCreditoDAO();
+            PagoDAO dp=new PagoDAO();
+            dp.eliminarTodosLosPagosCredito(id);
             d.eliminar(id);
            dao.eliminarCredito(id);
           acceso = listar;
 
-        } else if (action.equals("detalleFactura")) {
-//              request.setAttribute("idFactura",request.getParameter("id"));
-//            acceso=detalleFactura;
-//        
+        } else if (action.equals("detalleCredito")) {
+              request.setAttribute("idFactura",request.getParameter("id"));
+            acceso=detalleCredito;        
         }
         
         RequestDispatcher vista = request.getRequestDispatcher(acceso);

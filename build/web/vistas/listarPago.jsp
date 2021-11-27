@@ -1,20 +1,16 @@
-<%-- 
-    Document   : index
-    Created on : 10-04-2021, 03:05:28 PM
-    Author     : GabrielMunguia
---%>
-<%@page import="modelo.Pago"%>
 <%@page import="modeloDAO.PagoDAO"%>
-<%@page import="modelo.Cliente"%>
-<%@page import="modeloDAO.ProductoDAO"%>
-<% String accion = request.getParameter("accion");%>
+<%@page import="modelo.Pago"%>
+<%@page import="modeloDAO.MetodoPagoDAO"%>
+<%@page import="modelo.Factura"%>
+<%@page import="modeloDAO.FacturaDAO"%>
+<%@page import="modeloDAO.EmpleadoDAO"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="modelo.Empleado"%>
+<%@page import="modelo.Empleado"%>
 <%@page import="java.util.List"%>
-<%@page import="modelo.Producto"%>
-<%@page import="modeloDAO.ProductoDAO"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="modeloDAO.EmpleadoDAO"%>
 <!DOCTYPE html>
-<!DOCTYPE html>
+
 <html lang="es">
     <head>
         <meta charset="UTF-8">
@@ -26,41 +22,46 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://kit.fontawesome.com/7fc2bb9c0c.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.3/datatables.min.css"/>
 
     </head>
     <body>
         <div id="dash" class="sidebar open overflow-scroll">
 
         </div>
-        <section class="home-section bg-white">
+        <section class="home-section bg-white ">
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center px-5">
+                <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-11">
+                    <h1 class="m-3"> Lista de Pagos</h1>
 
 
-                    <div class=" w-100">
-                        <h1>Pagos</h1>
-                        <a class="btn btn-success" href="ControladorPago?accion=add">Agregar Nuevo</a>
-                        <br>
-                        <br>
-                        <table class="table table-striped table-hover  table-bordered">
+                    <div class="col-12">
+                        <table id="tabla"  class="p-2 mt-5 table table-striped table-bordered  col-12   "  style="width:100%">
                             <thead>
-                                <tr>
+                                <tr class="bg-dark text-white">
                                     <th class="text-center">ID PAGO</th>
-                                    <th class="text-center">ID FACTURA</th>
+                                    <th class="text-center">ID CREDITO</th>
                                     <th class="text-center">MONTO PAGADO</th>
                                     <th class="text-center">FECHA/HORA</th>
-                                    <th class="text-center">ACCIONES</th>
+                                    <th class="text-center">METODO PAGO</th>
+                                    <th class="text-center noExport">ACCIONES</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <%
                                     PagoDAO dao = new PagoDAO();
-                                    List<Pago> list = dao.listarPago();
+                                    String id = (String) request.getAttribute("idCredito");
+                                    System.out.println("id = " + id);
+
+                                    List<Pago> list = dao.listarPagosCredito(Integer.parseInt(id));
                                     Iterator<Pago> iter = list.iterator();
                                     Pago p = null;
+                                    MetodoPagoDAO daoPago = new MetodoPagoDAO();
                                     while (iter.hasNext()) {
                                         p = iter.next();
+                                        System.out.println(p.getIdPago());
                                 %>
 
                                 <tr>
@@ -68,9 +69,12 @@
                                     <td class="text-center"><%= p.getIdFactura()%></td>
                                     <td class="text-center"><%= p.getMontoPagado()%></td>
                                     <td><%= p.getFechaHora()%></td>
-                                    <td class="text-center">
-                                        <a class="btn btn-warning" href="ControladorPago?accion=editar&id=<%= p.getIdPago()%>">Editar</a>
-                                        <a class="btn btn-danger" href="ControladorPago?accion=eliminar&id=<%= p.getIdPago()%>">Eliminar</a>
+                                    <td><%= daoPago.getNombreMetodoPago(p.getIdmetodoPago())%></td>
+                                    <td class="text-center noExport">
+
+                                        <button class="btn btn-danger mx-2 btnEliminar">Elminar </button>
+                                        <a  class="d-none"  href="ControladorPago?accion=eliminarPago&idPago=<%= p.getIdPago()%>&idCredito=<%=id%>">Eliminar</a>
+                                      
                                     </td>
                                 </tr>
                                 <%}%>
@@ -81,20 +85,88 @@
 
 
 
+
+
+
+
                 </div>
+        </section>
+        <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+
+        <script type="text/javascript" src="" crossorigin="anonymous"></script>
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script  src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+        <!-- Para usar los botones -->
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+
+
+        <!-- Para los estilos en Excel     -->
+        <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.templates.min.js"></script>
+        <script type="text/javascript" src="./scripts/tablas.js" />
+
+
+        <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script> 
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const botonesEliminar = document.querySelectorAll('.btnEliminar');
+                for (btn of  botonesEliminar) {
+                    btn.addEventListener('click', (e) => {
+                        const link = e.target.parentNode.querySelector('.d-none');
+                        Swal.fire({
+                            title: 'Estas seguro de eliminarlo?',
+                            text: "Este cambio eliminara por completo la factura",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, borralo!'
+
+                        }).then((result) => {
+                            console.log(result)
+                            if (result.isConfirmed) {
+                                Swal.fire(
+                                        'Eliminado!',
+                                        'La factura se elimino correctamente',
+                                        'success'
+                                        ).then((result) => {
+
+
+                                    link.click();
+
+
+                                })
+
+
+                            }
+
+
+                        })
+
+
+
+
+                    });
+                }
+
+
+            });
 
 
 
 
 
-
-            </div>
-        </div>
-    </section>
-    <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+        </script>
 
 
 
-
-</body>
+    </body>
 </html>

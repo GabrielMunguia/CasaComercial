@@ -1,4 +1,4 @@
-export const aside=` 
+export const vendedorDashBoard=` 
 
     <div class="logo-details">
         <a href="Controlador?accion=menuPrincipal"  class="d-flex  justify-content-center align-items-center text-decoration-none">
@@ -15,20 +15,7 @@ export const aside=`
          <span class="tooltip">Search</span>
       </li>
 
-   <li>
-        <a href="ControladorEmpleados?accion=addEmpleado">
-          <i class='bx bx-grid-alt'></i>
-          <span class="links_name">Agregar Empleados</span>
-        </a>
-         <span class="tooltip">Agregar Empleados</span>
-      </li>
-   <li>
-        <a href="ControladorEmpleados?accion=listarEmpleado">
-          <i class='bx bx-grid-alt'></i>
-          <span class="links_name">Ver Empleados</span>
-        </a>
-         <span class="tooltip">Ver Empleados</span>
-      </li>
+  
       <li>
         <a href="ControladorCliente?accion=listarCliente"  name='accion' value='listarCliente'>
           <i class='bx bx-grid-alt'></i>
@@ -36,13 +23,7 @@ export const aside=`
         </a>
          <span class="tooltip">Ver Clientes</span>
       </li>
-      <li>
-       <a  href="ControladorCliente?accion=add"  name='accion' value='add' >
-         <i class='bx bx-user' ></i>
-         <span class="links_name">Agregar Cliente</span>
-       </a>
-       <span class="tooltip">Agregar Cliente</span>
-     </li>
+      
    <li>
        <a href="ControladorCreditos?accion=addCredito">
          <i class='bx bx-folder' ></i>
@@ -93,13 +74,7 @@ export const aside=`
        </a>
        <span class="tooltip">Ver productos</span>
      </li>
-     <li>
-       <a href="#">
-         <i class='bx bx-cog' ></i>
-         <span class="links_name">Agregar Producto</span>
-       </a>
-       <span class="tooltip">Agregar Producto</span>
-     </li>
+     
 
       <li>
        <a href="#">

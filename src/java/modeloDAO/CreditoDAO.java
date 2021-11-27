@@ -45,6 +45,7 @@ public class CreditoDAO implements CRUDCredito {
                 c.setIdEMpleado(rs.getInt("idEmpleado"));
                 c.setFecha(rs.getString("fecha"));
                 c.setMontoCredito(rs.getDouble("montoCredito"));
+                
 
                 list.add(c);
             }
@@ -56,23 +57,28 @@ public class CreditoDAO implements CRUDCredito {
 
     @Override
     public Credito list(int id) {
+         Credito c = new Credito();
           String sql = "select * from Credito where idCredito="+id;
         try{
+            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             
             while(rs.next()){
-                Credito c = new Credito();
+              
                 c.setIdCredito(rs.getInt("idCredito"));
                 c.setIdCLiente(rs.getInt("idCliente"));
                 c.setIdEMpleado(rs.getInt("idEmpleado"));
                 c.setFecha(rs.getString("fecha"));
                 c.setMontoCredito(rs.getDouble("montoCredito"));
+            
             }
             
-        }catch(Exception e){            
+        }catch(Exception e){     
+            System.out.println("e = " + e);
         }
+        
         return c;
     }
 
