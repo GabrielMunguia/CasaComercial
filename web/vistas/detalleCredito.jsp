@@ -219,7 +219,7 @@
           <hr>
           <a  id="btnImprimir" class="btn btn-outline-primary btn-lg no-print d-print-none">Imprimir</a>
           &nbsp;&nbsp;&nbsp;
-          <a href="#" class="btn btn-outline-dark btn-lg no-print d-print-none">Descargar pdf</a>
+         
 
         </div>
       </div>

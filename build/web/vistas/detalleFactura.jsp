@@ -190,9 +190,9 @@
       <div class="row pad-top-botm">
         <div class="col-lg-12 col-md-12 col-sm-12">
           <hr>
-          <a  id="btnImprimir" class="btn btn-outline-primary btn-lg">Imprimir</a>
+          <a  id="btnImprimir" class="btn btn-outline-primary btn-lg d-print-none">Imprimir</a>
           &nbsp;&nbsp;&nbsp;
-          <a href="#" class="btn btn-outline-dark btn-lg">Descargar pdf</a>
+          
 
         </div>
       </div>

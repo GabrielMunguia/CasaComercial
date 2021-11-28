@@ -102,7 +102,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">Telefono</label>
-                                <input type="number" class="form-control" name="txtTel" value="<%=em.getTel()%>" required>
+                                <input type="text" class="form-control" name="txtTel" value="<%=em.getTel()%>" required>
                             </div>
 
                             <div class="col-md-6">
