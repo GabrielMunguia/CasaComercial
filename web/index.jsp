@@ -8,11 +8,7 @@
 <%@page session="true"%>
 <% 
 
-//  HttpSession s= request.getSession();
-//  String x=  (String)s.getAttribute("login");
-//  if(x=="true"){
-//        response.sendRedirect("Controlador");
-//  }else{
+
       out.println("<!DOCTYPE html>");
       out.println(" <html lang='es'> ");
       out.println(" <meta charset='UTF-8'>");

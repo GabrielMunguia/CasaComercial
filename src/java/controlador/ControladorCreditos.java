@@ -7,9 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.Credito;
 import modelo.DetalleCredito;
 import modelo.DetalleFactura;
+import modelo.Usuario;
 import modeloDAO.CreditoDAO;
 import modeloDAO.DetalleCreditoDAO;
 import modeloDAO.DetalleFacturaDAO;
@@ -23,18 +25,20 @@ public class ControladorCreditos extends HttpServlet {
     String detalleCredito = "./vistas/detalleCredito.jsp";
     CreditoDAO dao = new CreditoDAO();
     Credito f = new Credito();
+       String login="./index.jsp";
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String acceso = "";
-        class lstProd {
-            
-            int id;
-            int cantidad;
-            
-        }
-        String action = request.getParameter("accion");
+        HttpSession session = request.getSession();
+          Usuario usr = (Usuario) session.getAttribute("login");
+           if(usr==null){
+              System.out.println("NULLLLLLLLLLLLLLLLL");
+              acceso=login;
+              
+          }else{
+                String action = request.getParameter("accion");
         if (action.equals("listar")) {
             
             acceso = listar;
@@ -54,6 +58,8 @@ public class ControladorCreditos extends HttpServlet {
               request.setAttribute("idFactura",request.getParameter("id"));
             acceso=detalleCredito;        
         }
+           }
+       
         
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request, response);

@@ -1,4 +1,3 @@
-
 package modeloDAO;
 
 import modelo.Cargo;
@@ -14,24 +13,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Conexion;
 
+public class EmpleadoDAO implements CRUDempleado {
 
-public class EmpleadoDAO implements CRUDempleado{
-    Conexion cn=new Conexion();
+    Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-    Empleado e=new Empleado();
+    Empleado e = new Empleado();
 
     @Override
     public List listarEmpleado() {
-        ArrayList<Empleado>list=new ArrayList<>();
-        String sql="select * from empleado";
-        try{
+        ArrayList<Empleado> list = new ArrayList<>();
+        String sql = "select * from empleado";
+        try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Empleado em = new Empleado();
                 em.setIdEmp(rs.getInt("idEmpleado"));
                 em.setNom(rs.getString("nombre"));
@@ -47,9 +46,9 @@ public class EmpleadoDAO implements CRUDempleado{
                 list.add(em);
             }
         } catch (SQLException ex) {
-          
+
         }
-        
+
         return list;
     }
 
@@ -60,16 +59,16 @@ public class EmpleadoDAO implements CRUDempleado{
 
     @Override
     public Empleado list(int idEmp) {
-   ArrayList<Empleado>list=new ArrayList<>();
-        String sql="select * from empleado where idEmpleado="+idEmp;
-          Empleado em = new Empleado();
-        try{
+        ArrayList<Empleado> list = new ArrayList<>();
+        String sql = "select * from empleado where idEmpleado=" + idEmp;
+        Empleado em = new Empleado();
+        try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-           
-            while(rs.next()){
-              
+
+            while (rs.next()) {
+
                 em.setIdEmp(rs.getInt("idEmpleado"));
                 em.setNom(rs.getString("nombre"));
                 em.setDui(rs.getString("DUI"));
@@ -85,71 +84,76 @@ public class EmpleadoDAO implements CRUDempleado{
         } catch (Exception e) {
             System.out.println("EL ERROR = " + e);
         }
-        
+
         return em;
     }
 
     @Override
     public boolean addEmpleado(Empleado emp) {
-        
-        String sql = "insert into empleado(nombre, DUI, NIT, genero, fechaNacimiento, telefono, direccion, usuario, password, idCargo)values('"+emp.getNom()+"','"+emp.getDui()+"', '"+emp.getNit()+"','"+emp.getGen()+"','"+emp.getFechNa()+"','"+emp.getTel()+"','"+emp.getDir()+"','"+emp.getUsu()+"','"+emp.getPas()+"','"+emp.getIdCa()+"')";
-        try{
+
+        String sql = "insert into empleado(nombre, DUI, NIT, genero, fechaNacimiento, telefono, direccion, usuario, password, idCargo)values('" + emp.getNom() + "','" + emp.getDui() + "', '" + emp.getNit() + "','" + emp.getGen() + "','" + emp.getFechNa() + "','" + emp.getTel() + "','" + emp.getDir() + "','" + emp.getUsu() + "','" + emp.getPas() + "','" + emp.getIdCa() + "')";
+        try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-        }catch(Exception e){
-            System.out.println(" e = " +  e);
+            return true;
+        } catch (Exception e) {
+            System.out.println(" e = " + e);
         }
         return false;
     }
 
     @Override
     public boolean editEmpleado(Empleado em) {
-        String sql = "update empleado set nombre='"+em.getNom()+"', DUI='"+em.getDui()+"', NIT='"+em.getNit()+"', genero='"+em.getGen()+"', fechaNacimiento='"+em.getFechNa()+"', telefono='"+em.getTel()+"', direccion='"+em.getDir()+"', usuario='"+em.getUsu()+"', password='"+em.getPas()+"', idCargo='"+em.getIdCa()+"'where idEmpleado="+em.getIdEmp();
-        try{
+        String sql = "update empleado set nombre='" + em.getNom() + "', DUI='" + em.getDui() + "', NIT='" + em.getNit() + "', genero='" + em.getGen() + "', fechaNacimiento='" + em.getFechNa() + "', telefono='" + em.getTel() + "', direccion='" + em.getDir() + "', usuario='" + em.getUsu() + "', password='" + em.getPas() + "', idCargo='" + em.getIdCa() + "'where idEmpleado=" + em.getIdEmp();
+        try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-        }catch(Exception e){
+            return true;
+        } catch (Exception e) {
             System.out.println("Erro al actualizar el empleado ************************************************************************");
         }
         return false;
-    }      
+    }
 
     @Override
     public boolean eliminarEmpleado(int idEmp) {
-            String sql = "delete from empleado where idEmpleado="+idEmp;
-            try {
-                con = cn.getConnection();
-                ps = con.prepareStatement(sql);
-                ps.executeUpdate();
-        } catch (Exception e) {
+        String sql = "delete from empleado where idEmpleado=" + idEmp;
+        try {
+           
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error = " + e);
         }
-            return false;
+        return false;
+
     }
+
     public List listarCargo() {
-        ArrayList<Cargo>list=new ArrayList<>();
-        String sql="select * from cargo";
-        try{
+        ArrayList<Cargo> list = new ArrayList<>();
+        String sql = "select * from cargo";
+        try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Cargo ca = new Cargo();
                 ca.setIdCa(rs.getInt("idCargo"));
                 ca.setCargo(rs.getString("cargo"));
                 ca.setDescri(rs.getString("descripcion"));
-                
+
                 list.add(ca);
             }
         } catch (SQLException ex) {
             Logger.getLogger(EmpleadoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return list;
     }
-    
-}
 
-   
+}

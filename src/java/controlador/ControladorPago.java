@@ -9,7 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.Credito;
+import modelo.Usuario;
 import modeloDAO.CreditoDAO;
 import modeloDAO.PagoDAO;
 
@@ -22,7 +24,7 @@ public class ControladorPago extends HttpServlet {
     Pago p = new Pago();
     PagoDAO dao = new PagoDAO();
     int id;
-
+ String login = "./index.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -45,7 +47,14 @@ public class ControladorPago extends HttpServlet {
             throws ServletException, IOException {
         String acceso = "";
         String action = request.getParameter("accion");
-        if (action.equalsIgnoreCase("Consultar")) {
+        
+         HttpSession session = request.getSession();
+        Usuario usr = (Usuario) session.getAttribute("login");
+        if (usr == null) {
+            System.out.println("NULLLLLLLLLLLLLLLLL");
+            acceso = login;
+
+        } else {if (action.equalsIgnoreCase("Consultar")) {
            String id = request.getParameter("idCredito");
             CreditoDAO cd= new CreditoDAO();
             Credito c = cd.list(Integer.parseInt(id));
@@ -133,7 +142,8 @@ public class ControladorPago extends HttpServlet {
             request.setAttribute("idCredito",idCredito);
            
             acceso = listar;
-        }
+        }}
+        
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request, response);
     }

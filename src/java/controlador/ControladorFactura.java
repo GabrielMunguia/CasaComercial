@@ -12,8 +12,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modelo.DetalleFactura;
 import modelo.Factura;
+import modelo.Usuario;
 import modeloDAO.DetalleFacturaDAO;
 import modeloDAO.FacturaDAO;
 
@@ -25,9 +27,10 @@ public class ControladorFactura extends HttpServlet {
 
     String add = "./vistas/agregarVenta.jsp";
     String listar = "./vistas/listarFactura.jsp";
-    String detalleFactura="./vistas/detalleFactura.jsp";
+    String detalleFactura = "./vistas/detalleFactura.jsp";
     Factura f = new Factura();
     FacturaDAO dao = new FacturaDAO();
+    String login = "./index.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,24 +60,32 @@ public class ControladorFactura extends HttpServlet {
             int cantidad;
 
         }
-        String action = request.getParameter("accion");
-        if (action.equals("listarFacturas")) {
+        HttpSession session = request.getSession();
+        Usuario usr = (Usuario) session.getAttribute("login");
+        if (usr == null) {
+            System.out.println("NULLLLLLLLLLLLLLLLL");
+            acceso = login;
 
-            acceso = listar;
-        } else if (action.equals("addVenta")) {
-            acceso = add;
+        } else {
+            String action = request.getParameter("accion");
+            if (action.equals("listarFacturas")) {
 
-        } else if (action.equals("eliminar")) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            DetalleFacturaDAO daoDetalleFactura = new DetalleFacturaDAO();
-            daoDetalleFactura.eliminar(id);
-            dao.eliminar(id);
-            acceso = listar;
+                acceso = listar;
+            } else if (action.equals("addVenta")) {
+                acceso = add;
 
-        }else if (action.equals("detalleFactura")) {
-              request.setAttribute("idFactura",request.getParameter("id"));
-            acceso=detalleFactura;
-        
+            } else if (action.equals("eliminar")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                DetalleFacturaDAO daoDetalleFactura = new DetalleFacturaDAO();
+                daoDetalleFactura.eliminar(id);
+                dao.eliminar(id);
+                acceso = listar;
+
+            } else if (action.equals("detalleFactura")) {
+                request.setAttribute("idFactura", request.getParameter("id"));
+                acceso = detalleFactura;
+
+            }
         }
 
         RequestDispatcher vista = request.getRequestDispatcher(acceso);

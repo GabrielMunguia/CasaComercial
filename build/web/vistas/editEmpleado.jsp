@@ -135,7 +135,7 @@
             </div>
         </section>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             
             document.querySelector("#cargo").selectedIndex=<%=em.getIdCa()%>;
@@ -144,6 +144,8 @@
             }else{
                  document.querySelector("#genero").selectedIndex=2;
             }
+            
+              
         
         
 

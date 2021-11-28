@@ -9,12 +9,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modelo.Usuario;
 
 //@WebServlet(name = "ControladorCliente", urlPatterns = {"/ControladorCliente"})
 public class ControladorCliente extends HttpServlet {
     String listar = "./vistas/listarCliente.jsp";
     String add = "./vistas/agregarCliente.jsp";
     String edit = "./vistas/editarCliente.jsp";
+    String login="./index.jsp";
     Cliente cli = new Cliente();
     ClienteDAO dao = new ClienteDAO();
     int id;
@@ -22,24 +25,25 @@ public class ControladorCliente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Controlador Cliente</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControladorCliente at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
+        
+        
+        
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String acceso="";
+         response.setContentType("text/html;charset=UTF-8");
+          HttpSession session = request.getSession();
+          String acceso="";
+          Usuario usr = (Usuario) session.getAttribute("login");
+          if(usr==null){
+              System.out.println("NULLLLLLLLLLLLLLLLL");
+              acceso=login;
+              
+          }else{
+               
         String action = request.getParameter("accion");
         if(action.equalsIgnoreCase("listarCliente")){
             acceso=listar;          
@@ -87,8 +91,13 @@ public class ControladorCliente extends HttpServlet {
             dao.eliminarCliente(id);
             acceso=listar;
         }
-        RequestDispatcher vista = request.getRequestDispatcher(acceso);
+       
+          }
+           RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request, response);
+       
+      
+       
     }
 
     @Override

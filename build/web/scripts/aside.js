@@ -102,7 +102,7 @@ export const aside=`
      </li>
 
       <li>
-       <a href="#">
+       <a href="Controlador?accion=salir">
          <i class='bx bx-cog' ></i>
          <span class="links_name">Cerrar sesion</span>
        </a>

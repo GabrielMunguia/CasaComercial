@@ -73,6 +73,15 @@ public class Controlador extends HttpServlet {
         String action = request.getParameter("accion");
         if (action.equals("menuPrincipal")) {
             request.getRequestDispatcher("./vistas/admin.jsp").forward(request, response);
+        }else if(action.equals("salir")){
+             System.out.println("SALIRRRRRRRRR");
+            HttpSession session = request.getSession();
+             session.invalidate();
+        
+             
+            
+             request.getRequestDispatcher("./index.jsp").forward(request, response);
+            
         }
 
     }

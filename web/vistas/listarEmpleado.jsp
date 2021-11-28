@@ -72,8 +72,8 @@
                                     <td class="text-center noExport"><%= em.getIdCa()%></td>
                                     <td>
                                         <a class="btn btn-warning" href="ControladorEmpleados?accion=EditarEmpleado&id=<%= em.getIdEmp()%>">Editar</a>
-
-                                        <a class="btn btn-danger" href="ControladorEmpleados?accion=eliminar&id=<%= em.getIdEmp()%>">Eliminar</a>
+                                        <a  class="d-none" href="ControladorEmpleados?accion=eliminar&id=<%= em.getIdEmp()%>">Eliminar</a>
+                                        <a class="btn btn-danger btnEliminar">Eliminar</a>
                                     </td>
                                 </tr>
                                 <%}%>
@@ -90,6 +90,7 @@
 
                 </div>
         </section>
+                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
 
         <script type="text/javascript" src="" crossorigin="anonymous"></script>
@@ -99,19 +100,100 @@
         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
         <script  src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
         <!-- Para usar los botones -->
-        <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+
 
 
         <!-- Para los estilos en Excel     -->
-        <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.templates.min.js"></script>
         <script type="text/javascript" src="./scripts/tablas.js" />
 
 
         <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script> 
+        <script>
 
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const botonesEliminar = document.querySelectorAll('.btnEliminar');
+                for (btn of  botonesEliminar) {
+                    btn.addEventListener('click', (e) => {
+                        const link = e.target.parentNode.querySelector('.d-none');
+                        Swal.fire({
+                            title: 'Estas seguro de eliminarlo?',
+                            text: "Se eliminara el empleado",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, borralo!'
+
+                        }).then((result) => {
+                            console.log(result)
+                            if (result.isConfirmed) {
+                               
+
+
+                                    link.click();
+
+
+                               
+
+
+                            }
+
+
+                        })
+
+
+
+
+                    });
+                }
+
+
+            });
+            
+            let error =<%=request.getAttribute("exito")%>
+            let elim =<%=request.getAttribute("eliminado")%>
+        console.log(error);
+        if (error === false) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Porfavor verifique los datos',
+                icon: 'error',
+                confirmButtonColor: 'red',
+                confirmButtonText: 'OK'
+            });
+
+        } else if (error == true) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Se actualizo correctamente',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+         if (elim === false) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'No se puede eliminar el empleado por que se necesita mantener su registro',
+                icon: 'error',
+                confirmButtonColor: 'red',
+                confirmButtonText: 'OK'
+            });
+
+        } else if (elim == true) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Se elimino correctamente',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
+
+
+
+
+
+        </script>
 
 
 
