@@ -92,7 +92,7 @@ public class ControladorCreditos extends HttpServlet {
                     
                     if (i % 2 == 0) {
                         f.setIdPRoducto(Integer.parseInt(res[i]));
-                        f.setPrecio(pd.obtenerPrecio(Integer.parseInt(res[i])));
+                        f.setPrecio(pd.obtenerPrecioCredito(Integer.parseInt(res[i])));
                         
                         
                     } else {

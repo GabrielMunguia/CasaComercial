@@ -3,18 +3,23 @@
 //Agregando aside 
 import {aside} from './aside.js';
 import {vendedorDashBoard} from './vendedorDashBoard.js';
+import {adminDashBoard} from'./adminDashBoard.js';
 
 document.addEventListener("DOMContentLoaded",()=>{
-  const div=document.querySelector("#dash");
+  const gerente=document.querySelector("#gerente");
   const vendedor=document.querySelector("#vendedor");
-  console.log(div);
+  const admin=document.querySelector("#admin");
+
   console.log(vendedor)
-  if(div){
+  if(gerente){
       
-      div.innerHTML=aside;
+      gerente.innerHTML=aside;
   }
   if(vendedor){
        vendedor.innerHTML=vendedorDashBoard;
+  }
+  if(admin){
+       admin.innerHTML=adminDashBoard;
   }
   
   
@@ -28,11 +33,11 @@ document.addEventListener("DOMContentLoaded",()=>{
     menuBtnChange();
   });
 
-  searchBtn.addEventListener("click", ()=>{ 
-    sidebar.classList.toggle("open");
-    
-    menuBtnChange(); 
-  });
+//  searchBtn.addEventListener("click", ()=>{ 
+//    sidebar.classList.toggle("open");
+//    
+//    menuBtnChange(); 
+//  });
 
  
   function menuBtnChange() {

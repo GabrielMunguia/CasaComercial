@@ -1,3 +1,4 @@
+<%@page import="modelo.Usuario"%>
 <%@page import="modelo.Credito"%>
 <%@page import="modelo.Credito"%>
 <%@page import="modeloDAO.CreditoDAO"%>
@@ -27,7 +28,33 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+       <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
@@ -35,7 +62,7 @@
             <div>
                 <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-11">
                     <h1 class="m-3"> Lista de Creditos</h1>
-
+                    
                     <div class="col-12">
                         <table id="tabla"  class="p-2 mt-5 table table-striped table-bordered  col-12   "  style="width:100%">
                             <thead>
@@ -46,7 +73,9 @@
                                     <th class="text-center">Fecha</th>
 
                                     <th class="text-center">Monto Credito</th>
+                                      
                                     <th class="text-center noExport">Acciones</th>
+                                           
 
                                 </tr>
                             </thead>
@@ -68,11 +97,15 @@
                                     <td class="text-center"><%= f.getIdEMpleado()%></td>
                                     <td class="text-center"><%= f.getFecha()%></td>
                                     <td class="text-center">$<%= f.getMontoCredito()%></td>
+                                    
                                     <td class="d-flex  justify-content-center align-items-center noExport">
+                                         <%if(usr.getIdCargo()==2){%>
                                         <button class="btn btn-danger mx-2 btnEliminar">Elminar </button>
                                         <a  class="d-none" href="ControladorCreditos?accion=eliminar&id=<%=f.getIdCredito()%>">Eliminar</a>
+                                        <%}%>
                                         <a class="btn btn-info" href="ControladorCreditos?accion=detalleCredito&id=<%= f.getIdCredito()%>">Ver detalle</a>
                                     </td>
+                                    
                                 </tr>
                                 <%}%>
                             </tbody>
@@ -88,7 +121,7 @@
 
                 </div>
         </section>
-                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
 
         <script type="text/javascript" src="" crossorigin="anonymous"></script>
@@ -97,13 +130,26 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
         <script  src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
-       
+        <!-- Para usar los botones -->
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 
 
         <!-- Para los estilos en Excel     -->
-     
+        <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.templates.min.js"></script>
         <script type="text/javascript" src="./scripts/tablas.js" />
-       
+
+
+        <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script> 
+
+
+
+
+
+        <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script> 
+
 
 
 

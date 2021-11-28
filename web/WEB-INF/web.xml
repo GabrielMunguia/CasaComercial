@@ -24,6 +24,10 @@
         <servlet-name>ControladorCreditos</servlet-name>
         <servlet-class>controlador.ControladorCreditos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorProducto</servlet-name>
+        <servlet-class>controlador.ControladorProducto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>ControladorCreditos</servlet-name>
         <url-pattern>/ControladorCreditos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorProducto</servlet-name>
+        <url-pattern>/ControladorProducto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

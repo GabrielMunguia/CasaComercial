@@ -1,3 +1,4 @@
+<%@page import="modelo.Usuario"%>
 <%@page import="modeloDAO.PagoDAO"%>
 <%@page import="modelo.Pago"%>
 <%@page import="modeloDAO.MetodoPagoDAO"%>
@@ -27,7 +28,33 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+     <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
@@ -46,7 +73,9 @@
                                     <th class="text-center">MONTO PAGADO</th>
                                     <th class="text-center">FECHA/HORA</th>
                                     <th class="text-center">METODO PAGO</th>
+                                     <%if (usr.getIdCargo() == 2) { %>
                                     <th class="text-center noExport">ACCIONES</th>
+                                    <% } %>
                                 </tr>
                             </thead>
                             <tbody>
@@ -70,12 +99,14 @@
                                     <td class="text-center"><%= p.getMontoPagado()%></td>
                                     <td><%= p.getFechaHora()%></td>
                                     <td><%= daoPago.getNombreMetodoPago(p.getIdmetodoPago())%></td>
+                                    <%if (usr.getIdCargo() == 2) { %>
                                     <td class="text-center noExport">
 
                                         <button class="btn btn-danger mx-2 btnEliminar">Elminar </button>
                                         <a  class="d-none"  href="ControladorPago?accion=eliminarPago&idPago=<%= p.getIdPago()%>&idCredito=<%=id%>">Eliminar</a>
                                       
                                     </td>
+                                    <% } %>
                                 </tr>
                                 <%}%>
                             </tbody>

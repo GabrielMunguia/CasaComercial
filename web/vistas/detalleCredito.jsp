@@ -1,3 +1,4 @@
+<%@page import="modelo.Usuario"%>
 <%@page import="modeloDAO.EmpleadoDAO"%>
 <%@page import="modelo.Empleado"%>
 <%@page import="modeloDAO.PagoDAO"%>
@@ -36,7 +37,33 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+      <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">

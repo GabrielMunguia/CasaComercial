@@ -4,6 +4,7 @@
     Author     : HP
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="modelo.Cargo"%>
 <%@page import="java.util.List"%>
@@ -25,7 +26,33 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+       <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
@@ -46,11 +73,11 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">DUI</label>
-                                <input type="number" class="form-control" name="txtDui" required>
+                                <input type="text" class="form-control" name="txtDui" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">NIT</label>
-                                <input type="number" class="form-control" name="txtNit" required>
+                                <input type="text" class="form-control" name="txtNit" required>
                             </div>
 
                             <div class="col-md-6">
@@ -75,7 +102,7 @@
 
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">Direccion</label>
-                                <textarea class="form-control" id="floatingTextarea" name="txtDir"></textarea>
+                                <textarea class="form-control" id="floatingTextarea" required name="txtDir"></textarea>
 
                             </div>
 

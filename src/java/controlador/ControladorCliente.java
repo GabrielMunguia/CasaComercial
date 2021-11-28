@@ -60,8 +60,13 @@ public class ControladorCliente extends HttpServlet {
             cli.setNIT(nit);
             cli.setDireccion(dir);
             cli.setTelefono(tel);
-            dao.addCliente(cli);
-            acceso=listar;
+           boolean exito=dao.addCliente(cli);
+           if (exito) {
+                     request.setAttribute("exito", "true");
+                } else {
+                     request.setAttribute("exito", "false");
+                }
+            acceso=add;
         }
         
         // REVISAR
@@ -82,13 +87,23 @@ public class ControladorCliente extends HttpServlet {
             cli.setNIT(nit);
             cli.setDireccion(dir);
             cli.setTelefono(tel);
-            dao.editCliente(cli);
+            boolean exito=dao.editCliente(cli);
+             if (exito) {
+                     request.setAttribute("exito", "true");
+                } else {
+                     request.setAttribute("exito", "false");
+                }
             acceso=listar;
         
         }else if(action.equalsIgnoreCase("eliminar")){
             id=Integer.parseInt(request.getParameter("id"));
             cli.setIdCliente(id);
-            dao.eliminarCliente(id);
+            boolean exito=dao.eliminarCliente(id);
+            if (exito) {
+                    request.setAttribute("eliminado", "true");
+                } else {
+                    request.setAttribute("eliminado", "false");
+                }
             acceso=listar;
         }
        

@@ -7,6 +7,7 @@ import modelo.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Usuario;
@@ -73,7 +74,9 @@ public class ClienteDAO implements ClienteCRUD{
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
-        }catch(Exception e){
+            return true;
+        }catch(SQLException e){
+            System.out.println("e = " + e);
         }
      return false;   
     }
@@ -85,7 +88,9 @@ public class ClienteDAO implements ClienteCRUD{
             con = cn.getConnection();
             ps =con.prepareStatement(sql);
             ps.executeUpdate();
-        }catch(Exception e){
+            return true;
+        }catch(SQLException e){
+            System.out.println("e = " + e);
         }
         return false;
     }
@@ -97,7 +102,9 @@ public class ClienteDAO implements ClienteCRUD{
             con=cn.getConnection();
             ps=con.prepareStatement(sql);
             ps.executeUpdate();
-        }catch(Exception e){
+            return true;
+        }catch(SQLException e){
+            System.out.println("e = " + e);
         }
         return false;
     } 

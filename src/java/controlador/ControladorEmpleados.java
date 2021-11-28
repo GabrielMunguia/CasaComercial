@@ -91,9 +91,9 @@ public class ControladorEmpleados extends HttpServlet {
                 em.setIdCa(car);
                 boolean exito = dao.addEmpleado(em);
                 if (exito) {
-                     request.setAttribute("exito", "true");
+                    request.setAttribute("exito", "true");
                 } else {
-                     request.setAttribute("exito", "false");
+                    request.setAttribute("exito", "false");
                 }
                 acceso = add;
             } else if (action.equalsIgnoreCase("editar")) {
@@ -127,21 +127,21 @@ public class ControladorEmpleados extends HttpServlet {
                 em.setUsu(usu);
                 em.setPas(pas);
                 em.setIdCa(car);
-              boolean exito= dao.editEmpleado(em);
-              if (exito) {
-                     request.setAttribute("exito", "true");
+                boolean exito = dao.editEmpleado(em);
+                if (exito) {
+                    request.setAttribute("exito", "true");
                 } else {
-                     request.setAttribute("exito", "false");
+                    request.setAttribute("exito", "false");
                 }
                 acceso = listar;
             } else if (action.equalsIgnoreCase("Eliminar")) {
                 id = Integer.parseInt(request.getParameter("id"));
                 em.setIdEmp(id);
-                boolean exito= dao.eliminarEmpleado(id);
-if (exito) {
-                     request.setAttribute("eliminado", "true");
+                boolean exito = dao.eliminarEmpleado(id);
+                if (exito) {
+                    request.setAttribute("eliminado", "true");
                 } else {
-                     request.setAttribute("eliminado", "false");
+                    request.setAttribute("eliminado", "false");
                 }
                 acceso = listar;
             }

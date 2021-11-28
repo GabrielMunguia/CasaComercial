@@ -3,6 +3,7 @@
     Created on : 10-04-2021, 03:05:28 PM
     Author     : GabrielMunguia
 --%>
+<%@page import="modelo.Usuario"%>
 <%@page import="modelo.MetodoPago"%>
 <%@page import="modeloDAO.MetodoPagoDAO"%>
 <%@page import="modelo.Cliente"%>
@@ -31,7 +32,33 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+       <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
@@ -45,13 +72,13 @@
                             <form action="ControladorPago">
                                 Id de Factura<br>
                                 <input class="form-control" type="text"
-                                       name="txtidFactura"><br>
+                                       name="txtidFactura"required ><br>
                                 Monto:<br>
-                                <input class="form-control" type="text"
+                                <input class="form-control"required type="text"
                                        name="txtMonto"><br>
                                
                                 <label for="inputPassword4" class="form-label">Metodo de pago</label>
-                                                <select id="metodoPago" class="form-select" name="metodoPago" required="">
+                                                <select id="metodoPago" class="form-select" name="metodoPago"  required>
                                                     <%
                                                         MetodoPagoDAO dao = new MetodoPagoDAO();
                                                         List<MetodoPago> list = dao.listarMetodosPago();

@@ -3,6 +3,7 @@
     Created on : 10-04-2021, 03:05:28 PM
     Author     : GabrielMunguia
 --%>
+<%@page import="modelo.Usuario"%>
 <%@page import="modelo.Pago"%>
 <%@page import="modeloDAO.PagoDAO"%>
 <%@page import="modelo.Cliente"%>
@@ -31,7 +32,33 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+       <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">

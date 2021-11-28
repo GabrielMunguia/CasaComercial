@@ -4,6 +4,7 @@
     Author     : GabrielMunguia
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="modelo.MetodoPago"%>
 <%@page import="modeloDAO.MetodoPagoDAO"%>
@@ -26,7 +27,33 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+       <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
@@ -37,7 +64,7 @@
                     <div id="formContainer">
                         <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
 
-
+                            <h1 class="mt-1">Agregar Credito</h1>
 
                             <form class="row g-3  w-100 mt-2" action="ControladorCreditos" method="POST">
 
@@ -58,7 +85,7 @@
                                                 <label for="inputEmail4" class="form-label">ID Empleado</label>
                                                 <input type="number" class="form-control" name="idEmpleado" required="">
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +136,7 @@
 
                                                             </tbody>
                                                             <tfoot>
-                                                                                                                                <tr>
+                                                                <tr>
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td></td>
@@ -117,7 +144,7 @@
                                                                     <td></td>
                                                                     <td>   <p>Total Credito <strong>$<span id="total">0.00</span></strong></p></td>
                                                                     <td>
-                                                                      
+
                                                                     </td>
                                                                 </tr>
 
@@ -151,6 +178,7 @@
             </div>
         </div>
     </section>
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
     <script>
@@ -187,24 +215,25 @@
         ];
         lstProductos = lstProductos.filter((prod) => prod.Stock > 0);
         console.log(lstProductos);
-const calcularTotal=()=>{
-      const total=document.querySelector('#total');
-            let numTotal=0;
-            const subTotales=document.querySelectorAll('.subTotal');
-            
-            for(sub of subTotales){
-             const subt=parseFloat(sub.textContent.replace('$',''));
-             numTotal+=subt;
+        const calcularTotal = () => {
+            const total = document.querySelector('#total');
+            let numTotal = 0;
+            const subTotales = document.querySelectorAll('.subTotal');
+
+            for (sub of subTotales) {
+                const subt = parseFloat(sub.textContent.replace('$', ''));
+                numTotal += subt;
             }
-           total.textContent=numTotal;
-}
+             numTotal=numTotal.toFixed(2);
+            total.textContent = numTotal;
+        }
 
         const btnAgregarProd = document.querySelector("#aggProducto");
         const idProd = document.querySelector("#idProd");
         const tabla = document.querySelector("#tabla");
-        tabla.addEventListener('DOMNodeInserted',()=>{
-          calcularTotal();
-            
+        tabla.addEventListener('DOMNodeInserted', () => {
+            calcularTotal();
+
         })
         const x2 = document.createElement("tr");
         let contador = 1;
@@ -242,7 +271,7 @@ const calcularTotal=()=>{
                                 const subTotal = input.parentElement.parentElement.querySelector(".subTotal");
 
                                 subTotal.textContent = "$" + (parseFloat(precio) * parseInt(parseInt(arrayAux[i]) + parseInt(cantidad.value)));
-                               
+
 
                                 encontrado = false;
 
@@ -304,7 +333,7 @@ const calcularTotal=()=>{
             for (btn of btnEliminar) {
 
                 btn.addEventListener("click", (e) => {
-                    
+
 
                     let arrayAux = arrayIdProduCompra.split(',');
                     let encontrado = false;
@@ -338,7 +367,7 @@ const calcularTotal=()=>{
                     inputHidden.value = JSON.stringify(arrayIdProduCompra);
 
                     tabla.removeChild(e.target.parentNode.parentNode);
-                      calcularTotal();
+                    calcularTotal();
 
 
                 });

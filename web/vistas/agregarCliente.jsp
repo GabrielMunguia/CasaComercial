@@ -3,6 +3,7 @@
     Created on : 10-04-2021, 03:05:28 PM
     Author     : GabrielMunguia
 --%>
+<%@page import="modelo.Usuario"%>
 <%@page import="modelo.Cliente"%>
 <%@page import="modeloDAO.ClienteDAO"%>
 <%@page import="modeloDAO.ClienteDAO"%>
@@ -29,8 +30,34 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
-    
+       <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
+
         </div>
         <section class="home-section bg-white">
 
@@ -44,20 +71,20 @@
                             <form action="ControladorCliente">
                                 Nombre:<br>
                                 <input class="form-control" type="text"
-                                       name="txtNombre"><br>
+                                       name="txtNombre" required ><br>
                                 DUI<br>
                                 <input class="form-control" type="text"
-                                       name="txtDUI"><br>
+                                       name="txtDUI" required><br>
                                 NIT<br>
-                                <input class="form-control" type="text"
+                                <input class="form-control" required type="text"
                                        name="txtNIT"><br>
                                 Dirección<br>
-                                <input class="form-control" type="text"
+                                <input class="form-control" required type="text"
                                        name="txtDireccion"><br>
                                 Teléfono<br>
-                                <input class="form-control" type="text"
+                                <input class="form-control" required type="text"
                                        name="txtTelefono"><br>
-                                <input class="btn btn-primary" type="submit"
+                                <input class="btn btn-primary" required type="submit"
                                        name="accion" value="Agregar">
                                 <a
                                     href="ControladorCliente?accion=listarCliente">Regresar</a>
@@ -73,8 +100,29 @@
                 </div>
             </div>
         </section>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+        <script>
+    let error =<%=request.getAttribute("exito")%>
+    console.log(error);
+    if (error === false) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Porfavor verifique los datos',
+            icon: 'error',
+            confirmButtonColor: 'red',
+            confirmButtonText: 'OK'
+        });
 
+    } else if (error == true) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Se registro correctamente',
+            showConfirmButton: false,
+            timer: 1500
+        })
+    }
+        </script>
 
 
 

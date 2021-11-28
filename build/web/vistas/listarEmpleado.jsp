@@ -1,3 +1,4 @@
+<%@page import="modelo.Usuario"%>
 <%@page import="modeloDAO.EmpleadoDAO"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="modelo.Empleado"%>
@@ -22,13 +23,40 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+       <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
+  
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-11">
+                <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-12">
                     <h1 class="m-3"> Lista de empleados</h1>
 
                     <div class="col-12">
@@ -44,7 +72,10 @@
                                     <th class="text-center">TELEFONO</th>
                                     <th class="text-center">DIRECCION</th>
                                     <th class="text-center">IDCARGO</th>
+                                     <%if(usr.getIdCargo()==2){ %>
                                     <th class="text-center noExport">ACCIONES</th>
+                                    
+                                    <% } %>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,6 +83,7 @@
                                     EmpleadoDAO dao = new EmpleadoDAO();
                                     List<Empleado> list = dao.listarEmpleado();
                                     Iterator<Empleado> iter = list.iterator();
+                                    
                                     Empleado em = null;
                                     while (iter.hasNext()) {
                                         em = iter.next();
@@ -69,12 +101,14 @@
                                     <td class="text-center"><%= em.getTel()%></td>
                                     <td class="text-center"><%= em.getDir()%></td>
 
-                                    <td class="text-center noExport"><%= em.getIdCa()%></td>
+                                    <td class="text-center noExport"><%= dao.getCargo(em.getIdCa())%></td>
+                                    <%if(usr.getIdCargo()==2){ %>
                                     <td>
                                         <a class="btn btn-warning" href="ControladorEmpleados?accion=EditarEmpleado&id=<%= em.getIdEmp()%>">Editar</a>
                                         <a  class="d-none" href="ControladorEmpleados?accion=eliminar&id=<%= em.getIdEmp()%>">Eliminar</a>
                                         <a class="btn btn-danger btnEliminar">Eliminar</a>
                                     </td>
+                                    <% } %>
                                 </tr>
                                 <%}%>
                             </tbody>
@@ -90,7 +124,7 @@
 
                 </div>
         </section>
-                             <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
 
         <script type="text/javascript" src="" crossorigin="anonymous"></script>
@@ -101,6 +135,22 @@
         <script  src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
         <!-- Para usar los botones -->
 
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script  src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+        <!-- Para usar los botones -->
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+
+
+        <!-- Para los estilos en Excel     -->
+        <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.templates.min.js"></script>
+
+
+
+        <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script> 
 
 
         <!-- Para los estilos en Excel     -->
@@ -128,13 +178,13 @@
                         }).then((result) => {
                             console.log(result)
                             if (result.isConfirmed) {
-                               
 
 
-                                    link.click();
+
+                                link.click();
 
 
-                               
+
 
 
                             }
@@ -150,44 +200,44 @@
 
 
             });
-            
+
             let error =<%=request.getAttribute("exito")%>
             let elim =<%=request.getAttribute("eliminado")%>
-        console.log(error);
-        if (error === false) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Porfavor verifique los datos',
-                icon: 'error',
-                confirmButtonColor: 'red',
-                confirmButtonText: 'OK'
-            });
+            console.log(error);
+            if (error === false) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Porfavor verifique los datos',
+                    icon: 'error',
+                    confirmButtonColor: 'red',
+                    confirmButtonText: 'OK'
+                });
 
-        } else if (error == true) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Se actualizo correctamente',
-                showConfirmButton: false,
-                timer: 1500
-            })
-        }
-         if (elim === false) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'No se puede eliminar el empleado por que se necesita mantener su registro',
-                icon: 'error',
-                confirmButtonColor: 'red',
-                confirmButtonText: 'OK'
-            });
+            } else if (error == true) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se actualizo correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            if (elim === false) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'No se puede eliminar el empleado por que se necesita mantener su registro',
+                    icon: 'error',
+                    confirmButtonColor: 'red',
+                    confirmButtonText: 'OK'
+                });
 
-        } else if (elim == true) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Se elimino correctamente',
-                showConfirmButton: false,
-                timer: 1500
-            })
-        }
+            } else if (elim == true) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se elimino correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
 
 
 

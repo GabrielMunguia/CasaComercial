@@ -4,6 +4,7 @@
     Author     : HP
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="modelo.Cargo"%>
 <%@page import="java.util.List"%>
@@ -26,7 +27,33 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+       <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
@@ -51,11 +78,11 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">DUI</label>
-                                <input type="number" class="form-control" name="txtDui" value="<%=em.getDui()%>"required>
+                                <input type="text" class="form-control" name="txtDui" value="<%=em.getDui()%>"required>
                             </div>
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">NIT</label>
-                                <input type="number" class="form-control" name="txtNit" value="<%=em.getNit()%>"  required>
+                                <input type="text" class="form-control" name="txtNit" value="<%=em.getNit()%>"  required>
                             </div>
 
                             <div class="col-md-6">

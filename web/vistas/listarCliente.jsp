@@ -1,3 +1,4 @@
+<%@page import="modelo.Usuario"%>
 <%@page import="modelo.Cliente"%>
 <%@page import="modelo.Cliente"%>
 <%@page import="modeloDAO.ClienteDAO"%>
@@ -25,13 +26,41 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+       <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
+            
+          
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-11">
+                <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-12">
                   <h1 class="m-3"> Lista de Clientes</h1>
 
                     <div class="col-12">
@@ -44,9 +73,12 @@
                             <th class="text-center">NIT</th>
                             <th class="text-center">DIRECCIÓN</th>
                             <th class="text-center">TELÉFONO</th>
+                            
+                            <%if(usr.getIdCargo()==1||usr.getIdCargo()==2){ %>
 
                            
                             <th class="text-center noExport">ACCIONES</th>
+                            <% } %>
                              
                         </tr>
                             </thead>
@@ -67,12 +99,16 @@
                             <td class="text-center"><%= c.getNIT()%></td>
                             <td class="text-center"><%= c.getDireccion()%></td>
                             <td><%= c.getTelefono()%></td>
-                          
+                           <%if(usr.getIdCargo()==1||usr.getIdCargo()==2){ %>
                             <td class="text-center noExport">
                                 <a class="btn btn-warning" href="ControladorCliente?accion=editar&id=<%= c.getIdCliente()%>">Editar</a>
-                                <a class="btn btn-danger" href="ControladorCliente?accion=eliminar&id=<%= c.getIdCliente()%>">Eliminar</a>
+                       
+                                 <%if(usr.getIdCargo()==2){%>
+                                    <a  class="d-none" href="ControladorCliente?accion=eliminar&id=<%= c.getIdCliente()%>">Eliminar</a>
+                                        <a class="btn btn-danger btnEliminar">Eliminar</a>
+                                        <%}%>
                             </td>
-                      
+                        <% } %>
                         </tr>
                         <%}%>
                     </tbody>
@@ -89,7 +125,7 @@
                 </div>
         </section>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript" src="" crossorigin="anonymous"></script>
 
 
@@ -110,8 +146,92 @@
 
         <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script> 
 
+<script>
 
 
+            document.addEventListener("DOMContentLoaded", () => {
+                const botonesEliminar = document.querySelectorAll('.btnEliminar');
+                for (btn of  botonesEliminar) {
+                    btn.addEventListener('click', (e) => {
+                        const link = e.target.parentNode.querySelector('.d-none');
+                        Swal.fire({
+                            title: 'Estas seguro de eliminarlo?',
+                            text: "Se eliminara el cliente",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Si, borralo!'
+
+                        }).then((result) => {
+                            console.log(result)
+                            if (result.isConfirmed) {
+
+
+
+                                link.click();
+
+
+
+
+
+                            }
+
+
+                        })
+
+
+
+
+                    });
+                }
+
+
+            });
+
+            let error =<%=request.getAttribute("exito")%>
+            let elim =<%=request.getAttribute("eliminado")%>
+            console.log(error);
+            if (error === false) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Porfavor verifique los datos',
+                    icon: 'error',
+                    confirmButtonColor: 'red',
+                    confirmButtonText: 'OK'
+                });
+
+            } else if (error == true) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se actualizo correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+            if (elim === false) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'No se puede eliminar el cliente por que se necesita mantener su registro',
+                    icon: 'error',
+                    confirmButtonColor: 'red',
+                    confirmButtonText: 'OK'
+                });
+
+            } else if (elim == true) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se elimino correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+
+
+
+
+
+        </script>
 
     </body>
 </html>

@@ -155,5 +155,28 @@ public class EmpleadoDAO implements CRUDempleado {
 
         return list;
     }
+    
+     public String getCargo(int id) {
+      
+        String sql = "select * from cargo where idCargo="+id;
+        Cargo ca = new Cargo();
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                
+                ca.setIdCa(rs.getInt("idCargo"));
+                ca.setCargo(rs.getString("cargo"));
+                ca.setDescri(rs.getString("descripcion"));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("ex = " + ex);
+        }
+
+        return ca.getCargo();
+    }
 
 }

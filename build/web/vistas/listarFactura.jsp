@@ -1,3 +1,4 @@
+<%@page import="modelo.Usuario"%>
 <%@page import="modelo.Factura"%>
 <%@page import="modeloDAO.FacturaDAO"%>
 <%@page import="modeloDAO.EmpleadoDAO"%>
@@ -24,27 +25,55 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+        <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
 
             <div>
                 <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-11">
-                     <h1 class="m-3"> Lista de Facturas</h1>
-
+                    <h1 class="m-3"> Lista de Facturas</h1>
+                   
                     <div class="col-12">
                         <table id="tabla"  class="p-2 mt-5 table table-striped table-bordered  col-12   "  style="width:100%">
                             <thead>
-                                 <tr class="bg-dark text-white">
+                                <tr class="bg-dark text-white">
                                     <th class="text-center">Numero factura</th>
                                     <th class="text-center">Fecha</th>
                                     <th class="text-center">Id cliente</th>
                                     <th class="text-center">Id Empleado</th>
                                     <th class="text-center">Total</th>
+                                      
                                     <th class="text-center noExport">Acciones</th>
+                                        
 
-                              
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,11 +94,16 @@
                                     <td class="text-center"><%= f.getIdCliente()%></td>
                                     <td class="text-center"><%= f.getIdEmpleado()%></td>
                                     <td class="text-center">$<%= f.getTotal()%></td>
+                                   
                                     <td class="d-flex  justify-content-center align-items-center noExport">
+                                          <%if(usr.getIdCargo()==2){%>
                                         <button class="btn btn-danger mx-2 btnEliminar">Elminar </button>
                                         <a  class="d-none" href="ControladorFactura?accion=eliminar&id=<%=f.getId()%>">Eliminar</a>
+                                        <%}%>
                                         <a class="btn btn-info" href="ControladorFactura?accion=detalleFactura&id=<%= f.getId()%>">Ver detalle</a>
                                     </td>
+                                 
+                                  
                                 </tr>
                                 <%}%>
                             </tbody>
@@ -106,7 +140,7 @@
 
 
         <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script> 
-          <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
 
 

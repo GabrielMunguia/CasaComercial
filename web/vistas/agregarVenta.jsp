@@ -4,6 +4,7 @@
     Author     : GabrielMunguia
 --%>
 
+<%@page import="modelo.Usuario"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="modelo.MetodoPago"%>
 <%@page import="modeloDAO.MetodoPagoDAO"%>
@@ -26,7 +27,33 @@
 
     </head>
     <body>
-        <div id="dash" class="sidebar open overflow-scroll">
+     <% Usuario usr = (Usuario) session.getAttribute("login");
+            String aside = "";
+
+            switch (usr.getIdCargo()) {
+                case 1: {
+                    aside = "admin";
+                }
+                break;
+                case 2:{
+                    
+                    aside="gerente";
+                }break;
+                
+                case 3:{
+                    
+                    aside="vendedor";
+                }
+                
+                default:{
+                aside="vendedor";
+                }break;
+
+            }
+
+            
+        %>
+        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
@@ -36,8 +63,7 @@
 
                     <div id="formContainer">
                         <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
-
-
+                            <h1 class="mt-1">Agregar Venta</h1>
 
                             <form class="row g-3  w-100 mt-2" action="ControladorFactura" method="POST">
 
@@ -213,6 +239,7 @@ const calcularTotal=()=>{
              const subt=parseFloat(sub.textContent.replace('$',''));
              numTotal+=subt;
             }
+            numTotal=numTotal.toFixed(2);
            total.textContent=numTotal;
 }
 

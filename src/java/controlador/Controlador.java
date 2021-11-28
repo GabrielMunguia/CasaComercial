@@ -50,7 +50,9 @@ public class Controlador extends HttpServlet {
 
             } else {
                 System.out.println("null");
+                 request.setAttribute("exito", "false");
                 request.getRequestDispatcher("./index.jsp").forward(request, response);
+                
             }
 
         }
