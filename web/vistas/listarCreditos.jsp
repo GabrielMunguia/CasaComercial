@@ -153,7 +153,7 @@
 
 
 
-        <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script> 
+ 
         <script>
 
 
