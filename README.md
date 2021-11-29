@@ -1,6 +1,6 @@
 ﻿# CasaComercial
  
-﻿##Proyecto de java web
+-Proyecto de java web
 
 -Servlet
 
