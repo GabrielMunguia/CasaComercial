@@ -60,24 +60,25 @@ public class ControladorProducto extends HttpServlet {
             } else if (action.equalsIgnoreCase("addProducto")) {
                 acceso = add;
             } else if (action.equalsIgnoreCase("Agregar")) {
-                String nomProd = request.getParameter("txtNom");
-                String desc = request.getParameter("txtDesc");
-                String marca = request.getParameter("txtMarca");
-                double costo = Double.parseDouble(request.getParameter("txtCosto"));
-                double precContado = Double.parseDouble(request.getParameter("txtPreCon"));
-                double precCredito = Double.parseDouble(request.getParameter("txtPreCred"));
-                String fotografia = request.getParameter("txtFotografia");
-                int stock = Integer.parseInt(request.getParameter("txtstock"));
-                int idcat = Integer.parseInt(request.getParameter("txtCat"));
-                pr.setNombre(nomProd);
-                pr.setDescripcion(desc);
+              String producto = request.getParameter("txtProducto");
+              String  descripcion = request.getParameter("txtDesc");
+              String marca = request.getParameter("txtMarca");
+              int idCategoria = Integer.parseInt(request.getParameter("txtCat"));
+              double costo = Double.parseDouble(request.getParameter("txtCosto"));
+              double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
+              int stock = Integer.parseInt(request.getParameter("txtStock"));
+              int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
+                pr.setProducto(producto);   
+                pr.setDescripcion(descripcion);
                 pr.setMarca(marca);
+                pr.setIdCategoria(idCategoria);
                 pr.setCosto(costo);
-                pr.setPrecioContado(precContado);
-                pr.setPrecioCredito(precCredito);
+                pr.setPrecioVenta(precioVenta);
                 pr.setStock(stock);
-                pr.setIdCategoria(idcat);
-                pr.setFotografia(fotografia);
+                pr.setIdProveedor(idProveedor);
+
+
+
                 daoprod.addProducto(pr);
                 acceso = listar;
             } else if (action.equalsIgnoreCase("editar")) {
@@ -85,26 +86,24 @@ public class ControladorProducto extends HttpServlet {
                 acceso = edit;
             } else if (action.equalsIgnoreCase("Actualizar")) {
                 idP = Integer.parseInt(request.getParameter("txtid"));
-                String nomProd = request.getParameter("txtNom");
-                String desc = request.getParameter("txtDesc");
-                String marca = request.getParameter("txtMarca");
-                double costo = Double.parseDouble(request.getParameter("txtCosto"));
-                double precContado = Double.parseDouble(request.getParameter("txtPreCon"));
-                double precCredito = Double.parseDouble(request.getParameter("txtPreCred"));
-                String fotografia = request.getParameter("txtFotografia");
-                int stock = Integer.parseInt(request.getParameter("txtstock"));
-                int idcat = Integer.parseInt(request.getParameter("txtCat"));
-
-                pr.setId(idP);
-                pr.setNombre(nomProd);
-                pr.setDescripcion(desc);
+                String producto = request.getParameter("txtProducto");
+              String  descripcion = request.getParameter("txtDesc");
+              String marca = request.getParameter("txtMarca");
+              int idCategoria = Integer.parseInt(request.getParameter("txtCat"));
+              double costo = Double.parseDouble(request.getParameter("txtCosto"));
+              double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
+              int stock = Integer.parseInt(request.getParameter("txtStock"));
+              int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
+                pr.setProducto(producto);   
+                pr.setDescripcion(descripcion);
                 pr.setMarca(marca);
+                pr.setIdCategoria(idCategoria);
                 pr.setCosto(costo);
-                pr.setPrecioContado(precContado);
-                pr.setPrecioCredito(precCredito);
-                pr.setFotografia(fotografia);
+                pr.setPrecioVenta(precioVenta);
                 pr.setStock(stock);
-                pr.setIdCategoria(idcat);
+                pr.setIdProveedor(idProveedor);
+                pr.setIdProducto(idP);
+                daoprod.editProducto(pr);
                 boolean exito = daoprod.editProducto(pr);
                 if (exito) {
                     request.setAttribute("exito", "true");
@@ -114,7 +113,7 @@ public class ControladorProducto extends HttpServlet {
                 acceso = listar;
             } else if (action.equalsIgnoreCase("Eliminar")) {
                 idP = Integer.parseInt(request.getParameter("id"));
-                pr.setId(idP);
+                // pr.setIdProducto(idP);
                boolean exito= daoprod.eliminarProducto(idP);
                  if (exito) {
                     request.setAttribute("eliminado", "true");

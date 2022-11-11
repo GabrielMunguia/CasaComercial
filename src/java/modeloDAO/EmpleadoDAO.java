@@ -24,7 +24,7 @@ public class EmpleadoDAO implements CRUDempleado {
     @Override
     public List listarEmpleado() {
         ArrayList<Empleado> list = new ArrayList<>();
-        String sql = "select * from empleado";
+        String sql = "select * from empleados where estado=1;";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -33,16 +33,17 @@ public class EmpleadoDAO implements CRUDempleado {
             while (rs.next()) {
                 Empleado em = new Empleado();
                 em.setIdEmp(rs.getInt("idEmpleado"));
-                em.setNom(rs.getString("nombre"));
+                em.setNom(rs.getString("nombres"));
+                em.setApellidos(rs.getString("apellidos"));
                 em.setDui(rs.getString("DUI"));
-                em.setNit(rs.getString("NIT"));
+                em.setNIT(rs.getString("NIT"));
+                em.setCorreo(rs.getString("correo"));
                 em.setGen(rs.getString("genero"));
                 em.setFechNa(rs.getString("fechaNacimiento"));
                 em.setTel(rs.getString("telefono"));
-                em.setDir(rs.getString("direccion"));
-                em.setUsu(rs.getString("usuario"));
-                em.setPas(rs.getString("password"));
-                em.setIdCa(rs.getInt("idCargo"));
+                em.setFechaContrato(rs.getString("fechaContratacion"));
+                em.setDireccion(rs.getString("direccion"));
+     
                 list.add(em);
             }
         } catch (SQLException ex) {
@@ -60,7 +61,7 @@ public class EmpleadoDAO implements CRUDempleado {
     @Override
     public Empleado list(int idEmp) {
         ArrayList<Empleado> list = new ArrayList<>();
-        String sql = "select * from empleado where idEmpleado=" + idEmp;
+        String sql = "select * from empleados where idEmpleado=" + idEmp;
         Empleado em = new Empleado();
         try {
             con = cn.getConnection();
@@ -70,16 +71,16 @@ public class EmpleadoDAO implements CRUDempleado {
             while (rs.next()) {
 
                 em.setIdEmp(rs.getInt("idEmpleado"));
-                em.setNom(rs.getString("nombre"));
+                em.setNom(rs.getString("nombres"));
+                em.setNIT(rs.getString("NIT"));
+                em.setApellidos(rs.getString("apellidos"));
                 em.setDui(rs.getString("DUI"));
-                em.setNit(rs.getString("NIT"));
+                em.setCorreo(rs.getString("correo"));
                 em.setGen(rs.getString("genero"));
                 em.setFechNa(rs.getString("fechaNacimiento"));
+                em.setFechaContrato(rs.getString("fechaContratacion"));
                 em.setTel(rs.getString("telefono"));
-                em.setDir(rs.getString("direccion"));
-                em.setUsu(rs.getString("usuario"));
-                em.setPas(rs.getString("password"));
-                em.setIdCa(rs.getInt("idCargo"));
+                em.setDireccion(rs.getString("direccion"));
             }
         } catch (Exception e) {
             System.out.println("EL ERROR = " + e);
@@ -91,8 +92,11 @@ public class EmpleadoDAO implements CRUDempleado {
     @Override
     public boolean addEmpleado(Empleado emp) {
 
-        String sql = "insert into empleado(nombre, DUI, NIT, genero, fechaNacimiento, telefono, direccion, usuario, password, idCargo)values('" + emp.getNom() + "','" + emp.getDui() + "', '" + emp.getNit() + "','" + emp.getGen() + "','" + emp.getFechNa() + "','" + emp.getTel() + "','" + emp.getDir() + "','" + emp.getUsu() + "','" + emp.getPas() + "','" + emp.getIdCa() + "')";
+        String sql = "insert into empleados(nombres,apellidos,NIT,fechaContratacion,direccion, DUI, correo, genero, fechaNacimiento, telefono)values('" + emp.getNom()+ "','" + emp.getApellidos()  + "','" + emp.getNIT()+ "','" + emp.getFechaContrato()+  "','" + emp.getDireccion()+"','" + emp.getDui() + "', '" + emp.getCorreo() + "','" + emp.getGen() + "','" + emp.getFechNa() + "','" + emp.getTel() + "')";
+        System.out.println(sql);
         try {
+            
+            
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
@@ -105,7 +109,8 @@ public class EmpleadoDAO implements CRUDempleado {
 
     @Override
     public boolean editEmpleado(Empleado em) {
-        String sql = "update empleado set nombre='" + em.getNom() + "', DUI='" + em.getDui() + "', NIT='" + em.getNit() + "', genero='" + em.getGen() + "', fechaNacimiento='" + em.getFechNa() + "', telefono='" + em.getTel() + "', direccion='" + em.getDir() + "', usuario='" + em.getUsu() + "', password='" + em.getPas() + "', idCargo='" + em.getIdCa() + "'where idEmpleado=" + em.getIdEmp();
+        String sql = "update empleados set nombres='" + em.getNom() + "', DUI='" + em.getDui() + "',apellidos='" + em.getApellidos() + "', genero='" + em.getGen() + "', fechaNacimiento='" + em.getFechNa() + "', fechaContratacion='" + em.getFechaContrato()+ "', telefono='" + em.getTel() + "', direccion='" + em.getDireccion()+ "', correo='" + em.getCorreo() + "'" + "where idEmpleado=" + em.getIdEmp();
+        System.out.println(sql);
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -119,7 +124,7 @@ public class EmpleadoDAO implements CRUDempleado {
 
     @Override
     public boolean eliminarEmpleado(int idEmp) {
-        String sql = "delete from empleado where idEmpleado=" + idEmp;
+        String sql = "update empleados set estado=0 where idEmpleado=" + idEmp;
         try {
            
             con = cn.getConnection();

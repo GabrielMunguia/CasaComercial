@@ -57,7 +57,7 @@ public class ControladorEmpleados extends HttpServlet {
         HttpSession session = request.getSession();
         Usuario usr = (Usuario) session.getAttribute("login");
         if (usr == null) {
-            System.out.println("NULLLLLLLLLLLLLLLLL");
+
             acceso = login;
 
         } else {
@@ -69,26 +69,31 @@ public class ControladorEmpleados extends HttpServlet {
                 acceso = add;
             } else if (action.equalsIgnoreCase("Agregar")) {
                 String nom = request.getParameter("txtNom");
+                String ape = request.getParameter("txtApellidos");
                 String dui = request.getParameter("txtDui");
-                String nit = request.getParameter("txtNit");
+                String nit = request.getParameter("txtNIT");
+                String correo = request.getParameter("txtCorreo");
                 String gen = request.getParameter("txtGen");
                 String fec = request.getParameter("txtFec");
+                String fecContrato = request.getParameter("txtFechaContrato");
                 String tel = request.getParameter("txtTel");
-                String dir = request.getParameter("txtDir");
-                String usu = request.getParameter("txtUsu");
-                String pas = request.getParameter("txtPas");
-                int car = Integer.parseInt(request.getParameter("txtCar"));
+                String direccion = request.getParameter("txtDireccion");
+   
+
 
                 em.setNom(nom);
+                em.setApellidos(ape);
                 em.setDui(dui);
-                em.setNit(nit);
+                em.setCorreo(correo);
+                em.setNIT(nit);
                 em.setGen(gen);
                 em.setFechNa(fec);
                 em.setTel(tel);
-                em.setDir(dir);
-                em.setUsu(usu);
-                em.setPas(pas);
-                em.setIdCa(car);
+                em.setDireccion(direccion);
+                em.setFechaContrato(fecContrato);
+                
+
+   
                 boolean exito = dao.addEmpleado(em);
                 if (exito) {
                     request.setAttribute("exito", "true");
@@ -104,29 +109,32 @@ public class ControladorEmpleados extends HttpServlet {
                 acceso = edit;
             } else if (action.equalsIgnoreCase("Actualizar")) {
 
+                try {
                 String nom = request.getParameter("txtNom");
+                String ape = request.getParameter("txtApellidos");
                 String dui = request.getParameter("txtDui");
-                String nit = request.getParameter("txtNit");
+                String nit = request.getParameter("txtNIT");
+                String correo = request.getParameter("txtCorreo");
                 String gen = request.getParameter("txtGen");
                 String fec = request.getParameter("txtFec");
+                String fecContrato = request.getParameter("txtFechaContrato");
                 String tel = request.getParameter("txtTel");
-                String dir = request.getParameter("txtDir");
-                System.out.println("dir = " + dir);
-                String usu = request.getParameter("txtUsu");
-                String pas = request.getParameter("txtPas");
-                int car = Integer.parseInt(request.getParameter("txtCargo"));
+                String direccion = request.getParameter("txtDireccion");
+
+               
                 id = Integer.parseInt(request.getParameter("txtid"));
                 em.setIdEmp(id);
                 em.setNom(nom);
+                em.setApellidos(ape);
                 em.setDui(dui);
-                em.setNit(nit);
+                em.setCorreo(correo);
+                em.setNIT(nit);
                 em.setGen(gen);
                 em.setFechNa(fec);
                 em.setTel(tel);
-                em.setDir(dir);
-                em.setUsu(usu);
-                em.setPas(pas);
-                em.setIdCa(car);
+                em.setDireccion(direccion);
+                em.setFechaContrato(fecContrato);
+              
                 boolean exito = dao.editEmpleado(em);
                 if (exito) {
                     request.setAttribute("exito", "true");
@@ -134,6 +142,9 @@ public class ControladorEmpleados extends HttpServlet {
                     request.setAttribute("exito", "false");
                 }
                 acceso = listar;
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             } else if (action.equalsIgnoreCase("Eliminar")) {
                 id = Integer.parseInt(request.getParameter("id"));
                 em.setIdEmp(id);

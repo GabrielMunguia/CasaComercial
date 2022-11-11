@@ -20,7 +20,7 @@ public class Conexion {
             //Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Class.forName("com.mysql.cj.jdbc.Driver");
             //con = DriverManager.getConnection("jdbc:sqlserver://ANDROID:1433;databaseName=midb;user=sa;password=root;");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/comercial?useTimeZone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?useTimeZone=true&serverTimezone=UTC&autoReconnect=true&useSSL=false","root","root");
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println("Error: \n"+e.getClass()+"\n"+e.getMessage());
              System.out.println("error en con");

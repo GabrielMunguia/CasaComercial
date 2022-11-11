@@ -26,34 +26,10 @@ export const adminDashBoard = `
          <span class="tooltip">Ver Clientes</span>
       </li>
       
-   <li>
-       <a href="ControladorCreditos?accion=addCredito">
-         <i class='bx bx-folder' ></i>
-         <span class="links_name">Agregar Credito</span>
-       </a>
-       <span class="tooltip">Agregar Venta</span>
-     </li>
-  <li>
-       <a href="ControladorCreditos?accion=listar">
-         <i class='bx bx-folder' ></i>
-         <span class="links_name">Ver Creditos</span>
-       </a>
-       <span class="tooltip">Ver Creditos</span>
-     </li>
-<li>
-       <a href="ControladorPago?accion=add">
-         <i class='bx bx-pie-chart-alt-2' ></i>
-         <span class="links_name">Agregar Pago</span>
-       </a>
-       <span class="tooltip">Agregar Pago</span>
-     </li>
-     <li>
-       <a  href="ControladorPago?accion=verPagos">
-         <i class='bx bx-chat' ></i>
-         <span class="links_name">Ver pagos</span>
-       </a>
-       <span class="tooltip">Ver pagos</span>
-     </li>
+ 
+
+
+ 
      
 
      <li>

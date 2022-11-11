@@ -3,6 +3,8 @@
     Created on : 10-04-2021, 03:05:28 PM
     Author     : GabrielMunguia
 --%>
+<%@page import="modelo.Proveedor"%>
+<%@page import="modeloDAO.ProveedorDAO"%>
 <%@page import="modelo.Categoria"%>
 <%@page import="modeloDAO.CategoriaDAO"%>
 <%@page import="modelo.Usuario"%>
@@ -76,7 +78,7 @@
 
                             <form action="ControladorProducto" enctype="multipart/form-data">
                                 Nombre del producto:<br>
-                                <input class="form-control" type="text" name="txtNom"><br>
+                                <input class="form-control" type="text" name="txtProducto"><br>
                                 Descripcion:<br>
                                 <input class="form-control" type="text" name="txtDesc"><br>
                                 Marca:<br>
@@ -99,13 +101,27 @@
                                 Costo:<br>
                                 <input class="form-control" type="text" name="txtCosto"><br>
                                 Precio contado:<br>
-                                <input class="form-control" type="text" name="txtPreCon"><br>
-                                Precio credito:<br>
-                                <input class="form-control" type="text" name="txtPreCred"><br>
-                                Imagen: <br>
-                                <input class="form-control" type="text" name="txtFotografia"><br>
+                                <input class="form-control" type="text" name="txtPrecioVenta"><br>
+                               
                                 Stock:<br>
-                                <input class="form-control" type="text" name="txtstock"><br>
+                                <input class="form-control" type="text" name="txtStock"><br>
+                                  Proveedor<br>
+                              
+                                        <Select class="form-control mb-4" id="prev"  name="txtIdProveedor"><br>
+                                    <%
+                                        ProveedorDAO dao3 = new ProveedorDAO();
+                                        List<Proveedor> list2 = dao3.listar();
+                                        Iterator<Proveedor> iter2 = list2.iterator();
+                                        Proveedor prov = null;
+                                        while (iter2.hasNext()) {
+                                            prov = iter2.next();
+
+                                    %>
+
+                                    <option value="<%= prov.getIdProveedor()%>"><%= prov.getNombre()%></option>
+                                    <%}%>
+                                </select>
+                          
                                 
                               
                               

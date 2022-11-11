@@ -3,6 +3,8 @@
     Created on : 10-04-2021, 03:05:28 PM
     Author     : GabrielMunguia
 --%>
+<%@page import="modelo.Proveedor"%>
+<%@page import="modeloDAO.ProveedorDAO"%>
 <%@page import="modelo.Categoria"%>
 <%@page import="modeloDAO.CategoriaDAO"%>
 <%@page import="modelo.Usuario"%>
@@ -80,23 +82,14 @@
                             <form action="ControladorProducto">
                                 <h1>Editar Producto</h1>
                                 Nombre del producto:<br>
-                                <input class="form-control" type="text" name="txtNom" value="<%=pr.getNombre()%>"><br>
+                                <input class="form-control" type="text" name="txtProducto" value="<%=pr.getProducto()%>"><br>
+                            
                                 Descripcion:<br>
                                 <input class="form-control" type="text" name="txtDesc" value="<%=pr.getDescripcion()%>"><br>
                                 Marca:<br>
                                 <input class="form-control" type="text" name="txtMarca" value="<%=pr.getMarca()%>"><br>
-                                Costo:<br>
-                                <input class="form-control" type="text" name="txtCosto" value="<%=pr.getCosto()%>"><br>
-                                Precio contado:<br>
-                                <input class="form-control" type="text" name="txtPreCon" value="<%=pr.getPrecioContado()%>"><br>
-                                Precio credito:<br>
-                                <input class="form-control" type="text" name="txtPreCred" value="<%=pr.getPrecioCredito()%>"><br>
-                                Imagen: 
-                                <input class="form-control" type="text" name="txtFotografia" value="<%=pr.getFotografia()%>"><br>
-                                Stock:<br>
-                                <input class="form-control" type="text" name="txtstock" value="<%=pr.getStock()%>"><br>
-                                Categoria:<br>
-                                <Select class="form-control mb-4"  name="txtCat"><br>
+                                 Categoria:<br>
+                                <Select class="form-control mb-4" id="cat"  name="txtCat"><br>
                                     <%
                                         CategoriaDAO dao2 = new CategoriaDAO();
                                         List<Categoria> list = dao2.listar();
@@ -110,7 +103,32 @@
                                     <option value="<%= cat.getIdCategoria()%>"><%= cat.getCategoria()%></option>
                                     <%}%>
                                 </select>
-                                <input type="hidden" name="txtid" value="<%=pr.getId()%>">
+                                Costo:<br>
+                                <input class="form-control" type="text" name="txtCosto" value="<%=pr.getCosto()%>"><br>
+                                Precio venta<br>
+                                <input class="form-control" type="text" name="txtPrecioVenta" value="<%=pr.getPrecioVenta()%>"><br>
+                             
+                                Stock:<br>
+                                <input class="form-control" type="text" name="txtStock" value="<%=pr.getStock()%>"><br>
+                                   Proveedor<br>
+                                <!-- <input class="form-control" value="<%=pr.getIdProveedor()%>" type="text" name="txtIdProveedor"><br> -->
+                                    <Select class="form-control mb-4" id="prev"  name="txtIdProveedor"><br>
+                                    <%
+                                        ProveedorDAO dao3 = new ProveedorDAO();
+                                        List<Proveedor> list2 = dao3.listar();
+                                        Iterator<Proveedor> iter2 = list2.iterator();
+                                        Proveedor prov = null;
+                                        while (iter2.hasNext()) {
+                                            prov = iter2.next();
+
+                                    %>
+
+                                    <option value="<%= prov.getIdProveedor()%>"><%= prov.getNombre()%></option>
+                                    <%}%>
+                                </select>
+                          
+                               
+                                <input type="hidden" name="txtid" value="<%=pr.getIdProducto()%>">
 
                                 <input class="btn btn-primary" type="submit" name="accion" value="Actualizar">
                                 <a class="btn btn-warning" href="ControladorProducto?accion=listarProducto">Regresar</a>
@@ -130,6 +148,7 @@
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
         <script>
             let error =<%=request.getAttribute("exito")%>
+        
             console.log(error);
             if (error === false) {
                 Swal.fire({
@@ -148,6 +167,18 @@
                     timer: 1500
                 })
             }
+
+            //asignar valor a la categoria
+            let cat = <%=pr.getIdCategoria()%>;
+            let select = document.querySelector("#cat");
+            select.value = cat;
+            
+             //asignar valor al proveedor
+            let prev = <%=pr.getIdProveedor()%>;
+            let select2 = document.querySelector("#prev");
+            select2.value = prev;
+            
+
         </script>
 
 

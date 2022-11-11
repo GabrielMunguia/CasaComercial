@@ -10,19 +10,16 @@ package modelo;
  * @author GabrielMunguia
  */
 public class Producto {
-
-    int id;
-    String nombre;
+ int idProducto;
+    String producto;
     String descripcion;
-    String marca;
-    double precioContado;
-    double precioCredito;
-    double costo;
-    int stock;
-    String fotografia;
     int idCategoria;
+    String marca;
+    double costo;
+    double precioVenta;
+    int stock;
+    int idProveedor;
     int cantidad;
-
     public int getCantidad() {
         return cantidad;
     }
@@ -31,20 +28,52 @@ public class Producto {
         this.cantidad = cantidad;
     }
 
-    public int getId() {
-        return id;
+
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getProveedor() {
+        return proveedor;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setProveedor(String proveedor) {
+        this.proveedor = proveedor;
+    }
+    String categoria;
+    String proveedor;
+    public Producto() {
+    }
+
+    public Producto(int idProducto, String producto, String descripcion, int idCategoria, String marca, double costo, double precioVenta, int stock, int idProveedor) {
+        this.idProducto = idProducto;
+        this.producto = producto;
+        this.descripcion = descripcion;
+        this.idCategoria = idCategoria;
+        this.marca = marca;
+        this.costo = costo;
+        this.precioVenta = precioVenta;
+        this.stock = stock;
+        this.idProveedor = idProveedor;
+    }
+    public int getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
 
     public String getDescripcion() {
@@ -55,28 +84,20 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
     public String getMarca() {
         return marca;
     }
 
     public void setMarca(String marca) {
         this.marca = marca;
-    }
-
-    public double getPrecioContado() {
-        return precioContado;
-    }
-
-    public void setPrecioContado(double precioContado) {
-        this.precioContado = precioContado;
-    }
-
-    public double getPrecioCredito() {
-        return precioCredito;
-    }
-
-    public void setPrecioCredito(double precioCredito) {
-        this.precioCredito = precioCredito;
     }
 
     public double getCosto() {
@@ -87,6 +108,14 @@ public class Producto {
         this.costo = costo;
     }
 
+    public double getPrecioVenta() {
+        return precioVenta;
+    }
+
+    public void setPrecioVenta(double precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
     public int getStock() {
         return stock;
     }
@@ -95,20 +124,15 @@ public class Producto {
         this.stock = stock;
     }
 
-    public String getFotografia() {
-        return fotografia;
+    public int getIdProveedor() {
+        return idProveedor;
     }
 
-    public void setFotografia(String fotografia) {
-        this.fotografia = fotografia;
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
     }
 
-    public int getIdCategoria() {
-        return idCategoria;
-    }
 
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
-    }
+   
 
 }

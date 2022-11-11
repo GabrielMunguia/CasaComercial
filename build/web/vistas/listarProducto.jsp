@@ -72,15 +72,18 @@
                             <thead>
                                 <tr class="bg-dark text-white">
                                     <th class="text-center">IDProducto</th>
-                                    <th class="text-center">NOMBRE PRODUCTO</th>
-                                    <th class="text-center">DESCRIPCION</th>
-                                    <th class="text-center">MARCA</th>
-                                    <th class="text-center">COSTO</th>
-                                    <th class="text-center">PRECIO CONTADO</th>
-                                    <th class="text-center">PRECIO CREDITO</th>
-                                    <th class="text-center">STOCK</th>
-                                    <th class="text-center">IDCATEGORIA</th>
-                                    <th class="text-center noExport">IMAGEN</th>
+                                 
+                                    <th class="text-center  col-3"  >Producto</th>
+                                    <th class="text-center col-4"  >Descripcion</th>
+                                    <th class="text-center">Categoria</th>
+                                    <th class="text-center">Marca</th>
+                                    <th class="text-center">Costo</th>
+                                     <th class="text-center">Stock</th>
+                                    <th class="text-center">Precio Venta</th>
+                                    <th class="text-center">Proveedor</th>
+
+                                    
+                                  
                                     <%if (usr.getIdCargo() == 2) { %>
                                     <th class="text-center noExport">ACCIONES</th>
                                      <% } %>
@@ -101,20 +104,22 @@
 
                                 %>
                                 <tr>
-                                    <td class="text-center"><%= pr.getId()%></td>
-                                    <td class="text-center"><%= pr.getNombre()%></td>
-                                    <td class="text-center"><%= pr.getDescripcion()%></td>
-                                    <td class="text-center"><%= pr.getMarca()%></td>
-                                    <td class="text-center"><%= pr.getCosto()%></td>
-                                    <td class="text-center"><%= pr.getPrecioContado()%></td>
-                                    <td class="text-center"><%= pr.getPrecioCredito()%></td>
+                                    <td class="text-center"><%= pr.getIdProducto() %></td>
+                                    <td class="text-center col-3"  ><%= pr.getProducto() %></td>
+                                    <td class="text-center col-4" ><%= pr.getDescripcion() %></td>
+                                    <td class="text-center"><%= pr.getCategoria()%></td>
+                                    <td class="text-center"><%= pr.getMarca() %></td>
+                                    <td class="text-center"><%= pr.getCosto() %></td>
                                     <td class="text-center"><%= pr.getStock()%></td>
-                                    <td class="text-center"><%= pr.getIdCategoria()%></td>
-                                    <td class="text-center noExport"><img src="<%= pr.getFotografia()%>" class='img-fluid' alt=''/></td>
+                                    <td class="text-center"><%= pr.getPrecioVenta() %></td>
+                                    <td class="text-center"><%= pr.getProveedor()%></td>
+
+                                   
+                                  
                                         <%if (usr.getIdCargo() == 2) { %>
                                     <td class="  container-fluid ">
-                                        <a class="btn btn-warning " href="ControladorProducto?accion=editar&id=<%= pr.getId()%>">Editar</a>
-                                          <a  class="d-none"  href="ControladorProducto?accion=eliminar&id=<%= pr.getId()%>">Eliminar</a>
+                                        <a class="btn btn-warning " href="ControladorProducto?accion=editar&id=<%= pr.getIdProducto()%>">Editar</a>
+                                          <a  class="d-none"  href="ControladorProducto?accion=eliminar&id=<%= pr.getIdProducto()%>">Eliminar</a>
                                         <a class="btn btn-danger btnEliminar">Eliminar</a>
                                    
                                     </td>

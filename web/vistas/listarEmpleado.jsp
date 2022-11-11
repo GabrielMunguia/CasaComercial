@@ -64,14 +64,16 @@
                             <thead>
                                 <tr class="bg-dark text-white">
                                     <th class="text-center">ID</th>
-                                    <th class="text-center">NOMBRE</th>
+                                    <th class="text-center">NOMBRES</th>
+                                    <th class="text-center">APELLIDOS</th>
                                     <th class="text-center">DUI</th>
                                     <th class="text-center">NIT</th>
                                     <th class="text-center">GENERO</th>
-                                    <th class="text-center">FECHANACIMIENTO</th>
+                                    <th class="text-center">FECHA NACIMIENTO</th>
+                                    <th class="text-center">FECHA CONTRATO</th>
                                     <th class="text-center">TELEFONO</th>
                                     <th class="text-center">DIRECCION</th>
-                                    <th class="text-center">IDCARGO</th>
+                                 
                                      <%if(usr.getIdCargo()==2){ %>
                                     <th class="text-center noExport">ACCIONES</th>
                                     
@@ -94,14 +96,16 @@
                                 <tr>
                                     <td class="text-center"><%= em.getIdEmp()%></td>
                                     <td class="text-center"><%= em.getNom()%></td>
+                                     <td class="text-center"><%= em.getApellidos()%></td>
                                     <td class="text-center"><%= em.getDui()%></td>
-                                    <td class="text-center"><%= em.getNit()%></td>
+                                    <td class="text-center"><%= em.getNIT()%></td>
                                     <td class="text-center"><%= em.getGen()%></td>
                                     <td class="text-center"><%= em.getFechNa()%></td>
+                                        <td class="text-center"><%= em.getFechaContrato()%></td>
                                     <td class="text-center"><%= em.getTel()%></td>
-                                    <td class="text-center"><%= em.getDir()%></td>
+                                 <td class="text-center"><%= em.getDireccion()%></td>
 
-                                    <td class="text-center noExport"><%= dao.getCargo(em.getIdCa())%></td>
+                                
                                     <%if(usr.getIdCargo()==2){ %>
                                     <td>
                                         <a class="btn btn-warning" href="ControladorEmpleados?accion=EditarEmpleado&id=<%= em.getIdEmp()%>">Editar</a>
@@ -154,17 +158,18 @@
 
 
         <!-- Para los estilos en Excel     -->
-        <script type="text/javascript" src="./scripts/tablas.js" />
+        <script type="text/javascript" src="./scripts/tablas.js" ></script>
 
 
  
         <script>
 
-
             document.addEventListener("DOMContentLoaded", () => {
                 const botonesEliminar = document.querySelectorAll('.btnEliminar');
+                console.log(botonesEliminar)
                 for (btn of  botonesEliminar) {
                     btn.addEventListener('click', (e) => {
+                        console.log('click');
                         const link = e.target.parentNode.querySelector('.d-none');
                         Swal.fire({
                             title: 'Estas seguro de eliminarlo?',
@@ -240,7 +245,7 @@
             }
 
 
-
+console.log('funciona el escript');
 
 
         </script>

@@ -1,11 +1,10 @@
+<%@page import="modeloDAO.VentaDAO"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="modelo.Producto"%>
 <%@page import="modeloDAO.ProductoDAO"%>
 <%@page import="modeloDAO.FacturaDetalladaDAO"%>
 <%@page import="modelo.FacturaDetallada"%>
-<%@page import="modelo.Factura"%>
-<%@page import="modelo.Factura"%>
-<%@page import="modeloDAO.FacturaDAO"%>
+
 
 <%@page import="java.util.Iterator"%>
 
@@ -66,7 +65,7 @@
               FacturaDetallada fd = new FacturaDetallada();
                FacturaDetalladaDAO dao = new FacturaDetalladaDAO();
                fd=dao.list(id);
-              FacturaDAO daoF = new FacturaDAO();
+              VentaDAO daoF = new VentaDAO();
               System.out.println(daoF.getTotalFactura(id));
               fd.setTota(daoF.getTotalFactura(id));
           
@@ -154,11 +153,11 @@
                         p=iter.next();
             %>
                 <tr>
-                  <td> <%=p.getNombre()%></td>
+                  <td> <%=p.getProducto()%></td>
                   <td><%=p.getDescripcion()%></td>
                   <td><%=p.getCantidad()%></td>
-                  <td>$<%=p.getPrecioContado()%> USD</td>
-                  <td>$<%=(p.getPrecioContado()*p.getCantidad())%>USD</td>
+                  <td>$<%=p.getPrecioVenta()%> USD</td>
+                  <td>$<%=(p.getPrecioVenta()*p.getCantidad())%>USD</td>
                 </tr>
                 
       <%}%>

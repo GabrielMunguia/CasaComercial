@@ -17,16 +17,24 @@
         <servlet-class>controlador.ControladorEmpleados</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ControladorFactura</servlet-name>
-        <servlet-class>controlador.ControladorFactura</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ControladorCreditos</servlet-name>
         <servlet-class>controlador.ControladorCreditos</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ControladorProducto</servlet-name>
         <servlet-class>controlador.ControladorProducto</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorCategoria</servlet-name>
+        <servlet-class>controlador.ControladorCategoria</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorProveedor</servlet-name>
+        <servlet-class>controlador.ControladorProveedor</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControladorVentas</servlet-name>
+        <servlet-class>controlador.ControladorVentas</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
@@ -45,16 +53,24 @@
         <url-pattern>/ControladorEmpleados</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ControladorFactura</servlet-name>
-        <url-pattern>/ControladorFactura</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ControladorCreditos</servlet-name>
         <url-pattern>/ControladorCreditos</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ControladorProducto</servlet-name>
         <url-pattern>/ControladorProducto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorCategoria</servlet-name>
+        <url-pattern>/ControladorCategoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorProveedor</servlet-name>
+        <url-pattern>/ControladorProveedor</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorVentas</servlet-name>
+        <url-pattern>/ControladorVentas</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

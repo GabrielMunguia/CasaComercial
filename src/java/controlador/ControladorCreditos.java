@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modelo.Credito;
 import modelo.DetalleCredito;
-import modelo.DetalleFactura;
+import modelo.DetalleVenta;
 import modelo.Usuario;
 import modeloDAO.CreditoDAO;
 import modeloDAO.DetalleCreditoDAO;
-import modeloDAO.DetalleFacturaDAO;
+import modeloDAO.DetalleVentaDAO;
 import modeloDAO.PagoDAO;
 import modeloDAO.ProductoDAO;
 

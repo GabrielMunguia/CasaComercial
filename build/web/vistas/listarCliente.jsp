@@ -68,7 +68,8 @@
                             <thead>
                                <tr class="bg-dark text-white">
                             <th class="text-center">ID</th>
-                            <th class="text-center">NOMBRE</th>
+                            <th class="text-center">NOMBRES</th>
+                            <th class="text-center">APELLIDOS</th>
                             <th class="text-center">DUI</th>
                             <th class="text-center">NIT</th>
                             <th class="text-center">DIRECCIÓN</th>
@@ -95,6 +96,7 @@
                         <tr>
                             <td class="text-center"><%= c.getIdCliente()%></td>
                             <td class="text-center"><%= c.getNombre()%></td>
+                                 <td class="text-center"><%= c.getApellidos()%></td>
                             <td class="text-center"><%= c.getDUI()%></td>
                             <td class="text-center"><%= c.getNIT()%></td>
                             <td class="text-center"><%= c.getDireccion()%></td>

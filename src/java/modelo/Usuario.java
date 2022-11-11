@@ -12,6 +12,15 @@ package modelo;
 public class Usuario {
    
     String usuario;
+
+    public int getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+    int idEmpleado;
     String password;
     int idCargo;
 

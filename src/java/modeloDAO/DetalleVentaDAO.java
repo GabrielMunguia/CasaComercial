@@ -4,31 +4,39 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import modelo.Conexion;
-import modelo.DetalleFactura;
+import modelo.DetalleVenta;
 
-public class DetalleFacturaDAO {
+public class DetalleVentaDAO {
 
     Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-    DetalleFactura f = new DetalleFactura();
+    DetalleVenta f = new DetalleVenta();
     
     
-           public boolean addDetalleFactura(DetalleFactura f) {
-        
-        String sql = "insert into detallefactura(idProducto, cantidad, descuento, idFactura)values('"+f.getIdProducto()+"','"+f.getCantidad()+"','"+f.getDescuento()+"', '"+f.getIdFactura()+"')";
-        
-        try{
+           public boolean addDetalleFactura(DetalleVenta f) {
+        String sql = "insert into detalles_ventas (idVenta, idProducto, cantidad, precioUnitario,descuento) values (?,?,?,?,?)";
+        try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
+            ps.setInt(1, f.getIdVenta());
+            ps.setInt(2, f.getIdProducto());
+            ps.setInt(3, f.getCantidad());
+            ps.setDouble(4, f.getPrecioUnitario());
+            ps.setDouble(5, f.getDescuento());
             ps.executeUpdate();
-        }catch(Exception e){
-            System.out.println(" ERROR AL INSETAR DETALLE FACTURA = " +  e);
+            return true;
+        } catch (Exception e) {
         }
         return false;
+
+        
+     
     }
-           
+
+    
+    
               public boolean eliminar(int id){
          String sql="delete from detallefactura where idFactura="+id;
         try {

@@ -9,36 +9,66 @@ package modelo;
  *
  * @author HP
  */
-public class Empleado extends modelo.Cargo{
+public class Empleado{
     int idEmp;
     String nom;
+    String ape;
     String dui;
-    String nit;
+    String correo;
     String gen;
     String fechNa;
+    String fechContrato;
     String tel;
-    String dir;
-    String usu;
-    String pas;
+    String nit;
+    String direccion;
+
     
 
     public Empleado() {
     }
 
-    public Empleado(int idCa, String cargo, String descri,String nom, String dui, String nit, String gen, String fechNa, String tel, String dir, String usu, String pas) {
-        super(idCa,cargo,descri);
+    public Empleado(String nom, String dui, String correo, String gen, String fechNa, String tel,String ape,String nit,String direccion) {
+  
         this.nom = nom;
         this.dui = dui;
-        this.nit = nit;
+        this.correo=correo;
+        this.ape=ape;
         this.gen = gen;
         this.fechNa = fechNa;
         this.tel = tel;
-        this.dir = dir;
-        this.usu = usu;
-        this.pas = pas;
+        this.direccion=direccion;
+        this.nit = nit;
+        
+      
         
     }
-
+    
+    public void setFechaContrato(String fecha){
+        this.fechContrato=fecha;
+    }
+     public String getFechaContrato(){
+        return this.fechContrato;
+    }
+    
+    
+     public String getDireccion(){
+        return this.direccion;
+    }
+    public void setDireccion(String direccion){
+        this.direccion=direccion;
+    }
+    public String getNIT(){
+        return this.nit;
+    }
+    public void setNIT(String nit){
+        this.nit=nit;
+    }
+    public String getApellidos(){
+        return this.ape;
+    }
+    public void setApellidos(String ape){
+        this.ape=ape;
+    }
     public int getIdEmp() {
         return idEmp;
     }
@@ -63,12 +93,12 @@ public class Empleado extends modelo.Cargo{
         this.dui = dui;
     }
 
-    public String getNit() {
-        return nit;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setNit(String nit) {
-        this.nit = nit;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getGen() {
@@ -94,35 +124,4 @@ public class Empleado extends modelo.Cargo{
     public void setTel(String tel) {
         this.tel = tel;
     }
-
-    public String getDir() {
-        return dir;
-    }
-
-    public void setDir(String dir) {
-        this.dir = dir;
-    }
-
-    public String getUsu() {
-        return usu;
-    }
-
-    public void setUsu(String usu) {
-        this.usu = usu;
-    }
-
-    public String getPas() {
-        return pas;
-    }
-
-    public void setPas(String pas) {
-        this.pas = pas;
-    }
-
-    
-
-    
-    
-    
-    
 }

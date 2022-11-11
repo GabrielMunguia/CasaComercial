@@ -28,24 +28,23 @@ public class UsuarioDAO {
    
     public Usuario validar(String usr,String password) {
        Usuario usuario= new Usuario();
-        String sql = "Select * from empleado where usuario=? and password=?";
+        String sql = "Select * from usuarios where usuario='"+usr+"'and clave='"+password+"';";
+        System.out.println(sql);
         try {
 
             con = cn.getConnection();
 
             ps = con.prepareStatement(sql);
 
-            ps.setString(1, usr);
-
-            ps.setString(2, password);
-            
+      
 
             rs = ps.executeQuery();
 
             while (rs.next()) {
                 usuario.setUsuario(rs.getString("usuario"));
-                usuario.setPassword(rs.getString("password"));
-                usuario.setIdCargo(rs.getInt("idCargo"));        
+                usuario.setPassword(rs.getString("clave"));
+                usuario.setIdCargo(rs.getInt("idRol"));   
+                usuario.setIdEmpleado(rs.getInt("idEmpleado"));
             }
 
             

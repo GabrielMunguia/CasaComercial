@@ -1,6 +1,7 @@
+<%@page import="modelo.Venta"%>
+<%@page import="modeloDAO.VentaDAO"%>
 <%@page import="modelo.Usuario"%>
-<%@page import="modelo.Factura"%>
-<%@page import="modeloDAO.FacturaDAO"%>
+
 <%@page import="modeloDAO.EmpleadoDAO"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="modelo.Empleado"%>
@@ -33,77 +34,86 @@
                     aside = "admin";
                 }
                 break;
-                case 2:{
-                    
-                    aside="gerente";
-                }break;
-                
-                case 3:{
-                    
-                    aside="vendedor";
+                case 2: {
+
+                    aside = "gerente";
                 }
-                
-                default:{
-                aside="vendedor";
-                }break;
+                break;
+
+                case 3: {
+
+                    aside = "vendedor";
+                }
+
+                default: {
+                    aside = "vendedor";
+                }
+                break;
 
             }
 
-            
+
         %>
-        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
+        <div id="<%= aside%>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
 
             <div>
                 <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-11">
-                    <h1 class="m-3"> Lista de Facturas</h1>
-                   
+                    <h1 class="m-3"> Lista de ventas</h1>
+
                     <div class="col-12">
                         <table id="tabla"  class="p-2 mt-5 table table-striped table-bordered  col-12   "  style="width:100%">
                             <thead>
                                 <tr class="bg-dark text-white">
-                                    <th class="text-center">Numero factura</th>
+                                    <th class="text-center">ID</th>
+                                    <th class="text-center">Tipo comprobante</th>
+                                    <th class="text-center">Numero de comprobante</th>
+                                    <th class="text-center">Cliente</th>
                                     <th class="text-center">Fecha</th>
-                                    <th class="text-center">Id cliente</th>
-                                    <th class="text-center">Id Empleado</th>
+                                    <th class="text-center">Empleado</th>
+                                    <th class="text-center">Metodo Pago</th>
                                     <th class="text-center">Total</th>
-                                      
+
                                     <th class="text-center noExport">Acciones</th>
-                                        
+
 
 
                                 </tr>
                             </thead>
                             <tbody>
                                 <%
-                                    FacturaDAO dao = new FacturaDAO();
-                                    List<Factura> list = dao.listarFacturas();
-                                    Iterator<Factura> iter = list.iterator();
-                                    Factura f = null;
+                                    VentaDAO dao = new VentaDAO();
+                                    List<Venta> list = dao.listarVenta();
+                                    Iterator<Venta> iter = list.iterator();
+                                    Venta v = null;
                                     while (iter.hasNext()) {
-                                        f = iter.next();
+                                        v = iter.next();
                                 %>
 
 
 
                                 <tr>
-                                    <td class="text-center"><%= f.getId()%></td>
-                                    <td class="text-center"><%= f.getFecha()%></td>
-                                    <td class="text-center"><%= f.getIdCliente()%></td>
-                                    <td class="text-center"><%= f.getIdEmpleado()%></td>
-                                    <td class="text-center">$<%= f.getTotal()%></td>
-                                   
+                                    <td class="text-center col-1"><%= v.getIdVenta()%></td>
+                                    <td class="text-center col-1"><%= v.getTipoComprobante()%></td>
+                                    <td class="text-center col-1"><%= v.getNoComprobante()%></td>
+                                    <td class="text-center "><%= v.getCliente()%></td>
+                                    <td class="text-center"><%= v.getFecha()%></td>
+                                    <td class="text-center"><%= v.getEmpleado()%></td>
+                                    <td class="text-center"><%= v.getMetodoPago()%></td>
+                                    <td class="text-center"><%= v.getTotal()%></td>
+
+
                                     <td class="d-flex  justify-content-center align-items-center noExport">
-                                          <%if(usr.getIdCargo()==2){%>
+                                        <%if (usr.getIdCargo() == 2) {%>
                                         <button class="btn btn-danger mx-2 btnEliminar">Elminar </button>
-                                        <a  class="d-none" href="ControladorFactura?accion=eliminar&id=<%=f.getId()%>">Eliminar</a>
+                                        <a  class="d-none" href="ControladorVentas?accion=eliminar&id=<%=v.getIdVenta()%>">Eliminar</a>
                                         <%}%>
-                                        <a class="btn btn-info" href="ControladorFactura?accion=detalleFactura&id=<%= f.getId()%>">Ver detalle</a>
+                                        <a class="btn btn-info" href="ControladorVentas?accion=detalleVenta&id=<%= v.getIdVenta()%>">Ver detalle</a>
                                     </td>
-                                 
-                                  
+
+
                                 </tr>
                                 <%}%>
                             </tbody>

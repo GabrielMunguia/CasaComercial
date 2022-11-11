@@ -27,7 +27,7 @@
 
     </head>
     <body>
-       <% Usuario usr = (Usuario) session.getAttribute("login");
+        <% Usuario usr = (Usuario) session.getAttribute("login");
             String aside = "";
 
             switch (usr.getIdCargo()) {
@@ -35,36 +35,38 @@
                     aside = "admin";
                 }
                 break;
-                case 2:{
-                    
-                    aside="gerente";
-                }break;
-                
-                case 3:{
-                    
-                    aside="vendedor";
+                case 2: {
+
+                    aside = "gerente";
                 }
-                
-                default:{
-                aside="vendedor";
-                }break;
+                break;
+
+                case 3: {
+
+                    aside = "vendedor";
+                }
+
+                default: {
+                    aside = "vendedor";
+                }
+                break;
 
             }
 
-            
+
         %>
-        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
+        <div id="<%= aside%>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
 
             <div>
                 <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
-<%
-                    EmpleadoDAO dao=new EmpleadoDAO();
-                    int id=Integer.parseInt((String)request.getAttribute("idEmp"));
-                    Empleado em=(Empleado)dao.list(id);
-                %>
+                    <%
+                        EmpleadoDAO dao = new EmpleadoDAO();
+                        int id = Integer.parseInt((String) request.getAttribute("idEmp"));
+                        Empleado em = (Empleado) dao.list(id);
+                    %>
                     <div class="card w-100">
                         <div class="card-header mb-2">
                             <strong>Editar Empleado</strong>
@@ -73,21 +75,42 @@
                               class='bg-white   p-2 mt-5 rounded ws-80 ws-50 d-flex flex-column justify-content-center align-items-center'
                               method='GET'>
                             <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">Nombre completo</label>
+                                <label for="inputEmail4" class="form-label">Nombres</label>
                                 <input type="text" class="form-control" name="txtNom" value="<%=em.getNom()%>" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="inputEmail4" class="form-label">Apellidos</label>
+                                <input type="text" class="form-control" name="txtApellidos" value="<%=em.getApellidos()%>" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">DUI</label>
                                 <input type="text" class="form-control" name="txtDui" value="<%=em.getDui()%>"required>
                             </div>
+
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">NIT</label>
-                                <input type="text" class="form-control" name="txtNit" value="<%=em.getNit()%>"  required>
+                                <input type="text" class="form-control" name="txtNit" value="<%=em.getNIT()%>"  required>
                             </div>
-
+                            <div class="col-md-6">
+                                <label for="inputPassword4" class="form-label">Direccion</label>
+                                <textarea  class="form-control" name="txtDireccion" required> <%=em.getDireccion()%></textarea>
+                               
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputPassword4" class="form-label">Correo</label>
+                                <input type="text" class="form-control" name="txtCorreo" value="<%=em.getCorreo()%>"  required>
+                            </div>
                             <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">Fecha nacimiento</label>
                                 <input type="date" class="form-control" name="txtFec" required value="<%=em.getFechNa()%>" >
+                              
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputPassword4" class="form-label">Fecha contratacion</label>
+                                <input type="date" class="form-control" name="txtFechaContrato" required value="<%=em.getFechaContrato()%>" />
+                              
+                                
                             </div>
 
 
@@ -105,44 +128,9 @@
                                 <input type="text" class="form-control" name="txtTel" value="<%=em.getTel()%>" required>
                             </div>
 
-                            <div class="col-md-6">
-                                <label for="inputPassword4" class="form-label">Direccion</label>
-                                <textarea class="form-control" name="txtDir" id="floatingTextarea" > <%=em.getDir()%></textarea>
+                           
 
-                            </div>
-
-
-
-                            <div class="col-md-6 ">
-                                <label for="inputPassword4" class="form-label">Cargo</label>
-                                <select class="form-select" id="cargo"   name="txtCargo"  required>
-                                    <%
-                    List<Cargo>list=dao.listarCargo();
-                    Iterator<Cargo>iter=list.iterator();
-                    Cargo car=null;
-                    while(iter.hasNext()){
-                        car=iter.next();
-            %>
-                
-                    <option value="<%= car.getIdCa()%>"><%= car.getCargo()%></option>
-                    <%}%>
-                                </select>
-                            </div>
-
-                            <div class="col-md-6 ">
-                                <label for="inputEmail4" class="form-label">Usuario</label>
-                                <input type="text" class="form-control" name="txtUsu"  value="<%=em.getUsu()%>" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" name="txtPas" value="<%=em.getPas()%>" required>
-                            </div>
-
-
-
-
-
-     <input type="hidden" name="txtid" value="<%=em.getIdEmp()%>">
+                            <input type="hidden" name="txtid" value="<%=em.getIdEmp()%>">
                             <div class="col-12 mt-2 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary" name='accion' value="Actualizar"
                                         type='submit'>Actualizar</button>
@@ -162,19 +150,19 @@
             </div>
         </section>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            
-            document.querySelector("#cargo").selectedIndex=<%=em.getIdCa()%>;
-            if('<%=em.getGen()%>'==='MASCULINO'){
-                 document.querySelector("#genero").selectedIndex=1;
-            }else{
-                 document.querySelector("#genero").selectedIndex=2;
+
+
+            if ('<%=em.getGen()%>' === 'MASCULINO') {
+                document.querySelector("#genero").selectedIndex = 1;
+            } else {
+                document.querySelector("#genero").selectedIndex = 2;
             }
-            
-              
-        
-        
+
+
+
+
 
 
         </script>

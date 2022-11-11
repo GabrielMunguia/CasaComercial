@@ -72,9 +72,12 @@
                                 Cliente c = (Cliente) dao.list(id);
                             %>
                             <h1>Modificar Cliente</h1>
+                          
                             <form action='ControladorCliente'>
-                                Nombre<br>
+                                Nombres<br>
                                 <input class="form-control" type="text" name="txtNombre" value="<%= c.getNombre()%>"><br>
+                                  Apellidos<br>
+                                <input class="form-control" type="text" name="txtApellidos" value="<%= c.getApellidos()%>"><br>
                                 DUI<br>
                                 <input class="form-control" type="text" name="txtDUI" value="<%= c.getDUI()%>"><br>
                                 NIT <br>
@@ -105,6 +108,10 @@
         </div>
     </section>
     <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+    <script>
+        const obj = "<%=c.getTelefono()%>";
+        console.log(obj)
+        </script>
 
 
 

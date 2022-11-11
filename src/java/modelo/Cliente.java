@@ -3,6 +3,7 @@ package modelo;
 public class Cliente {
     int idCliente;
     String nombre;
+    String apellidos;
     String DUI;
     String NIT;
     String direccion;
@@ -28,12 +29,26 @@ public class Cliente {
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
+    
+    
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    
+    
+      public String getApellidos() {
+        return apellidos;
+    }
+    
+    
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
 
     public String getDUI() {
         return DUI;

@@ -4,6 +4,9 @@
     Author     : GabrielMunguia
 --%>
 
+<%@page import="modeloDAO.ClienteDAO"%>
+<%@page import="modelo.Cliente"%>
+<%@page import="modeloDAO.ProveedorDAO"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="modelo.MetodoPago"%>
@@ -27,7 +30,7 @@
 
     </head>
     <body>
-     <% Usuario usr = (Usuario) session.getAttribute("login");
+        <% Usuario usr = (Usuario) session.getAttribute("login");
             String aside = "";
 
             switch (usr.getIdCargo()) {
@@ -35,25 +38,27 @@
                     aside = "admin";
                 }
                 break;
-                case 2:{
-                    
-                    aside="gerente";
-                }break;
-                
-                case 3:{
-                    
-                    aside="vendedor";
+                case 2: {
+
+                    aside = "gerente";
                 }
-                
-                default:{
-                aside="vendedor";
-                }break;
+                break;
+
+                case 3: {
+
+                    aside = "vendedor";
+                }
+
+                default: {
+                    aside = "vendedor";
+                }
+                break;
 
             }
 
-            
+
         %>
-        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
+        <div id="<%= aside%>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
@@ -65,7 +70,7 @@
                         <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
                             <h1 class="mt-1">Agregar Venta</h1>
 
-                            <form class="row g-3  w-100 mt-2" action="ControladorFactura" method="POST">
+                            <form class="row g-3  w-100 mt-2" action="ControladorVentas" method="POST">
 
 
                                 <div class="col-sm-12 ">
@@ -77,14 +82,45 @@
                                         <div class="card-body row">
                                             <div class="col-md-6">
                                                 <label for="inputEmail4" class="form-label">ID Cliente</label>
-                                                <input type="number" class="form-control" name="idClienteFactura" required="">
+                                                <input list="brow" name="idClienteFactura" class="form-control" placeholder="Ingrese el DUI ">
+                                                <datalist id="brow" >
+                                                    <option value="">Seleccione un cliente</option>
+                                                    <%
+                                                        ClienteDAO daoC = new ClienteDAO();
+                                                        List<Cliente> list2 = daoC.listarCliente();
+                                                        Iterator<Cliente> iter2 = list2.iterator();
+                                                        Cliente prov = null;
+                                                        while (iter2.hasNext()) {
+                                                            prov = iter2.next();
+
+                                                    %>
+
+                                                    <option value="<%= prov.getIdCliente()%>"><%=prov.getDUI()%></option>
+                                                    <%}%>
+
+                                                </datalist>  
+
                                             </div>
 
                                             <div class="col-md-6">
-                                                <label for="inputEmail4" class="form-label">ID Empleado</label>
-                                                <input type="number" class="form-control" name="idEmpleado" required="">
+                                                <label for="inputEmail4" class="form-label
+                                                       ">Tipo de documento</label>
+                                                <select name="tipoDocumento" class="form-select">
+                                                    <option value="FC">Factura</option>
+                                                    <option value="CCF">Credito fiscal</option>
+                                                </select>
                                             </div>
-                                            <div class="col-md-6 ">
+
+                                            <div class="col-md-6 mt-4">
+                                                <label for="inputEmail4" class="form-label
+                                                       ">Numero de documento</label>
+                                                <input type="number"  class="form-control" name="noDocumento" />
+                                            </div>
+
+
+
+
+                                            <div class="col-md-6 mt-4 ">
                                                 <label for="inputPassword4" class="form-label">Metodo de pago</label>
                                                 <select id="metodoPago" class="form-select" name="metodoPago" required="">
                                                     <%
@@ -139,7 +175,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th scope="col">#</th>
-                                                                    <th scope="col">Imagen</th>
+
                                                                     <th scope="col">Nombre</th>
                                                                     <th scope="col">Precio</th>
                                                                     <th scope="col">Cantidad</th>
@@ -152,7 +188,7 @@
 
                                                             </tbody>
                                                             <tfoot>
-                                                                                                                                <tr>
+                                                                <tr>
                                                                     <td></td>
                                                                     <td></td>
                                                                     <td></td>
@@ -160,7 +196,7 @@
                                                                     <td></td>
                                                                     <td>   <p>Total a pagar <strong>$<span id="total">0.00</span></strong></p></td>
                                                                     <td>
-                                                                      
+
                                                                     </td>
                                                                 </tr>
 
@@ -176,274 +212,278 @@
                                 </div>
                                 <input type="hidden" id="lstProdCompra" name="lstProd">
 
-
+                             <input type="hidden" id="fecha" name="fecha">
 
                                 <div class="col-12 mt-2 d-flex justify-content-end">
                                     <input class="btn btn-primary" type="submit"
                                            name="accion" value="Pagar">
-                                    <a
-                            </div>
-                        </form>
 
+                                </div>
+                            </form>
+
+                        </div>
                     </div>
+
+
+
+
                 </div>
-
-
-
-
             </div>
-        </div>
-    </section>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
-    <script>
-
-        let error =<%=request.getAttribute("exito")%>
-        console.log(error);
-        if (error === false) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'Porfavor verifique los datos',
-                icon: 'error',
-                confirmButtonColor: 'red',
-                confirmButtonText: 'OK'
-            });
-
-        } else if (error == true) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Se registro correctamente',
-                showConfirmButton: false,
-                timer: 1500
-            })
-        }
-
-
-
-//            <%ProductoDAO p = new ProductoDAO();
-    List<Producto> strList = p.listar();
-        %>
-        let lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
-        Nombre :"<%= strList.get(i).getNombre()%>", Precio :"<%= strList.get(i).getPrecioContado()%>",
-        Imagen :"<%= strList.get(i).getFotografia()%>",
-                Stock :"<%= strList.get(i).getStock()%>", id :"<%= strList.get(i).getId()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
-        ];
-        lstProductos = lstProductos.filter((prod) => prod.Stock > 0);
-        console.log(lstProductos);
-const calcularTotal=()=>{
-      const total=document.querySelector('#total');
-            let numTotal=0;
-            const subTotales=document.querySelectorAll('.subTotal');
-            
-            for(sub of subTotales){
-             const subt=parseFloat(sub.textContent.replace('$',''));
-             numTotal+=subt;
-            }
-            numTotal=numTotal.toFixed(2);
-           total.textContent=numTotal;
-}
-
-        const btnAgregarProd = document.querySelector("#aggProducto");
-        const idProd = document.querySelector("#idProd");
-        const tabla = document.querySelector("#tabla");
-        tabla.addEventListener('DOMNodeInserted',()=>{
-          calcularTotal();
-            
-        })
-        const x2 = document.createElement("tr");
-        let contador = 1;
-        let arrayIdProduCompra = "";
-        const inputHidden = document.querySelector("#lstProdCompra");
-        let btnEliminar;
-        btnAgregarProd.addEventListener("click", () => {
-            const id = document.querySelector("#idProd");
-            const cantidad = document.querySelector("#cantidadProd");
-            const lst = lstProductos.filter((prod) => prod.id === id.value);
-            if (lst.length > 0) {
-                const prod = lst[0];
-                let arrayAux = arrayIdProduCompra.split(',');
-                let encontrado = false;
-                let arrayAux2 = [];
-                let x = false;
-                if (arrayAux.length > 1) {
-                    for (let i = 0; i < arrayAux.length; i++) {
-
-
-                        if (i % 2 == 0) {
-
-
-                            if (arrayAux[i] == prod.id) {
-                                encontrado = true;
-                                x = true;
-                            }
-                            arrayAux2.push(arrayAux[i]);
-                        } else {
-                            if (encontrado) {
-                                arrayAux2.push(parseInt(arrayAux[i]) + parseInt(cantidad.value));
-                                const input = obtenerInput(prod.id);
-                                input.value = parseInt(arrayAux[i]) + parseInt(cantidad.value);
-                                const precio = input.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$", "");
-                                const subTotal = input.parentElement.parentElement.querySelector(".subTotal");
-
-                                subTotal.textContent = "$" + (parseFloat(precio) * parseInt(parseInt(arrayAux[i]) + parseInt(cantidad.value)));
-                               
-
-                                encontrado = false;
-
-                            } else {
-                                arrayAux2.push(arrayAux[i]);
-                            }
-                        }
-
-                    }
-//       console.log(arrayAux2);
-
-                    arrayIdProduCompra = arrayAux2 + "";
-                    inputHidden.value = JSON.stringify(arrayIdProduCompra);
-                }
-                if (!x) {
-                    arrayIdProduCompra += prod.id + "," + cantidad.value + ",";
-//      console.log(arrayIdProduCompra);
-                    const x =
-                            " <tr><th scope='row'>" +
-                            contador +
-                            "</th><td class='w-25'> <img src='" +
-                            prod.Imagen +
-                            "' class='img-fluid' alt='quixote' ></td> <td>" +
-                            prod.Nombre +
-                            "</td> <td class='precioProd'>$" +
-                            prod.Precio +
-                            "</td> <td><input type='number' max='" + prod.Stock + "'idInput='" + prod.id + "' value='" +
-                            cantidad.value +
-                            "' class='text-center border-0 btn input-cantidad'></td><td class='subTotal'>$" +
-                            cantidad.value * prod.Precio +
-                            "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id=" +
-                            prod.id +
-                            " value='Eliminar' ></td></tr>";
-                    tabla.innerHTML += x;
-                    contador++;
-                    inputHidden.value = JSON.stringify(arrayIdProduCompra);
-                }
-
-
-//       console.log(arrayAux2);
-
-
-                aggBtnEliminar();
-                procesarCambiosCantidad();
-            } else {
+        </section>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
+        <script>
+const fecha= document.querySelector('#fecha');
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
+fecha.value = dateTime;
+            let error =<%=request.getAttribute("exito")%>
+            console.log(error);
+            if (error === false) {
                 Swal.fire({
                     title: 'Error!',
-                    text: 'El producto no se encuentra disponible',
+                    text: 'Porfavor verifique los datos',
                     icon: 'error',
                     confirmButtonColor: 'red',
                     confirmButtonText: 'OK'
                 });
+
+            } else if (error == true) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se registro correctamente',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             }
-        });
 
-        const aggBtnEliminar = () => {
 
-            btnEliminar = document.querySelectorAll(".btnEliminarProd");
-            for (btn of btnEliminar) {
 
-                btn.addEventListener("click", (e) => {
-                    
+            <%ProductoDAO p = new ProductoDAO();
+                List<Producto> strList = p.listar();
+            %>
+            let lstProductos = [<% for (int i = 0; i < strList.size(); i++) {%>{
+            Nombre :"<%= strList.get(i).getProducto()%>", Precio :"<%= strList.get(i).getPrecioVenta()%>",
 
+            Stock :"<%= strList.get(i).getStock()%>", id :"<%= strList.get(i).getIdProducto()%>"}<%= i + 1 < strList.size() ? "," : ""%><% }%>
+            ];
+            lstProductos = lstProductos.filter((prod) => prod.Stock > 0);
+            console.log(lstProductos);
+            const calcularTotal = () => {
+                const total = document.querySelector('#total');
+                let numTotal = 0;
+                const subTotales = document.querySelectorAll('.subTotal');
+
+                for (sub of subTotales) {
+                    const subt = parseFloat(sub.textContent.replace('$', ''));
+                    numTotal += subt;
+                }
+                numTotal = numTotal.toFixed(2);
+                total.textContent = numTotal;
+            }
+
+            const btnAgregarProd = document.querySelector("#aggProducto");
+            const idProd = document.querySelector("#idProd");
+            const tabla = document.querySelector("#tabla");
+            tabla.addEventListener('DOMNodeInserted', () => {
+                calcularTotal();
+
+            })
+            const x2 = document.createElement("tr");
+            let contador = 1;
+            let arrayIdProduCompra = "";
+            const inputHidden = document.querySelector("#lstProdCompra");
+            let btnEliminar;
+            btnAgregarProd.addEventListener("click", () => {
+                const id = document.querySelector("#idProd");
+                const cantidad = document.querySelector("#cantidadProd");
+                const lst = lstProductos.filter((prod) => prod.id === id.value);
+                if (lst.length > 0) {
+                    const prod = lst[0];
                     let arrayAux = arrayIdProduCompra.split(',');
                     let encontrado = false;
                     let arrayAux2 = [];
-                    for (let i = 0; i < arrayAux.length; i++) {
+                    let x = false;
+                    if (arrayAux.length > 1) {
+                        for (let i = 0; i < arrayAux.length; i++) {
 
 
-                        if (i % 2 == 0) {
+                            if (i % 2 == 0) {
 
 
-                            if (arrayAux[i] == e.target.id) {
-
-                                encontrado = true;
-                                console.log("SE ENCONTRO LA COINCIDENCIA");
-                            } else {
-                                console.log("se agrego " + arrayAux[i]);
+                                if (arrayAux[i] == prod.id) {
+                                    encontrado = true;
+                                    x = true;
+                                }
                                 arrayAux2.push(arrayAux[i]);
-                            }
-                        } else {
-                            if (encontrado) {
-                                encontrado = false;
-                                console.log("SE ENCONTRO LA CANITDAD DE PAR");
                             } else {
-                                console.log("se agrego " + arrayAux[i]);
-                                arrayAux2.push(arrayAux[i]);
+                                if (encontrado) {
+                                    arrayAux2.push(parseInt(arrayAux[i]) + parseInt(cantidad.value));
+                                    const input = obtenerInput(prod.id);
+                                    input.value = parseInt(arrayAux[i]) + parseInt(cantidad.value);
+                                    const precio = input.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$", "");
+                                    const subTotal = input.parentElement.parentElement.querySelector(".subTotal");
+
+                                    subTotal.textContent = "$" + (parseFloat(precio) * parseInt(parseInt(arrayAux[i]) + parseInt(cantidad.value)));
+
+
+                                    encontrado = false;
+
+                                } else {
+                                    arrayAux2.push(arrayAux[i]);
+                                }
                             }
+
                         }
+                        //       console.log(arrayAux2);
 
+                        arrayIdProduCompra = arrayAux2 + "";
+                        inputHidden.value = JSON.stringify(arrayIdProduCompra);
                     }
-                    arrayIdProduCompra = arrayAux2 + "";
-                    inputHidden.value = JSON.stringify(arrayIdProduCompra);
-
-                    tabla.removeChild(e.target.parentNode.parentNode);
-                      calcularTotal();
-
-
-                });
-            }
-            ;
-        }
-
-        const obtenerInput = (id) => {
-            const inputs = document.querySelectorAll('.input-cantidad');
-            console.log(inputs);
-            console.log(id)
-            return Object.values(inputs).filter((inp) => inp.getAttribute("idinput") == id)[0];
-        };
-
-        const procesarCambiosCantidad = () => {
-
-            const inputsCantidad = document.querySelectorAll('.input-cantidad');
-            for (input of inputsCantidad) {
-                input.addEventListener('change', (e) => {
-
-                    let arrayAux = arrayIdProduCompra.split(',');
-                    let encontrado = false;
-                    let arrayAux2 = [];
-                    for (let i = 0; i < arrayAux.length; i++) {
-                        if (i % 2 == 0) {
-
-
-                            if (arrayAux[i] == e.target.getAttribute("idinput")) {
-                                encontrado = true;
-                                arrayAux2.push(arrayAux[i]);
-                            } else {
-                                arrayAux2.push(arrayAux[i]);
-                            }
-                        } else {
-                            if (encontrado) {
-                                arrayAux2.push(e.target.value);
-                            } else {
-                                arrayAux2.push(arrayAux[i]);
-                            }
-                        }
-
+                    if (!x) {
+                        arrayIdProduCompra += prod.id + "," + cantidad.value + ",";
+                        //      console.log(arrayIdProduCompra);
+                        const x =
+                                " <tr><th scope='row'>" +
+                                contador +
+                                "</th><td " +
+                                "<td>" +
+                                prod.Nombre +
+                                "</td> <td class='precioProd'>$" +
+                                prod.Precio +
+                                "</td> <td><input type='number' max='" + prod.Stock + "'idInput='" + prod.id + "' value='" +
+                                cantidad.value +
+                                "' class='text-center border-0 btn input-cantidad'></td><td class='subTotal'>$" +
+                                cantidad.value * prod.Precio +
+                                "</td> <td><input type='button' class='btn btn-danger btnEliminarProd' id=" +
+                                prod.id +
+                                " value='Eliminar' ></td></tr>";
+                        tabla.innerHTML += x;
+                        contador++;
+                        inputHidden.value = JSON.stringify(arrayIdProduCompra);
                     }
 
-                    arrayIdProduCompra = arrayAux2 + "";
-                    inputHidden.value = JSON.stringify(arrayIdProduCompra);
 
-                    const precio = e.target.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$", "");
-                    const subTotal = e.target.parentElement.parentElement.querySelector(".subTotal");
-                    subTotal.textContent = "$" + (parseFloat(precio) * parseInt(parseInt(e.target.value)));
+                    //       console.log(arrayAux2);
 
-                });
+
+                    aggBtnEliminar();
+                    procesarCambiosCantidad();
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'El producto no se encuentra disponible',
+                        icon: 'error',
+                        confirmButtonColor: 'red',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+
+            const aggBtnEliminar = () => {
+
+                btnEliminar = document.querySelectorAll(".btnEliminarProd");
+                for (btn of btnEliminar) {
+
+                    btn.addEventListener("click", (e) => {
+
+
+                        let arrayAux = arrayIdProduCompra.split(',');
+                        let encontrado = false;
+                        let arrayAux2 = [];
+                        for (let i = 0; i < arrayAux.length; i++) {
+
+
+                            if (i % 2 == 0) {
+
+
+                                if (arrayAux[i] == e.target.id) {
+
+                                    encontrado = true;
+                                    console.log("SE ENCONTRO LA COINCIDENCIA");
+                                } else {
+                                    console.log("se agrego " + arrayAux[i]);
+                                    arrayAux2.push(arrayAux[i]);
+                                }
+                            } else {
+                                if (encontrado) {
+                                    encontrado = false;
+                                    console.log("SE ENCONTRO LA CANITDAD DE PAR");
+                                } else {
+                                    console.log("se agrego " + arrayAux[i]);
+                                    arrayAux2.push(arrayAux[i]);
+                                }
+                            }
+
+                        }
+                        arrayIdProduCompra = arrayAux2 + "";
+                        inputHidden.value = JSON.stringify(arrayIdProduCompra);
+
+                        tabla.removeChild(e.target.parentNode.parentNode);
+                        calcularTotal();
+
+
+                    });
+                }
+                ;
             }
 
-        }
+            const obtenerInput = (id) => {
+                const inputs = document.querySelectorAll('.input-cantidad');
+                console.log(inputs);
+                console.log(id)
+                return Object.values(inputs).filter((inp) => inp.getAttribute("idinput") == id)[0];
+            };
+
+            const procesarCambiosCantidad = () => {
+
+                const inputsCantidad = document.querySelectorAll('.input-cantidad');
+                for (input of inputsCantidad) {
+                    input.addEventListener('change', (e) => {
+
+                        let arrayAux = arrayIdProduCompra.split(',');
+                        let encontrado = false;
+                        let arrayAux2 = [];
+                        for (let i = 0; i < arrayAux.length; i++) {
+                            if (i % 2 == 0) {
+
+
+                                if (arrayAux[i] == e.target.getAttribute("idinput")) {
+                                    encontrado = true;
+                                    arrayAux2.push(arrayAux[i]);
+                                } else {
+                                    arrayAux2.push(arrayAux[i]);
+                                }
+                            } else {
+                                if (encontrado) {
+                                    arrayAux2.push(e.target.value);
+                                } else {
+                                    arrayAux2.push(arrayAux[i]);
+                                }
+                            }
+
+                        }
+
+                        arrayIdProduCompra = arrayAux2 + "";
+                        inputHidden.value = JSON.stringify(arrayIdProduCompra);
+
+                        const precio = e.target.parentElement.parentElement.querySelector(".precioProd").textContent.replace("$", "");
+                        const subTotal = e.target.parentElement.parentElement.querySelector(".subTotal");
+                        subTotal.textContent = "$" + (parseFloat(precio) * parseInt(parseInt(e.target.value)));
+
+                    });
+                }
+
+            }
 
 
 
-    </script>
+        </script>
 
 
 
 
-</body>
+    </body>
 </html>

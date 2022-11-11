@@ -33,6 +33,8 @@ public class Controlador extends HttpServlet {
 
             String usuario = request.getParameter("usuario");
             String password = request.getParameter("password");
+            System.out.println("usuario"+usuario);
+            System.out.println("password"+password);
             usr = dao.validar(usuario, password);
 
             if (usr.getIdCargo() != 0) {

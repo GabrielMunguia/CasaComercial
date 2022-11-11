@@ -69,9 +69,12 @@
                         <div class="col-12">
                             <h1>Agrega a un nuevo Cliente</h1>
                             <form action="ControladorCliente">
-                                Nombre:<br>
+                                Nombres:<br>
                                 <input class="form-control" type="text"
                                        name="txtNombre" required ><br>
+                                 Apellidos<br>
+                                 <input class="form-control" type="text"
+                                       name="txtApellidos" required ><br>
                                 DUI<br>
                                 <input class="form-control" type="text"
                                        name="txtDUI" required><br>

@@ -39,7 +39,7 @@ public class ControladorCliente extends HttpServlet {
           String acceso="";
           Usuario usr = (Usuario) session.getAttribute("login");
           if(usr==null){
-              System.out.println("NULLLLLLLLLLLLLLLLL");
+          
               acceso=login;
               
           }else{
@@ -51,11 +51,13 @@ public class ControladorCliente extends HttpServlet {
             acceso=add;
         }else if(action.equalsIgnoreCase("Agregar")){
             String nom = request.getParameter("txtNombre");
+            String ape= request.getParameter("txtApellidos");
             String dui = request.getParameter("txtDUI");
             String nit = request.getParameter("txtNIT");
             String dir = request.getParameter("txtDireccion");
             String tel = request.getParameter("txtTelefono");
             cli.setNombre(nom);
+             cli.setApellidos(ape);
             cli.setDUI(dui);
             cli.setNIT(nit);
             cli.setDireccion(dir);
@@ -77,12 +79,14 @@ public class ControladorCliente extends HttpServlet {
         }else if(action.equalsIgnoreCase("Actualizar")){
             id=Integer.parseInt(request.getParameter("txtid"));
             String nom = request.getParameter("txtNombre");
+            String ape = request.getParameter("txtApellidos");
             String dui = request.getParameter("txtDUI");
             String nit = request.getParameter("txtNIT");
             String dir = request.getParameter("txtDireccion");
             String tel = request.getParameter("txtTelefono");
             cli.setIdCliente(id);
             cli.setNombre(nom);
+            cli.setApellidos(ape);
             cli.setDUI(dui);
             cli.setNIT(nit);
             cli.setDireccion(dir);

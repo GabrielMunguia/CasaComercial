@@ -40,45 +40,19 @@ export const aside=`
          <span class="tooltip">Ver Clientes</span>
       </li>
      
-   <li>
-       <a href="ControladorCreditos?accion=addCredito">
-         <i class='bx bx-folder' ></i>
-         <span class="links_name">Agregar Credito</span>
-       </a>
-       <span class="tooltip">Agregar Venta</span>
-     </li>
-  <li>
-       <a href="ControladorCreditos?accion=listar">
-         <i class='bx bx-folder' ></i>
-         <span class="links_name">Ver Creditos</span>
-       </a>
-       <span class="tooltip">Ver Creditos</span>
-     </li>
+   
     
-     <li>
-       <a href="ControladorPago?accion=add">
-         <i class='bx bx-pie-chart-alt-2' ></i>
-         <span class="links_name">Agregar Pago</span>
-       </a>
-       <span class="tooltip">Agregar Pago</span>
-     </li>
- <li>
-       <a  href="ControladorPago?accion=verPagos">
-         <i class='bx bx-chat' ></i>
-         <span class="links_name">Ver pagos</span>
-       </a>
-       <span class="tooltip">Ver pagos</span>
-     </li>
+    
 
      <li>
-       <a href="ControladorFactura?accion=addVenta">
+       <a href="ControladorVentas?accion=addVenta">
          <i class='bx bx-folder' ></i>
          <span class="links_name">Agregar Venta</span>
        </a>
        <span class="tooltip">Agregar Venta</span>
      </li>
      <li>
-       <a href="ControladorFactura?accion=listarFacturas">
+       <a href="ControladorVentas?accion=listarVentas">
          <i class='bx bx-cart-alt' ></i>
          <span class="links_name">Ver Ventas</span>
        </a>
@@ -95,6 +69,36 @@ export const aside=`
        <a href="ControladorProducto?accion=listarProducto">
          <i class='bx bx-heart' ></i>
          <span class="links_name">Ver productos</span>
+       </a>
+       <span class="tooltip">Ver productos</span>
+     </li>
+
+ <li>
+       <a href="ControladorCategoria?accion=addCategoria">
+         <i class='bx bx-cog' ></i>
+         <span class="links_name">Agregar categoria</span>
+       </a>
+       <span class="tooltip">Agregar categoria</span>
+     </li>
+     <li>
+       <a href="ControladorCategoria?accion=listarCategoria">
+         <i class='bx bx-heart' ></i>
+         <span class="links_name">Ver categorias</span>
+       </a>
+       <span class="tooltip">Ver productos</span>
+     </li>
+
+ <li>
+       <a href="ControladorProveedor?accion=addProveedor">
+         <i class='bx bx-cog' ></i>
+         <span class="links_name">Agregar proveedor</span>
+       </a>
+       <span class="tooltip">Agregar categoria</span>
+     </li>
+     <li>
+       <a href="ControladorProveedor?accion=listarProveedor">
+         <i class='bx bx-heart' ></i>
+         <span class="links_name">Ver proveedores</span>
        </a>
        <span class="tooltip">Ver productos</span>
      </li>
