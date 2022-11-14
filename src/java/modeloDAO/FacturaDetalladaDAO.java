@@ -26,7 +26,10 @@ public class FacturaDetalladaDAO {
 
     public FacturaDetallada list(int idFactura) {
         ArrayList<FacturaDetallada> list = new ArrayList<>();
-        String sql = "select f.idFactura,f.fecha,f.idEmpleado,e.nombre as nombreEmpleado,c.idCliente,c.nombre as nombreCliente ,c.direccion,mp.metodo, f.total,c.telefono from factura as f, cliente as c , empleado as e , metodopago as mp where f.idCliente=c.idCliente and e.idEmpleado=f.idEmpleado and mp.idMetodoPago=f.idMetodoPago and idFactura=" + idFactura;
+        String sql = "SELECT v.idVenta,c.idCliente,concat(c.nombres,' ',c.apellidos)as nombre_cliente,c.direccion as direccion_cliente,c.telefono as telefono_cliente \n" +
+",e.idEmpleado,concat(e.nombres,' ',e.apellidos) as nombre_empleado,total as total_venta,fecha as fecha_venta,\n" +
+"mp.metodo as metodo_pago\n" +
+" FROM ventas as v join empleados as e on e.idEmpleado=v.idEmpleado join clientes as c on c.idCliente=v.idCliente join metodopago as mp on mp.idMetodoPago=v.idMetodoPago where idVenta=" + idFactura+';';
         System.out.println("sql = " + sql);
         FacturaDetallada f = new FacturaDetallada();
         try {
@@ -35,15 +38,17 @@ public class FacturaDetalladaDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                f.setIdFactura(rs.getInt("idFactura"));
-                f.setFecha(rs.getString("fecha"));
+                f.setIdFactura(rs.getInt("idVenta"));
+                f.setFecha(rs.getString("fecha_venta"));
                 f.setIdEmpleado(rs.getInt("idEmpleado"));
-                f.setNombreEmpleado(rs.getString("nombreEmpleado"));
+                f.setNombreEmpleado(rs.getString("nombre_empleado"));
                 f.setIdCliente(rs.getInt("idCliente"));
-                f.setNombreCliente(rs.getString("nombreCliente"));
-                f.setDireccionCliente(rs.getString("direccion"));
-                f.setMetodoPago(rs.getString("metodo"));
-                f.setTelCliente(rs.getString("telefono"));
+                f.setNombreCliente(rs.getString("nombre_cliente"));
+                f.setDireccionCliente(rs.getString("direccion_cliente"));
+                f.setMetodoPago(rs.getString("metodo_pago"));
+                f.setTelCliente(rs.getString("telefono_cliente"));
+                f.setTota(rs.getDouble("total_venta"));
+              
                 
 
                

@@ -26,12 +26,35 @@ export const aside=`
          <span class="tooltip">Ver Empleados</span>
       </li>
  <li>
+
+  <li>
+        <a href="ControladorUsuarios?accion=add">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Agregar Usuario</span>
+        </a>
+         <span class="tooltip">Agregar Usuario</span>
+      </li>
+   <li>
+        <a href="ControladorUsuarios?accion=listar">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Ver Usuario</span>
+        </a>
+         <span class="tooltip">Ver Usuario</span>
+      </li>
+ <li>
+
+
+
        <a  href="ControladorCliente?accion=add"  name='accion' value='add' >
          <i class='bx bx-user' ></i>
          <span class="links_name">Agregar Cliente</span>
        </a>
        <span class="tooltip">Agregar Cliente</span>
      </li>
+
+
+
+
       <li>
         <a href="ControladorCliente?accion=listarCliente"  name='accion' value='listarCliente'>
           <i class='bx bx-grid-alt'></i>

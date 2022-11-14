@@ -111,67 +111,79 @@ public class ControladorVentas extends HttpServlet {
         String action = request.getParameter("accion");
 
         if (action.equals("Pagar")) {
-            HttpSession session = request.getSession();
-            Usuario usr = (Usuario) session.getAttribute("login");
-            int idCliente = Integer.parseInt(request.getParameter("idClienteFactura"));
-//            int idEmpleado = Integer.parseInt(request.getParameter("idEmpleado"));
-            int metodoPago = Integer.parseInt(request.getParameter("metodoPago"));
-            String tipoDocument = request.getParameter("tipoDocumento");
-            int noComprobante = Integer.parseInt(request.getParameter("noDocumento"));
-            f.setIdCliente(idCliente);
-            f.setIdEmpleado(usr.getIdEmpleado());
-            f.setIdMetodoPago(metodoPago);
-            f.setTotal(0);
-            f.setTipoComprobante(tipoDocument);
-            f.setNoComprobante(noComprobante);
 
-            f.setFecha(request.getParameter("fecha"));
-            int idFactura = dao.addFactura(f);
-            if (idFactura != 0) {
-                double total=0;
-                String lst = request.getParameter("lstProd");
-                lst = lst.replace("\"", "");
-                String[] res = lst.split(",");
-                DetalleVenta f = new DetalleVenta();
-                f.setIdVenta(idFactura);
-                f.setDescuento(0);
-                ProductoDAO daoProd = new ProductoDAO();
 
-                DetalleVentaDAO daoF = new DetalleVentaDAO();
-
-                for (int i = 0; i < res.length; i++) {
-
-                    if (i % 2 == 0) {
-                        f.setIdProducto(Integer.parseInt(res[i]));
-
-                    } else {
-                        Producto p = new Producto();
-                        p= daoProd.listProducto(f.getIdProducto());
-                        f.setCantidad(Integer.parseInt(res[i]));
-                        f.setPrecioUnitario(p.getPrecioVenta());
-                        daoF.addDetalleFactura(f);
-                      
-                        daoProd.descontarStock(f.getIdProducto(),f.getCantidad());
-                        total+=(f.getCantidad()*p.getPrecioVenta());
-                        
+            try {
+                HttpSession session = request.getSession();
+                Usuario usr = (Usuario) session.getAttribute("login");
+                int idCliente = Integer.parseInt(request.getParameter("idClienteFactura"));
+    //            int idEmpleado = Integer.parseInt(request.getParameter("idEmpleado"));
+                int metodoPago = Integer.parseInt(request.getParameter("metodoPago"));
+                String tipoDocument = request.getParameter("tipoDocumento");
+                int noComprobante = Integer.parseInt(request.getParameter("noDocumento"));
+                f.setIdCliente(idCliente);
+                f.setIdEmpleado(usr.getIdEmpleado());
+                f.setIdMetodoPago(metodoPago);
+                f.setTotal(0);
+                f.setTipoComprobante(tipoDocument);
+                f.setNoComprobante(noComprobante);
+    
+                f.setFecha(request.getParameter("fecha"));
+                int idFactura = dao.addFactura(f);
+                if (idFactura != 0) {
+                    double total=0;
+                    String lst = request.getParameter("lstProd");
+                    lst = lst.replace("\"", "");
+                    String[] res = lst.split(",");
+                    DetalleVenta f = new DetalleVenta();
+                    f.setIdVenta(idFactura);
+                    f.setDescuento(0);
+                    ProductoDAO daoProd = new ProductoDAO();
+    
+                    DetalleVentaDAO daoF = new DetalleVentaDAO();
+    
+                    for (int i = 0; i < res.length; i++) {
+    
+                        if (i % 2 == 0) {
+                            f.setIdProducto(Integer.parseInt(res[i]));
+    
+                        } else {
+                            Producto p = new Producto();
+                            p= daoProd.listProducto(f.getIdProducto());
+                            f.setCantidad(Integer.parseInt(res[i]));
+                            f.setPrecioUnitario(p.getPrecioVenta());
+                            daoF.addDetalleFactura(f);
+                          
+                            daoProd.descontarStock(f.getIdProducto(),f.getCantidad());
+                            total+=(f.getCantidad()*p.getPrecioVenta());
+                            
+                        }
+    
                     }
-
-                }
-                dao.actualizarTotal(f.getIdVenta(), total);
-                
-                request.setAttribute("exito", "true");
-                acceso = add;
-
-            } else {
+                    dao.actualizarTotal(f.getIdVenta(), total);
+                    
+                    request.setAttribute("exito", "true");
+                    acceso = add;
+                    } else {
                 System.out.println("ERROR FALSE");
                 request.setAttribute("exito", "false");
                 acceso = add;
             }
+            } catch (Exception e) {
+                // TODO: handle exception
+                request.setAttribute("exito", "false");
+                acceso = add;
+            }
+          
+
+            
 
         }
 
+       //ir a la vista sin datos del post
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request, response);
+        
     }
 
     @Override

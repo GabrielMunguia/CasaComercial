@@ -184,4 +184,34 @@ public class EmpleadoDAO implements CRUDempleado {
         return ca.getCargo();
     }
 
+    //obtener los empleados sin usuario
+    public List listaEmpleadosSinUsuario() {
+        ArrayList<Empleado> list = new ArrayList<>();
+        String sql = "select * from empleados where idEmpleado not in (select idEmpleado from usuarios) and estado=1";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Empleado em = new Empleado();
+                em.setIdEmp(rs.getInt("idEmpleado"));
+                em.setNom(rs.getString("nombres"));
+                em.setApellidos(rs.getString("apellidos"));
+                em.setDui(rs.getString("DUI"));
+                em.setCorreo(rs.getString("correo"));
+                em.setGen(rs.getString("genero"));
+                em.setFechNa(rs.getString("fechaNacimiento"));
+                em.setFechaContrato(rs.getString("fechaContratacion"));
+                em.setTel(rs.getString("telefono"));
+                em.setDireccion(rs.getString("direccion"));
+                list.add(em);
+            }
+        } catch (SQLException ex) {
+   
+        }
+        return list;
+        
+    }  
+
 }

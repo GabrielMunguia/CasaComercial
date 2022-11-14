@@ -10,8 +10,73 @@ package modelo;
  * @author GabrielMunguia
  */
 public class Usuario {
-   
+
     String usuario;
+    int idEmpleado;
+    String password;
+    int idCargo;
+    int idUsuario;
+    boolean estado;
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNombre_empleado() {
+        return nombre_empleado;
+    }
+
+    public void setNombre_empleado(String nombre_empleado) {
+        this.nombre_empleado = nombre_empleado;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public String getDui_empelado() {
+        return dui_empelado;
+    }
+
+    public void setDui_empelado(String dui_empelado) {
+        this.dui_empelado = dui_empelado;
+    }
+    String nombre_empleado,rol,dui_empelado;
+
+
+
+    public Usuario() {
+        this.estado = true;
+
+    }
+
+    public Usuario(int id, String usuario, String password, boolean estado) {
+
+        this.usuario = usuario;
+        this.password = password;
+        this.estado = estado;
+    }
+
+    public void setID(int id) {
+        this.idUsuario = id;
+    }
+     public int getID() {
+        return this.idUsuario;
+     }
+    public boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
 
     public int getIdEmpleado() {
         return idEmpleado;
@@ -20,9 +85,6 @@ public class Usuario {
     public void setIdEmpleado(int idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
-    int idEmpleado;
-    String password;
-    int idCargo;
 
     public int getIdCargo() {
         return idCargo;
@@ -30,22 +92,6 @@ public class Usuario {
 
     public void setIdCargo(int idCargo) {
         this.idCargo = idCargo;
-    }
-
-
-
-  
-
-   
-
-    public Usuario() {
-      
-    }
-
-    public Usuario(int id, String usuario, String password) {
-    
-        this.usuario = usuario;
-        this.password = password;
     }
 
     public String getUsuario() {
@@ -63,7 +109,5 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
-    
+
 }

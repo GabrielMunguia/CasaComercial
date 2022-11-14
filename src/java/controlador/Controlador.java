@@ -36,7 +36,8 @@ public class Controlador extends HttpServlet {
             System.out.println("usuario"+usuario);
             System.out.println("password"+password);
             usr = dao.validar(usuario, password);
-
+  
+            
             if (usr.getIdCargo() != 0) {
                 session.setAttribute("login", usr);
             }

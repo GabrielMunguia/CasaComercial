@@ -15,6 +15,9 @@
 <%@page import="java.util.List"%>
 <%@page import="modeloDAO.ProductoDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -159,8 +162,27 @@
                                             <div class="col-md-12 ">
                                                 <label for="inputEmail4" class="form-label">ID Producto</label>
                                                 <div class="d-flex">
-                                                    <input type="number" class="form-control mx-2" id="idProd" placeholder="Agregar producto"
-                                                           >
+<!--                                                    <input type="number" class="form-control mx-2" id="idProd" placeholder="Agregar producto"
+                                                           >-->
+                                                    
+                                                    
+                                                    <input type="number" list="brow2" class="form-control mx-2" id="idProd" placeholder="Agregar producto">
+                                                <datalist id="brow2" >
+                                                    
+                                                    <%
+                                                        ProductoDAO daoProd = new ProductoDAO();
+                                                        List<Producto> listProd = daoProd.listarProducto();
+                                                        Iterator<Producto> iterProd = listProd.iterator();
+                                                        Producto prod = null;
+                                                        while (iterProd.hasNext()) {
+                                                            prod = iterProd.next();
+
+                                                    %>
+
+                                                    <option value="<%= prod.getIdProducto()%>"><%=prod.getProducto()%></option>
+                                                    <%}%>
+
+                                                </datalist>  
                                                     <input type="numer" class="form-control mx-2 w-25" id="cantidadProd"  placeholder="cantidad"
                                                            >
                                                     <input type="button" class=" btn btn-outline-primary" id="aggProducto" value="Agregar">
@@ -257,6 +279,8 @@ fecha.value = dateTime;
                     showConfirmButton: false,
                     timer: 1500
                 })
+
+              
             }
 
 
