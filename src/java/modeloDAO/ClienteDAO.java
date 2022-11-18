@@ -41,6 +41,7 @@ public class ClienteDAO implements ClienteCRUD{
                 list.add(c);
             }
         }catch(Exception e){  
+            System.out.println(e);
         }
         return list;
     }

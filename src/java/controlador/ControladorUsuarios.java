@@ -24,7 +24,7 @@ import modeloDAO.UsuarioDAO;
 public class ControladorUsuarios extends HttpServlet {
 
     String listar = "./vistas/listarUsuarios.jsp";
-    String add = "./vistas/addEmpleado.jsp";
+    String add = "./vistas/addUsuario.jsp";
     String edit = "./vistas/editEmpleado.jsp";
     Empleado em = new Empleado();
     String login = "./index.jsp";
@@ -64,10 +64,49 @@ public class ControladorUsuarios extends HttpServlet {
             if (action.equalsIgnoreCase("listar")) {
                 System.out.println(action);
                 acceso = listar;
-            } else if (action.equalsIgnoreCase("addEmpleado")) {
+            } else if (action.equalsIgnoreCase("add")) {
 
                 acceso = add;
             } else if (action.equalsIgnoreCase("Agregar")) {
+                  try {
+                     int idEmpleado = Integer.parseInt(request.getParameter("txtIdEmpleado"));
+                   int idCargo= Integer.parseInt(request.getParameter("txtIdRol"));
+                   String usuario=request.getParameter("txtUsuario");
+                   String password = request.getParameter("txtPassword");
+                   
+                   if(dao.validarUsuarioUnico(usuario)){
+                         Usuario user =  new Usuario();
+                   user.setIdCargo(idCargo);
+                   user.setIdEmpleado(idEmpleado);
+                   user.setPassword(password);
+
+                   user.setUsuario(usuario);
+                   
+      
+             
+                boolean exito = dao.agregar(user);
+                if (exito) {
+                    request.setAttribute("exito", "true");
+               } else {
+                    request.setAttribute("exito", "false");
+               }
+           
+               
+            
+                       
+                   }else{
+                     
+                            request.setAttribute("errorUsuario", "true");
+                   }
+                } catch (Exception e) {
+                      request.setAttribute("exito", "false");
+                }
+                   
+            acceso = add;
+      
+             
+             
+           
                
                 acceso = add;
             } else if (action.equalsIgnoreCase("editar")) {

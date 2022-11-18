@@ -10,7 +10,14 @@ export const aside=`
     </div>
     <ul class="nav-list px-0  ">
      
-
+ <li>
+        <a href="ControladorCaja?accion=addCaja">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">CAJA</span>
+        </a>
+         <span class="tooltip">Caja</span>
+      </li>
+   <li>
    <li>
         <a href="ControladorEmpleados?accion=addEmpleado">
           <i class='bx bx-grid-alt'></i>

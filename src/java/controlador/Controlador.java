@@ -27,6 +27,7 @@ public class Controlador extends HttpServlet {
 
         String accion = request.getParameter("accion");
 
+        
         if (accion.equals("Ingresar")) {
 
             HttpSession session = request.getSession();
@@ -36,12 +37,15 @@ public class Controlador extends HttpServlet {
             System.out.println("usuario"+usuario);
             System.out.println("password"+password);
             usr = dao.validar(usuario, password);
+            
   
             
             if (usr.getIdCargo() != 0) {
                 session.setAttribute("login", usr);
             }
 
+            
+            
             if (session.getAttribute("login") != null) {
 
                 Usuario activo = (Usuario) session.getAttribute("login");

@@ -40,6 +40,10 @@
         <servlet-name>ControladorUsuarios</servlet-name>
         <servlet-class>controlador.ControladorUsuarios</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorCaja</servlet-name>
+        <servlet-class>controlador.ControladorCaja</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>ControladorUsuarios</servlet-name>
         <url-pattern>/ControladorUsuarios</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorCaja</servlet-name>
+        <url-pattern>/ControladorCaja</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

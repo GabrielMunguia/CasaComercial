@@ -34,8 +34,10 @@ public class UsuarioDAO {
         System.out.println(sql);
         try {
 
+            
             con = cn.getConnection();
 
+            
             ps = con.prepareStatement(sql);
 
       
@@ -43,6 +45,7 @@ public class UsuarioDAO {
             rs = ps.executeQuery();
 
             while (rs.next()) {
+                
                 usuario.setUsuario(rs.getString("usuario"));
                 usuario.setPassword(rs.getString("clave"));
                 usuario.setIdCargo(rs.getInt("idRol"));   
@@ -52,7 +55,7 @@ public class UsuarioDAO {
             
 
         } catch (Exception e) {
-            System.out.println("error = " + e);
+            System.out.println("error! = " + e);
             
         }
         
@@ -118,6 +121,22 @@ public class UsuarioDAO {
             System.out.println("error = " + e);
         }
         return lista;
+    }
+
+
+    public boolean validarUsuarioUnico(String usuario) {
+        String sql = "select * from usuarios where usuario='" + usuario + "';";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+        }
+        return true;
     }
     
  
