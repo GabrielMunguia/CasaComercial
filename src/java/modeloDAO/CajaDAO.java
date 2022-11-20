@@ -49,6 +49,115 @@ public class CajaDAO {
         }
       
     }
+
+
+    public boolean abrirCaja(Caja c) {
+        String sql = "insert into caja(idUsuarioEmp,fechaApertura,montoApertura,montoCierre)values("+c.getIdUsuarioEmp()+",'"+c.getFechaApertura()+"',"+c.getMontoApertura()+","+c.getMontoApertura()+")";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+          
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+            System.out.println(sql);
+            return false;
+        }
+    }
+
+
+    public boolean validarCajaAbierta(int idUsuarioEmp) {
+        String sql = "select * from caja where idUsuarioEmp=" + idUsuarioEmp + " and fechaCierre is null";
+        System.out.println(sql);
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+            return false;
+        }
+    }
+
+
+    public boolean aumentarVentas(double  valorVenta, int idUsuarioEmp) {
+        String sql = "update caja set ventasTotales=ventasTotales+"+ 1+",montoCierre=montoCierre+"
+        + valorVenta+" where idUsuarioEmp=" + idUsuarioEmp + " and fechaCierre is null";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+            System.out.println(sql);
+            return false;
+        }
+    }
+
+    //obtener ultima caja abierta del usuario
+    public Caja obtenerUltimaCaja(int idUsuarioEmp) {
+        String sql = "select * from caja where idUsuarioEmp=" + idUsuarioEmp + " and fechaCierre is null";
+        Caja c = new Caja();
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                c.setIdCaja(rs.getInt("idCaja"));
+                c.setIdUsuarioEmp(rs.getInt("idUsuarioEmp"));
+                c.setFechaApertura(rs.getString("fechaApertura"));
+                c.setMontoCierre(rs.getDouble("montoCierre"));
+                c.setVentasTotales(rs.getDouble("ventasTotales"));
+                c.setMontoApertura(rs.getDouble("montoApertura"));
+            }
+            return c;
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+            return null;
+        }
+    }
+
+    //restar valor al montoCierra y restar a ventasTotales y restar a total de ventas
+    public boolean restarMontoCierre(double valorVenta, int idUsuarioEmp) {
+        String sql = "update caja set montoCierre=montoCierre-"+valorVenta+",ventasTotales=ventasTotales-1 where idUsuarioEmp=" + idUsuarioEmp + " and fechaCierre is null";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+            System.out.println(sql);
+            return false;
+        }
+    }
+
+
+    public boolean cerrarCaja(int idUsuarioEmp, String fechaCierre,int idEmpleadoReceptor) {
+        String sql = "update caja set fechaCierre='"+fechaCierre+"',idEmpleadoReceptor="+idEmpleadoReceptor+" where idUsuarioEmp=" + idUsuarioEmp + " and fechaCierre is null";
+        System.out.println(sql);
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+            System.out.println(sql);
+            return false;
+        }
+    }
+
+  
+
+    
+
   
  
 

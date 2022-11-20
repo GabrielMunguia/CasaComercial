@@ -4,6 +4,8 @@
     Author     : HP
 --%>
 
+<%@page import="modelo.Caja"%>
+<%@page import="modeloDAO.CajaDAO"%>
 <%@page import="modelo.Empleado"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="java.util.Iterator"%>
@@ -60,24 +62,63 @@
 
             <div>
                 <div class="container-fluid d-flex justify-content-center align-items-center flex-column m-2">
+                  
+                    <%
+                        CajaDAO dao = new CajaDAO();
+                        Caja caja = dao.obtenerUltimaCaja(usr.getID());
+                        
+                    %>
 
                     <div class="card col-6">
                         <div class="card-header text-center  ">
-                            <strong class="fs-4 text-center " >Abrir caja</strong>
+                            <strong class="fs-4 text-center " >Cerrar caja</strong>
                         </div>
                         <form class="row g-3 mb-3  px-3 d-flex justify-content-center py-4" action='ControladorCaja'
                               class='bg-white   p-2 mt-5 rounded ws-80 ws-50 d-flex flex-column justify-content-center align-items-center'
                               method='GET'>
-                            <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">Monto de apertura </label>
-                                <input class="form-control" type="number" step="any" name="monto" />
+                            
+                             <div class="col-12">
+                                <label for="inputEmail4" class="form-label">Monto apertura </label>
+                                <input class="form-control" type="number" step="any" disabled value="<%=caja.getMontoApertura()%>" />
                             </div>
-                              <input type="hidden"  name="fechaApertura" id="fechaApertura" />
+                            
+                            <div class="col-12">
+                                <label for="inputEmail4" class="form-label">Ventas totales </label>
+                                <input class="form-control" type="number" step="any" disabled value="<%=caja.getVentasTotales()%>" />
+                            </div>
+                            
+                            <div class="col-12">
+                                <label for="inputEmail4" class="form-label">Monto de cierre </label>
+                                <input class="form-control" type="number" step="any" disabled value="<%=caja.getMontoCierre()%>" />
+                            </div>
+                            
+                              <input type="hidden"  name="fechaCierre" id="fechaCierre" />
+                              <div class="col-12">
+                                   <label for="inputEmail4" class="form-label">Empleado receptor </label>
+                              <select name="idEmpleadoReceptor" class="form-control" required>
+                                  
+                                     <%
+                                                        EmpleadoDAO dao2 = new EmpleadoDAO();
+                                                        List<Empleado> list2 = dao2.listarEmpleado();
+                                                        Iterator<Empleado> iter2 = list2.iterator();
+                                                        Empleado emp = null;
+                                                        while (iter2.hasNext()) {
+                                                            emp = iter2.next();
+
+                                                    %>
+
+                                                  
+                                                  <option value="<%= emp.getIdEmp()%>"><%=emp.getNom()+" "+emp.getApellidos()%></option>
+                                                  
+                                                    <%}%>
+                                </select>
+                           
+                            </div>
 
 
-                            <div class="col-12 mt-2 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary" name='accion' value="abrirCaja"
-                                        type='submit'>Abrir caja</button>
+                            <div class="col-12 mt-5 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary" name='accion' value="cerrarCaja"
+                                        type='submit'>Cerrar caja</button>
                             </div>
                         </form>
 
@@ -96,25 +137,13 @@
                                  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
         <script>
-            const fechaApertura = document.getElementById("fechaApertura");
+            const fechaCierre = document.getElementById("fechaCierre");
  
          
-            fechaApertura.value =getFechaApertura();
+            fechaCierre.value =getFechaCierre();
           
              let error =<%=request.getAttribute("exito")%>
-             let usuarioError= <%=request.getAttribute("errorUsuario")%>
-             
-             if(usuarioError){
-                Swal.fire({
-                title: 'Error!',
-                text: 'El usuario ya existe',
-                icon: 'error',
-                confirmButtonColor: 'red',
-                confirmButtonText: 'OK'
-            });  
-            
           
-             }
   
         if (error === false) {
             Swal.fire({
@@ -132,10 +161,15 @@
                 showConfirmButton: false,
                 timer: 1500
             })
+            
+            // setTimeout(()=>{
+            //     //quitar cualquier dato que se mando por el request
+            //     window.location.href = "ControladorCaja?accion=abrirCaja";
+            // },1550)
         }
 
 
-        function getFechaApertura(){
+        function getFechaCierre(){
             const fecha = new Date();
             let dia = fecha.getDate();
             let mes = fecha.getMonth() + 1;

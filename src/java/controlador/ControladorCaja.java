@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modelo.Caja;
 import modelo.Empleado;
 import modelo.Usuario;
+import modeloDAO.CajaDAO;
 import modeloDAO.EmpleadoDAO;
 import modeloDAO.UsuarioDAO;
 
@@ -25,10 +27,11 @@ public class ControladorCaja extends HttpServlet {
 
     String listar = "./vistas/listarUsuarios.jsp";
     String add = "./vistas/addCaja.jsp";
-    String edit = "./vistas/editEmpleado.jsp";
-    Empleado em = new Empleado();
+    String cerrar="./vistas/cerrarCaja.jsp";
+
+    Caja caja = new Caja();
     String login = "./index.jsp";
-    UsuarioDAO dao = new UsuarioDAO();
+    CajaDAO dao = new CajaDAO();
     int id;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -64,82 +67,82 @@ public class ControladorCaja extends HttpServlet {
             if (action.equalsIgnoreCase("listar")) {
                 System.out.println(action);
                 acceso = listar;
-            } else if (action.equalsIgnoreCase("addCaja")) {
+            } else if (action.equalsIgnoreCase("caja")) {
+                Boolean tieneCajaAbierta= dao.validarCajaAbierta(usr.getID());
+                if(tieneCajaAbierta){
+                 acceso = cerrar;
+                }else{
+                       acceso = add;
+                }
 
-                acceso = add;
-            } else if (action.equalsIgnoreCase("Agregar")) {
-                  try {
-                     int idEmpleado = Integer.parseInt(request.getParameter("txtIdEmpleado"));
-                   int idCargo= Integer.parseInt(request.getParameter("txtIdRol"));
-                   String usuario=request.getParameter("txtUsuario");
-                   String password = request.getParameter("txtPassword");
-                   
-                   if(dao.validarUsuarioUnico(usuario)){
-                         Usuario user =  new Usuario();
-                   user.setIdCargo(idCargo);
-                   user.setIdEmpleado(idEmpleado);
-                   user.setPassword(password);
-
-                   user.setUsuario(usuario);
-                   
-      
              
-                boolean exito = dao.agregar(user);
-                if (exito) {
-                    request.setAttribute("exito", "true");
-               } else {
-                    request.setAttribute("exito", "false");
-               }
-           
-               
-            
-                       
-                   }else{
+            } else if (action.equalsIgnoreCase("abrirCaja")) {
+                  try {
+                         Boolean tieneCajaAbierta= dao.validarCajaAbierta(usr.getID());
+                         if(!tieneCajaAbierta){
+                          Double montoCaja = Double.parseDouble(request.getParameter("monto"));
+                      String fechaApertura= request.getParameter("fechaApertura");
+                      Caja c  = new Caja();
+                      c.setFechaApertura(fechaApertura);
+                      c.setIdUsuarioEmp(usr.getID());
+                      c.setMontoApertura(montoCaja);
+                      System.out.println("datos: "+usr.getID());
+                      Boolean exito= dao.abrirCaja(c);
+                      if(exito){
+                            request.setAttribute("exito", "true");
+                                acceso = cerrar;
+                      }else{
+                            request.setAttribute("exito", "false");
+                              acceso = add;
+                      }
+                         }
                      
-                            request.setAttribute("errorUsuario", "true");
-                   }
+                      
+                  
                 } catch (Exception e) {
                       request.setAttribute("exito", "false");
+                          acceso = add;
                 }
                    
-            acceso = add;
-      
-             
-             
-           
-               
-                acceso = add;
-            } else if (action.equalsIgnoreCase("editar")) {
-//           request.setAttribute("idEmp",request.getParameter("id"));
-                acceso = edit;
-            } else if (action.equals("EditarEmpleado")) {
-                request.setAttribute("idUsuario", request.getParameter("id"));
-                acceso = edit;
-            } else if (action.equalsIgnoreCase("Actualizar")) {
 
-                try {
-               
-                acceso = listar;
+            
+            } else if (action.equalsIgnoreCase("cerrarCaja")) {
+                  try {
+                         Boolean tieneCajaAbierta= dao.validarCajaAbierta(usr.getID());
+                       
+                         if(tieneCajaAbierta){
+                          int  idEmpleado = Integer.parseInt(request.getParameter("idEmpleadoReceptor"));
+                           String fechaCierre= request.getParameter("fechaCierre");
+                           Boolean exito= dao.cerrarCaja(usr.getID(), fechaCierre, idEmpleado);
+                            if(exito){
+                            request.setAttribute("exito", "true");
+                                 acceso = add;
+                      }else{
+                            request.setAttribute("exito", "false");
+                               acceso = cerrar;
+                      }
+                   
+                         }
+                     
+                      
+                  
                 } catch (Exception e) {
-                    System.out.println(e);
+                      System.out.println(e);
+                      request.setAttribute("exito", "false");
+                         acceso = cerrar;
                 }
-            } else if (action.equalsIgnoreCase("actualizarEstado")) {
-                id = Integer.parseInt(request.getParameter("id"));
-                boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
-                em.setIdEmp(id);
-                boolean exito = dao.actualizarEstado(id,estado);
-                if (exito) {
-                    request.setAttribute("eliminado", "true");
-                } else {
-                    request.setAttribute("eliminado", "false");
-                }
-                acceso = listar;
-            }
+                   
+
+           
+            } 
 
         }
 
-        RequestDispatcher vista = request.getRequestDispatcher(acceso);
+       //ir a la vista pero quitar cualquier parametro que se haya enviado
+       RequestDispatcher vista = request.getRequestDispatcher(acceso);
+         request.removeAttribute("accion");
         vista.forward(request, response);
+
     }
 
     /**

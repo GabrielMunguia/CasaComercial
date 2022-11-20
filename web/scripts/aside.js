@@ -11,7 +11,7 @@ export const aside=`
     <ul class="nav-list px-0  ">
      
  <li>
-        <a href="ControladorCaja?accion=addCaja">
+        <a href="ControladorCaja?accion=caja">
           <i class='bx bx-grid-alt'></i>
           <span class="links_name">CAJA</span>
         </a>

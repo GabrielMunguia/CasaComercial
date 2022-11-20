@@ -4,6 +4,7 @@
     Author     : GabrielMunguia
 --%>
 
+<%@page import="modeloDAO.CajaDAO"%>
 <%@page import="modeloDAO.ClienteDAO"%>
 <%@page import="modelo.Cliente"%>
 <%@page import="modeloDAO.ProveedorDAO"%>
@@ -58,7 +59,7 @@
                 break;
 
             }
-
+   CajaDAO daoCaja = new CajaDAO();
 
         %>
         <div id="<%= aside%>" class="sidebar open overflow-scroll ">
@@ -255,6 +256,7 @@
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
         <script>
+            validarCajaAbierta();
 const fecha= document.querySelector('#fecha');
 var today = new Date();
 var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -500,6 +502,27 @@ fecha.value = dateTime;
                     });
                 }
 
+            }
+            
+            //esta funcion valida si la caja esta abierta
+            
+           async  function validarCajaAbierta(){
+                const cajaAbierta=<%=daoCaja.validarCajaAbierta(usr.getID())%>;
+                if(cajaAbierta==0){
+                  await   Swal.fire({
+                        title: 'Error!',
+                        text: 'La caja no se encuentra abierta',
+                        icon: 'error',
+                        confirmButtonColor: 'red',
+                        confirmButtonText: 'OK',
+                        showConfirmButton: false,
+                    timer: 1500
+                    });
+               
+                     window.location.href="ControladorCaja?accion=caja";
+                }
+                
+                
             }
 
 

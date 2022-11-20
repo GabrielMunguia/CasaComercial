@@ -50,6 +50,7 @@ public class UsuarioDAO {
                 usuario.setPassword(rs.getString("clave"));
                 usuario.setIdCargo(rs.getInt("idRol"));   
                 usuario.setIdEmpleado(rs.getInt("idEmpleado"));
+                usuario.setID(rs.getInt("idUsuario"));   
             }
 
             
