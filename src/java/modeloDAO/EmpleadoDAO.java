@@ -214,4 +214,33 @@ public class EmpleadoDAO implements CRUDempleado {
         
     }  
 
+
+    public Empleado getEmpleadoByUsuario(int id){
+        String sql = "SELECT * FROM empleados join usuarios on usuarios.idEmpleado=empleados.idEmpleado where empleados.idEmpleado="+id;
+        Empleado em = new Empleado();
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                em.setIdEmp(rs.getInt("idEmpleado"));
+                em.setNom(rs.getString("nombres"));
+                em.setApellidos(rs.getString("apellidos"));
+                em.setDui(rs.getString("DUI"));
+                em.setCorreo(rs.getString("correo"));
+                em.setGen(rs.getString("genero"));
+                em.setFechNa(rs.getString("fechaNacimiento"));
+                em.setFechaContrato(rs.getString("fechaContratacion"));
+                em.setTel(rs.getString("telefono"));
+                em.setDireccion(rs.getString("direccion"));
+               
+             
+            }
+        } catch (SQLException ex) {
+   
+        }
+        return em;
+    }
+
 }

@@ -1,7 +1,12 @@
+<%@page import="modelo.Caja"%>
+<%@page import="modeloDAO.CajaDAO"%>
+<%@page import="modeloDAO.UsuarioDAO"%>
+<%@page import="modelo.Producto"%>
+<%@page import="modeloDAO.ProductoDAO"%>
 <%@page import="modelo.Usuario"%>
-<%@page import="modelo.Cliente"%>
-<%@page import="modelo.Cliente"%>
-<%@page import="modeloDAO.ClienteDAO"%>
+<%@page import="modelo.Credito"%>
+<%@page import="modelo.Credito"%>
+<%@page import="modeloDAO.CreditoDAO"%>
 <%@page import="modeloDAO.EmpleadoDAO"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="modelo.Empleado"%>
@@ -23,10 +28,12 @@
         <script src="https://kit.fontawesome.com/7fc2bb9c0c.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.3/datatables.min.css"/>
+        <!--font awesome con CDN-->  
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">  
 
     </head>
     <body>
-       <% Usuario usr = (Usuario) session.getAttribute("login");
+        <% Usuario usr = (Usuario) session.getAttribute("login");
             String aside = "";
 
             switch (usr.getIdCargo()) {
@@ -34,86 +41,95 @@
                     aside = "admin";
                 }
                 break;
-                case 2:{
-                    
-                    aside="gerente";
-                }break;
-                
-                case 3:{
-                    
-                    aside="vendedor";
+                case 2: {
+
+                    aside = "gerente";
                 }
-                
-                default:{
-                aside="vendedor";
-                }break;
+                break;
+
+                case 3: {
+
+                    aside = "vendedor";
+                }
+
+                default: {
+                    aside = "vendedor";
+                }
+                break;
 
             }
 
-            
+
         %>
-        <div id="<%= aside %>" class="sidebar open overflow-scroll ">
+        <div id="<%= aside%>" class="sidebar open overflow-scroll ">
 
         </div>
         <section class="home-section bg-white ">
-            
-          
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-12">
-                  <h1 class="m-3"> Lista de Clientes</h1>
+                <div class="container-fluid d-flex justify-content-center align-items-center flex-column  col-11">
+                    <h1 class="m-3"> Lista de cortes de caja</h1>
 
                     <div class="col-12">
                         <table id="tabla"  class="p-2 mt-5 table table-striped table-bordered  col-12   "  style="width:100%">
                             <thead>
-                               <tr class="bg-dark text-white">
-                            <th class="text-center">ID</th>
-                            <th class="text-center">NOMBRES</th>
-                            <th class="text-center">APELLIDOS</th>
-                            <th class="text-center">DUI</th>
-                            <th class="text-center">NIT</th>
-                            <th class="text-center">DIRECCI�N</th>
-                            <th class="text-center">TEL�FONO</th>
-                            
-                            <%if(usr.getIdCargo()==1||usr.getIdCargo()==2){ %>
+                                <tr class="bg-dark text-white">
+                                    <th class="text-center">ID</th>
 
-                           
-                            <th class="text-center noExport">ACCIONES</th>
-                            <% } %>
-                             
-                        </tr>
+                                    <th class="text-center  col-3"  >Empleado</th>
+                                     <th class="text-center  col-3"  >Receptor</th>
+                                    <th class="text-center">VentasTotales</th>
+                                    <th class="text-center col-4"  >Monto apertura</th>
+                                    <th class="text-center">Monto de cierre</th>
+                                    <th class="text-center">Fecha apertura</th>
+                                    <th class="text-center">Fecha cierre</th>
+                                    <th class="text-center">Estado</th>
+
+
+
+
+                                
+                                </tr>
                             </thead>
-                           <tbody>
-                        <%
-                            ClienteDAO dao = new ClienteDAO();
-                            List<Cliente> list = dao.listarCliente();
-                            Iterator<Cliente> iter = list.iterator();
-                            Cliente c = null;
-                            while (iter.hasNext()) {
-                                c = iter.next();
-                        %>
+                            <tbody>
+                                <%
+                                    CajaDAO dao2 = new CajaDAO();
 
-                        <tr>
-                            <td class="text-center"><%= c.getIdCliente()%></td>
-                            <td class="text-center"><%= c.getNombre()%></td>
-                                 <td class="text-center"><%= c.getApellidos()%></td>
-                            <td class="text-center"><%= c.getDUI()%></td>
-                            <td class="text-center"><%= c.getNIT()%></td>
-                            <td class="text-center"><%= c.getDireccion()%></td>
-                            <td><%= c.getTelefono()%></td>
-                           <%if(usr.getIdCargo()==1||usr.getIdCargo()==2){ %>
-                            <td class="text-center noExport">
-                                <a class="btn btn-warning" href="ControladorCliente?accion=editar&id=<%= c.getIdCliente()%>">Editar</a>
-                       
-                                 <%if(usr.getIdCargo()==2){%>
-                                    <a  class="d-none" href="ControladorCliente?accion=eliminar&id=<%= c.getIdCliente()%>">Eliminar</a>
-                                        <a class="btn btn-danger btnEliminar">Eliminar</a>
-                                        <%}%>
-                            </td>
-                        <% } %>
-                        </tr>
-                        <%}%>
-                    </tbody>
+                                    List<Caja> list = dao2.listar();
+                                    Iterator<Caja> iter = list.iterator();
+                                    Caja caja = null;
+
+                                    while (iter.hasNext()) {
+                                        caja = iter.next();
+
+                                %>
+                                <tr>
+                                    <td class="text-center"><%= caja.getIdCaja()%></td>
+                                    <td class="text-center"><%= caja.getNombreEmpleado()%></td>
+                                     <td class="text-center">
+                                      
+                                          <%=caja.getFechaCierre()!=null?caja.getNombreReceptor():"-"%>
+                                     
+                                     </td>
+                                         <td class="text-center"><%= caja.getVentasTotales()%></td>
+                                    <td class="text-center"><%= caja.getMontoApertura()%></td>
+                                
+                                    <td class="text-center"><%= caja.getMontoCierre()%></td>
+                                    <td class="text-center"><%= caja.getFechaApertura()%></td>
+                                    <td class="text-center">
+                                        <%=caja.getFechaCierre()!=null?caja.getFechaCierre():"-"%>
+                                    </td>
+                                        <td class="text-center">
+                                       
+                                       <a class="btn <%= caja.getFechaCierre()!=null?"btn-success px-4":"btn-danger"%>">   <%=caja.getFechaCierre()!=null?"Completo":"Incompleto "%></a>
+                                      </td>
+
+
+
+
+                                </tr>
+                                <%}%>
+                            </tbody>
                         </table>
                     </div>
 
@@ -126,8 +142,10 @@
 
                 </div>
         </section>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-qZvrmS2ekKPF2mSznTQsxqPgnpkI4DNTlrdUmTzrDgektczlKNRRhy5X5AAOnx5S09ydFYWWNSfcEqDTTHgtNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <script type="text/javascript" src="" crossorigin="anonymous"></script>
 
 
@@ -143,12 +161,18 @@
         <!-- Para los estilos en Excel     -->
         <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/datatables-buttons-excel-styles@1.1.1/js/buttons.html5.styles.templates.min.js"></script>
+   
         <script type="text/javascript" src="./scripts/tablas.js" />
 
 
         <script src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script> 
 
-<script>
+
+
+
+
+
+        <script>
 
 
             document.addEventListener("DOMContentLoaded", () => {
@@ -157,8 +181,8 @@
                     btn.addEventListener('click', (e) => {
                         const link = e.target.parentNode.querySelector('.d-none');
                         Swal.fire({
-                            title: 'Estas seguro de eliminarlo?',
-                            text: "Se eliminara el cliente",
+                            title: 'Estas seguro de cambiar el estado del usuario?',
+                            text: "Se cambiara el estado del usuario",
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
@@ -214,7 +238,7 @@
             if (elim === false) {
                 Swal.fire({
                     title: 'Error!',
-                    text: 'No se puede eliminar el cliente por que se necesita mantener su registro',
+                    text: 'No se puede eliminar el producto por que se necesita mantener su registro',
                     icon: 'error',
                     confirmButtonColor: 'red',
                     confirmButtonText: 'OK'
@@ -223,17 +247,18 @@
             } else if (elim == true) {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Se elimino correctamente',
+                    title: 'Se actualizo correctamente',
                     showConfirmButton: false,
                     timer: 1500
                 })
             }
 
 
-
-
+ 
 
         </script>
+
+
 
     </body>
 </html>

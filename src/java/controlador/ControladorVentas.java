@@ -49,10 +49,10 @@ public class ControladorVentas extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorFactura</title>");
+            out.println("<title>Servlet ControladorVentas</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorFactura at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorVentas at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }

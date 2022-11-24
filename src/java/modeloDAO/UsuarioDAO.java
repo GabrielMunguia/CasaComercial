@@ -18,7 +18,10 @@ import java.util.List;
 import modelo.Conexion;
 import modelo.Usuario;
 import modelo.validar;
-
+import java.security.SecureRandom;
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 public class UsuarioDAO {
 
     Connection con;
@@ -27,10 +30,15 @@ public class UsuarioDAO {
     ResultSet rs;
     int r = 0;
 
+
    
     public Usuario validar(String usr,String password) {
        Usuario usuario= new Usuario();
-        String sql = "Select * from usuarios where usuario='"+usr+"'and clave='"+password+"';";
+       //encryptar
+       password=this.encrypt(password);
+ 
+
+        String sql = "Select * from usuarios where usuario='"+usr+"'and clave='"+password+"' and estado=1;";
         System.out.println(sql);
         try {
 
@@ -65,6 +73,8 @@ public class UsuarioDAO {
 
   
     public  Boolean agregar(Usuario u) {
+        //encriptar
+        u.setPassword(this.encrypt(u.getPassword()));
         String sql = "insert into usuarios(usuario,clave,idRol,idEmpleado)values(?,?,?,?)";
         try {
             con = cn.getConnection();
@@ -81,6 +91,8 @@ public class UsuarioDAO {
         return false;
       
     }
+
+    
 
     //set estado
     public boolean actualizarEstado(int idUsuario, boolean estado) {
@@ -139,6 +151,104 @@ public class UsuarioDAO {
         }
         return true;
     }
+
+    //encryp
+    public static String encrypt( String value) {
+        String key = "Bar12345Bar12345"; // 128 bit key
+        String initVector = "RandomInitVector"; // 16 bytes IV
+
+        try {
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+
+            byte[] encrypted = cipher.doFinal(value.getBytes());
+            System.out.println("encrypted string: "
+                    + javax.xml.bind.DatatypeConverter.printBase64Binary(encrypted));
+
+            return javax.xml.bind.DatatypeConverter.printBase64Binary(encrypted);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "";
+        }
+    }
+
+    //decryp
+    public static String decrypt(String encrypted) {
+        String key = "Bar12345Bar12345"; // 128 bit key
+        String initVector = "RandomInitVector"; // 16 bytes IV
+        try{
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+
+            byte[] original = cipher.doFinal(javax.xml.bind.DatatypeConverter.parseBase64Binary(encrypted));
+
+            return new String(original);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+         return "";
+    }
+        
+     
+    public Usuario obtenerUsuario(int idUsuario) {
+        Usuario u = new Usuario();
+        String sql = "select * from usuarios where idUsuario=" + idUsuario + ";";
+        System.out.println(sql);
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                u.setID(rs.getInt("idUsuario"));
+                u.setUsuario(rs.getString("usuario"));
+                u.setPassword("");
+                u.setIdCargo(rs.getInt("idRol"));
+                u.setIdEmpleado(rs.getInt("idEmpleado"));
+                u.setEstado(rs.getBoolean("estado"));
+            }
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+        }
+        return u;
+    }
+
+
+    public boolean actualizarUsuario(Usuario u) {
+        String sql = "update usuarios set usuario='" + u.getUsuario() + "',idRol=" + u.getIdCargo() + ",idEmpleado=" + u.getIdEmpleado() + " where idUsuario=" + u.getID() + ";";
+        System.out.println(sql);
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+        }
+        return false;
+    }
+
+    //actualizar usuario con contraseña
+    public boolean actualizarUsuarioContrasena(Usuario u) {
+        String sql = "update usuarios set usuario='" + u.getUsuario() + "',idRol=" + u.getIdCargo() + ",idEmpleado=" + u.getIdEmpleado() + ",clave='" + encrypt(u.getPassword()) + "' where idUsuario=" + u.getID() + ";";
+        System.out.println(sql);
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+        }
+        return false;
+    }
+
+
     
  
 

@@ -3,6 +3,7 @@ package controlador;
 import java.io.IOException;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,7 +30,7 @@ public class ControladorProducto extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -60,15 +61,15 @@ public class ControladorProducto extends HttpServlet {
             } else if (action.equalsIgnoreCase("addProducto")) {
                 acceso = add;
             } else if (action.equalsIgnoreCase("Agregar")) {
-              String producto = request.getParameter("txtProducto");
-              String  descripcion = request.getParameter("txtDesc");
-              String marca = request.getParameter("txtMarca");
-              int idCategoria = Integer.parseInt(request.getParameter("txtCat"));
-              double costo = Double.parseDouble(request.getParameter("txtCosto"));
-              double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
-              int stock = Integer.parseInt(request.getParameter("txtStock"));
-              int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
-                pr.setProducto(producto);   
+                String producto = request.getParameter("txtProducto");
+                String descripcion = request.getParameter("txtDesc");
+                String marca = request.getParameter("txtMarca");
+                int idCategoria = Integer.parseInt(request.getParameter("txtCat"));
+                double costo = Double.parseDouble(request.getParameter("txtCosto"));
+                double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
+                int stock = Integer.parseInt(request.getParameter("txtStock"));
+                int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
+                pr.setProducto(producto);
                 pr.setDescripcion(descripcion);
                 pr.setMarca(marca);
                 pr.setIdCategoria(idCategoria);
@@ -76,8 +77,6 @@ public class ControladorProducto extends HttpServlet {
                 pr.setPrecioVenta(precioVenta);
                 pr.setStock(stock);
                 pr.setIdProveedor(idProveedor);
-
-
 
                 daoprod.addProducto(pr);
                 acceso = listar;
@@ -87,14 +86,14 @@ public class ControladorProducto extends HttpServlet {
             } else if (action.equalsIgnoreCase("Actualizar")) {
                 idP = Integer.parseInt(request.getParameter("txtid"));
                 String producto = request.getParameter("txtProducto");
-              String  descripcion = request.getParameter("txtDesc");
-              String marca = request.getParameter("txtMarca");
-              int idCategoria = Integer.parseInt(request.getParameter("txtCat"));
-              double costo = Double.parseDouble(request.getParameter("txtCosto"));
-              double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
-              int stock = Integer.parseInt(request.getParameter("txtStock"));
-              int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
-                pr.setProducto(producto);   
+                String descripcion = request.getParameter("txtDesc");
+                String marca = request.getParameter("txtMarca");
+                int idCategoria = Integer.parseInt(request.getParameter("txtCat"));
+                double costo = Double.parseDouble(request.getParameter("txtCosto"));
+                double precioVenta = Double.parseDouble(request.getParameter("txtPrecioVenta"));
+                int stock = Integer.parseInt(request.getParameter("txtStock"));
+                int idProveedor = Integer.parseInt(request.getParameter("txtIdProveedor"));
+                pr.setProducto(producto);
                 pr.setDescripcion(descripcion);
                 pr.setMarca(marca);
                 pr.setIdCategoria(idCategoria);
@@ -114,13 +113,81 @@ public class ControladorProducto extends HttpServlet {
             } else if (action.equalsIgnoreCase("Eliminar")) {
                 idP = Integer.parseInt(request.getParameter("id"));
                 // pr.setIdProducto(idP);
-               boolean exito= daoprod.eliminarProducto(idP);
-                 if (exito) {
+                boolean exito = daoprod.eliminarProducto(idP);
+                if (exito) {
                     request.setAttribute("eliminado", "true");
                 } else {
                     request.setAttribute("eliminado", "false");
                 }
                 acceso = listar;
+            } else if (action.equalsIgnoreCase("cargaMasiva")) {
+                String lstProductos = request.getParameter("lstProductos");
+                Boolean exito = true;
+
+                String[] lstProd2 = lstProductos.split("\\|");
+
+                for (String prod2 : lstProd2) {
+                    try {
+                             Producto prod = new Producto();
+
+                    String[] lstProd3 = prod2.split("\\-");
+                    for (String prod3 : lstProd3) {
+                        String[] lstProd4 = prod3.split("\\:");
+                        String tipo = lstProd4[0];
+                        String valor = lstProd4[1];
+                        System.out.println(tipo+":"+valor);
+                        switch (tipo) {
+                            case "Nombre": {
+                                prod.setProducto(valor);
+                            }
+                            break;
+                            case "Descripcion": {
+                                prod.setDescripcion(valor);
+                            }
+                            break;
+                            case "Marca": {
+                                prod.setMarca(valor);
+                            }
+                            break;
+                            case "idCategoria": {
+                                prod.setIdCategoria(Integer.parseInt(valor));
+                            }
+                            break;
+                            case "Costo": {
+                                prod.setCosto(Double.parseDouble(valor));
+                            }
+                            break;
+                            case "precio": {
+                                prod.setPrecioVenta(Double.parseDouble(valor));
+                            }
+                            break;
+                            case "Stock": {
+                                prod.setStock(Integer.parseInt(valor));
+                            }
+                            break;
+                            case "idProveedor": {
+                                prod.setIdProveedor(Integer.parseInt(valor));
+                            }
+                            break;
+
+                        }
+
+                    }
+
+                    daoprod.addProducto(prod);
+                    } catch (Exception e) {
+                        exito=false;
+                        System.out.println(e);
+                    }
+
+                }
+
+                if (exito) {
+                    request.setAttribute("exito", "true");
+                } else {
+                    request.setAttribute("exito", "false");
+                }
+                acceso = add;
             }
         }
 

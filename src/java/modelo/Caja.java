@@ -12,10 +12,27 @@ public class Caja {
 
     int idCaja, idUsuarioEmp, idEmpleadoReceptor;
     String fechaApertura, fechaCierre;
-    double montoCierre, ventasTotales, montoApertura;
 
+    public String getNombreEmpleado() {
+        return nombreEmpleado;
+    }
+
+    public void setNombreEmpleado(String nombreEmpleado) {
+        this.nombreEmpleado = nombreEmpleado;
+    }
+
+    public String getNombreReceptor() {
+        return nombreReceptor;
+    }
+
+    public void setNombreReceptor(String nombreReceptor) {
+        this.nombreReceptor = nombreReceptor;
+    }
+    String nombreEmpleado,nombreReceptor;
+    double montoCierre, ventasTotales, montoApertura;
     public Caja() {
     }
+    
 
     public int getIdCaja() {
         return idCaja;

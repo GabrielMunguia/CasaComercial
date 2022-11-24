@@ -153,6 +153,33 @@ public class CajaDAO {
             return false;
         }
     }
+    
+
+    public List listar() {
+        String sql = "SELECT c.idCaja,c.ventasTotales,concat(e.nombres,' ',e.apellidos)empleado , concat(emp2.nombres,' ',emp2.apellidos)receptor ,c.montoApertura,c.montoCierre,c.fechaApertura,c.fechaCierre  FROM caja as c join usuarios as u on u.idUsuario=c.idUsuarioEmp join empleados as e on e.idEmpleado = u.idEmpleado left join empleados as emp2 on emp2.idEmpleado = idEmpleadoReceptor";
+        List<Caja> lista = new ArrayList<>();
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Caja c = new Caja();
+                c.setIdCaja(rs.getInt("idCaja"));
+                c.setVentasTotales(rs.getDouble("ventasTotales"));
+                c.setNombreEmpleado(rs.getString("empleado"));
+                c.setMontoApertura(rs.getDouble("montoApertura"));
+                c.setNombreReceptor(rs.getString("receptor"));
+                c.setMontoCierre(rs.getDouble("montoCierre"));
+                c.setFechaApertura(rs.getString("fechaApertura"));
+                c.setFechaCierre(rs.getString("fechaCierre"));
+                lista.add(c);
+            }
+        } catch (Exception e) {
+            System.out.println("error = " + e);
+        }
+        return lista;
+    }
+    
 
   
 

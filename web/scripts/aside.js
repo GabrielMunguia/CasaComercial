@@ -3,7 +3,7 @@ export const aside=`
     <div class="logo-details">
         <a href="Controlador?accion=menuPrincipal"  class="d-flex  justify-content-center align-items-center text-decoration-none">
        <i class='bx bxl-c-plus-plus icon '></i>
-          <div class="logo_name">Comercial</div>
+          <div class="logo_name">CONBINI</div>
       
      </a>
   <i class='bx bx-menu' id="btn" ></i>
@@ -18,6 +18,15 @@ export const aside=`
          <span class="tooltip">Caja</span>
       </li>
    <li>
+ <li>
+        <a href="ControladorCaja?accion=listar">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Ver cortes caja</span>
+        </a>
+         <span class="tooltip">Caja</span>
+      </li>
+   <li>
+
    <li>
         <a href="ControladorEmpleados?accion=addEmpleado">
           <i class='bx bx-grid-alt'></i>

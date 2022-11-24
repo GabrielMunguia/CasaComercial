@@ -4,6 +4,7 @@
     Author     : HP
 --%>
 
+<%@page import="modeloDAO.UsuarioDAO"%>
 <%@page import="modelo.Empleado"%>
 <%@page import="modelo.Usuario"%>
 <%@page import="java.util.Iterator"%>
@@ -29,6 +30,7 @@
     <body>
        <% Usuario usr = (Usuario) session.getAttribute("login");
             String aside = "";
+            UsuarioDAO daoUsuario= new UsuarioDAO();
 
             switch (usr.getIdCargo()) {
                 case 1: {
@@ -50,6 +52,8 @@
                 }break;
 
             }
+                 int idU = Integer.parseInt((String) request.getAttribute("idUsuario"));
+           Usuario UsuarioEdit = daoUsuario.obtenerUsuario(idU);
 
             
         %>
@@ -61,23 +65,63 @@
             <div>
                 <div class="container-fluid d-flex justify-content-center align-items-center flex-column m-2">
 
-                    <div class="card col-6">
-                        <div class="card-header text-center  ">
-                            <strong class="fs-4 text-center " >Abrir caja</strong>
+                    <div class="card w-100">
+                        <div class="card-header w-100 text-center  ">
+                            <strong class="fs-4 texte-center w-100" >Editar usuario</strong>
                         </div>
-                        <form class="row g-3 mb-3  px-3 d-flex justify-content-center py-4" action='ControladorCaja'
+                        <form class="row g-3 mb-3  px-1" action='ControladorUsuarios'
                               class='bg-white   p-2 mt-5 rounded ws-80 ws-50 d-flex flex-column justify-content-center align-items-center'
                               method='GET'>
+                            <input value="<%=UsuarioEdit.getID()%>"  type="hidden" class="form-control" name="idUser" required>
                             <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">Monto de apertura </label>
-                                <input class="form-control" type="number" step="any" name="monto" />
-                            </div>
-                              <input type="hidden"  name="fechaApertura" id="fechaApertura" />
+                                <label for="inputEmail4" class="form-label">Empleado</label>
+                               <%
+                                                        EmpleadoDAO dao = new EmpleadoDAO();
+                                                       Empleado emp = dao.getEmpleadoByUsuario(UsuarioEdit.getID());
+                                                       
 
+                                                    %>
+                                <select class="form-control" required disabled>
+                                   
+                                  
+
+                                                    <option selected value="<%= emp.getIdEmp()%>"><%=emp.getNom()+" "+emp.getApellidos()%></option>
+                                                           </select>
+                              <input  name="txtIdEmpleado"  value="<%= emp.getIdEmp()%>" type="hidden" class="form-control"  required>
+                                                    <%%>
+                                                    
+                                                    
+                         
+                                
+                            </div>
+                                  
+                                 <div class="col-md-6">
+                                <label for="inputEmail4" class="form-label">Rol</label>
+                           
+                                <select name="txtIdRol" class="form-control" required>
+                                 
+                                    <option value="1"  <%=UsuarioEdit.getIdCargo()==1?"selected":""%> >Admnistrador</option>
+                                     <option value="2" <%=UsuarioEdit.getIdCargo()==2?"selected":""%>>Gerente</option>
+                                    <option value="3" <%=UsuarioEdit.getIdCargo()==3?"selected":""%> >Vendedor</option>
+                                
+                                 
+                                 
+                                </select>
+                            </div>
+                          <div class="col-md-6">
+                                <label for="inputEmail4" class="form-label">Usuario</label>
+                                <input value="<%=UsuarioEdit.getUsuario()%>"  type="text" class="form-control" name="txtUsuario" required>
+                            </div>
+                                
+                            <div class="col-md-6">
+                                <label for="inputPassword4" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" name="txtPassword" >
+                            </div>
+                           
 
                             <div class="col-12 mt-2 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary" name='accion' value="abrirCaja"
-                                        type='submit'>Abrir caja</button>
+                                <button type="submit" class="btn btn-primary" name='accion' value="actualizar"
+                                        type='submit'>Actualizar</button>
                             </div>
                         </form>
 
@@ -96,11 +140,6 @@
                                  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="module" src="./scripts/dash.js" crossorigin="anonymous"></script>
         <script>
-            const fechaApertura = document.getElementById("fechaApertura");
- 
-         
-            fechaApertura.value =getFechaApertura();
-          
              let error =<%=request.getAttribute("exito")%>
              let usuarioError= <%=request.getAttribute("errorUsuario")%>
              
@@ -133,27 +172,6 @@
                 timer: 1500
             })
         }
-
-
-        function getFechaApertura(){
-            const fecha = new Date();
-            let dia = fecha.getDate();
-            let mes = fecha.getMonth() + 1;
-            let anio = fecha.getFullYear();
-            let hora = fecha.getHours();
-            let minuto = fecha.getMinutes();
-            let segundo = fecha.getSeconds();
-            //dejar con dos digitos
-            dia = dia < 10 ? "0" + dia : dia;
-            mes = mes < 10 ? "0" + mes : mes;
-            hora = hora < 10 ? "0" + hora : hora;
-            minuto = minuto < 10 ? "0" + minuto : minuto;
-            segundo = segundo < 10 ? "0" + segundo : segundo;
-            return anio+"-"+mes+"-"+dia+" "+hora+":"+minuto+":"+segundo;
-        }
-
-       
-    
         </script>
 
 

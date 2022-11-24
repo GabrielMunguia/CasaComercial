@@ -10,7 +10,9 @@
             <file>file:/D:/CasaComercial/src/java/controlador/ControladorUsuarios.java</file>
             <file>file:/D:/CasaComercial/web/scripts/aside.js</file>
             <file>file:/D:/CasaComercial/src/java/controlador/ControladorCaja.java</file>
+            <file>file:/D:/CasaComercial/web/vistas/listarCortesCaja.jsp</file>
             <file>file:/D:/CasaComercial/src/java/modelo/Caja.java</file>
+            <file>file:/D:/CasaComercial/web/vistas/listarUsuarios.jsp</file>
             <file>file:/D:/CasaComercial/src/java/modeloDAO/CajaDAO.java</file>
         </group>
     </open-files>

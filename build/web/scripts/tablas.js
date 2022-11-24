@@ -41,7 +41,7 @@ $(document).ready(function () {
                 {
                     //definimos estilos del boton de excel
                     extend: "excel",
-                    text: 'Exportar a Excel',
+                    text: 'Exportar a Excel ',
                     className: 'btn btn-outline-success mb-3',
                     exportOptions: {
                         columns: "thead th:not(.noExport)"
@@ -95,6 +95,23 @@ $(document).ready(function () {
 
 
                 },
+                {
+                    //definimos estilos del boton de excel
+                    extend: "pdf",
+                    text: 'Exportar a PDF',
+                    className: 'btn btn-outline-success mb-3',
+                    exportOptions: {
+                        columns: "thead th:not(.noExport)"
+                    },
+
+                   
+
+
+                },
+               
+               
+
+                                    
             ]
         }
 

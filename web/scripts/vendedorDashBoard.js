@@ -3,13 +3,21 @@ export const vendedorDashBoard=`
     <div class="logo-details">
         <a href="Controlador?accion=menuPrincipal"  class="d-flex  justify-content-center align-items-center text-decoration-none">
        <i class='bx bxl-c-plus-plus icon '></i>
-          <div class="logo_name">Comercial</div>
+          <div class="logo_name">CONBINI</div>
       
      </a>
   <i class='bx bx-menu' id="btn" ></i>
     </div>
     <ul class="nav-list px-0  ">
      
+    <li>
+    <a href="ControladorCaja?accion=caja">
+      <i class='bx bx-grid-alt'></i>
+      <span class="links_name">CAJA</span>
+    </a>
+     <span class="tooltip">Caja</span>
+  </li>
+<li>
 
   <li>
        <a  href="ControladorCliente?accion=add"  name='accion' value='add' >
@@ -26,31 +34,18 @@ export const vendedorDashBoard=`
          <span class="tooltip">Ver Clientes</span>
       </li>
       
-   <li>
-       <a href="ControladorCreditos?accion=addCredito">
-         <i class='bx bx-folder' ></i>
-         <span class="links_name">Agregar Credito</span>
-       </a>
-       <span class="tooltip">Agregar Venta</span>
-     </li>
-  <li>
-       <a href="ControladorCreditos?accion=listar">
-         <i class='bx bx-folder' ></i>
-         <span class="links_name">Ver Creditos</span>
-       </a>
-       <span class="tooltip">Ver Creditos</span>
-     </li>
+  
      
 
      <li>
-       <a href="ControladorFactura?accion=addVenta">
+       <a href="ControladorVentas?accion=addVenta">
          <i class='bx bx-folder' ></i>
          <span class="links_name">Agregar Venta</span>
        </a>
        <span class="tooltip">Agregar Venta</span>
      </li>
      <li>
-       <a href="ControladorFactura?accion=listarFacturas">
+       <a href="ControladorVentas?accion=addVenta">
          <i class='bx bx-cart-alt' ></i>
          <span class="links_name">Ver Ventas</span>
        </a>

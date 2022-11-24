@@ -25,7 +25,7 @@ import modeloDAO.UsuarioDAO;
  */
 public class ControladorCaja extends HttpServlet {
 
-    String listar = "./vistas/listarUsuarios.jsp";
+    String listar = "./vistas/listarCortesCaja.jsp";
     String add = "./vistas/addCaja.jsp";
     String cerrar="./vistas/cerrarCaja.jsp";
 

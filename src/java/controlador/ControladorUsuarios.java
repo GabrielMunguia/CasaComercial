@@ -25,7 +25,7 @@ public class ControladorUsuarios extends HttpServlet {
 
     String listar = "./vistas/listarUsuarios.jsp";
     String add = "./vistas/addUsuario.jsp";
-    String edit = "./vistas/editEmpleado.jsp";
+    String edit = "./vistas/editUsuario.jsp";
     Empleado em = new Empleado();
     String login = "./index.jsp";
     UsuarioDAO dao = new UsuarioDAO();
@@ -34,7 +34,7 @@ public class ControladorUsuarios extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -68,66 +68,98 @@ public class ControladorUsuarios extends HttpServlet {
 
                 acceso = add;
             } else if (action.equalsIgnoreCase("Agregar")) {
-                  try {
-                     int idEmpleado = Integer.parseInt(request.getParameter("txtIdEmpleado"));
-                   int idCargo= Integer.parseInt(request.getParameter("txtIdRol"));
-                   String usuario=request.getParameter("txtUsuario");
-                   String password = request.getParameter("txtPassword");
-                   
-                   if(dao.validarUsuarioUnico(usuario)){
-                         Usuario user =  new Usuario();
-                   user.setIdCargo(idCargo);
-                   user.setIdEmpleado(idEmpleado);
-                   user.setPassword(password);
+                try {
+                    int idEmpleado = Integer.parseInt(request.getParameter("txtIdEmpleado"));
+                    int idCargo = Integer.parseInt(request.getParameter("txtIdRol"));
+                    String usuario = request.getParameter("txtUsuario");
+                    String password = request.getParameter("txtPassword");
 
-                   user.setUsuario(usuario);
-                   
-      
-             
-                boolean exito = dao.agregar(user);
-                if (exito) {
-                    request.setAttribute("exito", "true");
-               } else {
-                    request.setAttribute("exito", "false");
-               }
-           
-               
-            
-                       
-                   }else{
-                     
-                            request.setAttribute("errorUsuario", "true");
-                   }
+                    if (dao.validarUsuarioUnico(usuario)) {
+                        Usuario user = new Usuario();
+                        user.setIdCargo(idCargo);
+                        user.setIdEmpleado(idEmpleado);
+                        user.setPassword(password);
+
+                        user.setUsuario(usuario);
+
+                        boolean exito = dao.agregar(user);
+                        if (exito) {
+                            request.setAttribute("exito", "true");
+                        } else {
+                            request.setAttribute("exito", "false");
+                        }
+
+                    } else {
+
+                        request.setAttribute("errorUsuario", "true");
+                    }
                 } catch (Exception e) {
-                      request.setAttribute("exito", "false");
+                    request.setAttribute("exito", "false");
                 }
-                   
-            acceso = add;
-      
-             
-             
-           
-               
+
+                acceso = add;
+
                 acceso = add;
             } else if (action.equalsIgnoreCase("editar")) {
-//           request.setAttribute("idEmp",request.getParameter("id"));
-                acceso = edit;
-            } else if (action.equals("EditarEmpleado")) {
                 request.setAttribute("idUsuario", request.getParameter("id"));
                 acceso = edit;
-            } else if (action.equalsIgnoreCase("Actualizar")) {
+            } else if (action.equalsIgnoreCase("actualizar")) {
 
                 try {
-               
-                acceso = listar;
+                    try {
+                        System.out.println("entroooo");
+                        int idEmpleado = Integer.parseInt(request.getParameter("txtIdEmpleado"));
+                        int idCargo = Integer.parseInt(request.getParameter("txtIdRol"));
+                        String usuario = request.getParameter("txtUsuario");
+                        String password = request.getParameter("txtPassword");
+                        int id = Integer.parseInt(request.getParameter("idUser")); 
+                    
+                        Usuario usuarioActual = dao.obtenerUsuario(id);
+     
+
+                
+
+                        if (dao.validarUsuarioUnico(usuario) ||(usuarioActual.getUsuario().equals(usuario))) {
+                            Usuario user = new Usuario();
+                            user.setIdCargo(idCargo);
+                            user.setIdEmpleado(idEmpleado);
+                          
+                            //validar si viene el password
+                            if (password != null) {
+                                user.setPassword(password);
+                            }
+                            
+
+                            user.setUsuario(usuario);
+                            user.setID(id);
+
+                            boolean exito =password!=null? dao.actualizarUsuarioContrasena(user): dao.actualizarUsuario(user);
+                            if (exito) {
+                                request.setAttribute("exito", "true");
+                            } else {
+                                request.setAttribute("exito", "false");
+                            }
+
+                        } else {
+
+                            request.setAttribute("errorUsuario", "true");
+                        }
+                    } catch (Exception e) {
+                         System.out.println(e);
+                        request.setAttribute("exito", "false");
+                    }
+      request.setAttribute("idUsuario", request.getParameter("idUser"));
+                    acceso = edit;
+
                 } catch (Exception e) {
+                    System.out.println("ERRORRR1S");
                     System.out.println(e);
                 }
             } else if (action.equalsIgnoreCase("actualizarEstado")) {
                 id = Integer.parseInt(request.getParameter("id"));
                 boolean estado = Boolean.parseBoolean(request.getParameter("estado"));
                 em.setIdEmp(id);
-                boolean exito = dao.actualizarEstado(id,estado);
+                boolean exito = dao.actualizarEstado(id, estado);
                 if (exito) {
                     request.setAttribute("eliminado", "true");
                 } else {

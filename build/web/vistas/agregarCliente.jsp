@@ -21,7 +21,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Casa Comercial</title>
+        <title>CONBINI</title>
         <link rel="stylesheet" href="./css/style.css"/>
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
@@ -62,38 +62,42 @@
         <section class="home-section bg-white">
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center">
+                <div class="   d-flex justify-content-center align-items-center flex-column m-2">
 
-
-                    <div class="container">
-                        <div class="col-12">
-                            <h1>Agrega a un nuevo Cliente</h1>
-                            <form action="ControladorCliente">
-                                Nombres:<br>
-                                <input class="form-control" type="text"
-                                       name="txtNombre" required ><br>
-                                 Apellidos<br>
-                                 <input class="form-control" type="text"
-                                       name="txtApellidos" required ><br>
-                                DUI<br>
-                                <input class="form-control" type="text"
-                                       name="txtDUI" required><br>
-                                NIT<br>
-                                <input class="form-control" required type="text"
-                                       name="txtNIT"><br>
-                                Dirección<br>
-                                <input class="form-control" required type="text"
-                                       name="txtDireccion"><br>
-                                Teléfono<br>
-                                <input class="form-control" required type="text"
-                                       name="txtTelefono"><br>
-                                <input class="btn btn-primary" required type="submit"
-                                       name="accion" value="Agregar">
-                                <a
-                                    href="ControladorCliente?accion=listarCliente">Regresar</a>
-                            </form>
+                    <div class="card col-12 col-lg-8  ">
+                        <div class="card-header">
+                            <h3>Agrega a un nuevo Cliente</h3>
                         </div>
-                    </div>
+                        <div class="card-body">
+                            <div class="col-12">
+                         
+                                <form action="ControladorCliente">
+                                    Nombres:<br>
+                                    <input class="form-control" type="text"
+                                           name="txtNombre" required ><br>
+                                     Apellidos<br>
+                                     <input class="form-control" type="text"
+                                           name="txtApellidos" required ><br>
+                                    DUI<br>
+                                    <input class="form-control" type="text"
+                                           name="txtDUI" required><br>
+                                    NIT<br>
+                                    <input class="form-control" required type="text"
+                                           name="txtNIT"><br>
+                                    Dirección<br>
+                                    <input class="form-control" required type="text"
+                                           name="txtDireccion"><br>
+                                    Teléfono<br>
+                                    <input class="form-control" required type="text"
+                                           name="txtTelefono"><br>
+                                    <input class="btn btn-primary" required type="submit"
+                                           name="accion" value="Agregar">
+                                    <a
+                                        href="ControladorCliente?accion=listarCliente">Regresar</a>
+                                </form>
+                            </div>
+                        </div>
+                      </div>
 
 
 

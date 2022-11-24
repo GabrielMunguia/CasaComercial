@@ -18,7 +18,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Casa Comercial</title>
+        <title>CONBINI</title>
         <link rel="stylesheet" href="./css/style.css"/>
         <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
@@ -59,9 +59,9 @@
         <section class="home-section bg-white ">
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center flex-column m-2">
+                <div class="d-flex justify-content-center align-items-center flex-column m-2">
 
-                    <div class="card w-100">
+                    <div class="card col-12 col-lg-8  ">
                         <div class="card-header  ">
                             <strong class="fs-4 " >Agregar usuario</strong>
                         </div>
