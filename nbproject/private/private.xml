@@ -3,17 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/CasaComercial/src/java/controlador/Controlador.java</file>
-            <file>file:/D:/CasaComercial/web/vistas/addCaja.jsp</file>
-            <file>file:/D:/CasaComercial/web/vistas/addUsuario.jsp</file>
+            <file>file:/D:/CasaComercial/web/vistas/editUsuario.jsp</file>
             <file>file:/D:/CasaComercial/src/java/modeloDAO/UsuarioDAO.java</file>
             <file>file:/D:/CasaComercial/src/java/controlador/ControladorUsuarios.java</file>
-            <file>file:/D:/CasaComercial/web/scripts/aside.js</file>
-            <file>file:/D:/CasaComercial/src/java/controlador/ControladorCaja.java</file>
-            <file>file:/D:/CasaComercial/web/vistas/listarCortesCaja.jsp</file>
-            <file>file:/D:/CasaComercial/src/java/modelo/Caja.java</file>
-            <file>file:/D:/CasaComercial/web/vistas/listarUsuarios.jsp</file>
-            <file>file:/D:/CasaComercial/src/java/modeloDAO/CajaDAO.java</file>
+            <file>file:/D:/CasaComercial/src/java/modelo/Usuario.java</file>
         </group>
     </open-files>
 </project-private>

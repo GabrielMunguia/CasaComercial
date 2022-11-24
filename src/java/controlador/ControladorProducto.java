@@ -174,7 +174,12 @@ public class ControladorProducto extends HttpServlet {
 
                     }
 
-                    daoprod.addProducto(prod);
+                   Boolean seAgrego=daoprod.addProducto(prod);
+                   if(!seAgrego){
+                   exito=false;
+                   
+                   }
+                   
                     } catch (Exception e) {
                         exito=false;
                         System.out.println(e);

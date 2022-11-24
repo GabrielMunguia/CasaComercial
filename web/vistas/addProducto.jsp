@@ -75,7 +75,7 @@
                               <a  href="http://localhost:8080<%=request.getContextPath()%>/assets/ejemploProductos.xlsx"id="btnDescargarPlantilla" class="btn btn-secondary" target="_blank">Descargar plantilla</a>
                           </div>
                           <div>
-                            <button id="btnConfimar" disabled class="btn btn-primary mx-3 btn-secondary d-none" type="button" >Confimar</button>
+                            <button id="btnConfimar" disabled class="btn btn-primary mx-3 btn-secondary d-none" type="button" >CONFIMAR CARGA MASIVA</button>
                             <input class="d-none" id="btnSubmitCargaMasiva"  type="submit" name="accion" value="cargaMasiva">
                             <input class="d-none" id="lstProductos"  type="hidden" name="lstProductos" value="add">
                         </div>
@@ -271,7 +271,18 @@
                     const arrayProd = XLSX.utils.sheet_to_json(worksheet);
                     let lstProd="";
                     let errorCarga = false;
-                    console.log(arrayProd)
+                
+                    if (arrayProd.length === 0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'El archivo esta vacio',
+                            showConfirmButton: false,
+                            timer: 1500
+
+                        })
+                        return;
+                    }
                     
                      arrayProd.map(produc => {
                         const { Nombre,Costo,Descripcion,Marca,Stock,idCategoria,idProveedor,precio}=produc;
