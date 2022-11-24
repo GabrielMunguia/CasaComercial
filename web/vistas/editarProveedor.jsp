@@ -56,11 +56,11 @@
         <section class="home-section bg-white ">
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center flex-column m-2 py-4">
+                <div class=" d-flex justify-content-center align-items-center flex-column  ">
 
-                    <div class="card w-50">
+                    <div class="card ">
                         <div class="card-header  ">
-                            <strong class="fs-4 " >Agregar proveedor</strong>
+                            <strong class="fs-4 " >Editar proveedor</strong>
                         </div>
                   
                         <%

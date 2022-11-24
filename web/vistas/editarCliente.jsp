@@ -61,39 +61,44 @@
         <section class="home-section bg-white">
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center">
-
-
-                    <div class="container">
-                        <div class="col-lg-6">
-                            <%
-                                ClienteDAO dao = new ClienteDAO();
-                                int id = Integer.parseInt((String) request.getAttribute("IDCliente"));
-                                Cliente c = (Cliente) dao.list(id);
-                            %>
-                            <h1>Modificar Cliente</h1>
-                          
-                            <form action='ControladorCliente'>
-                                Nombres<br>
-                                <input class="form-control" type="text" name="txtNombre" value="<%= c.getNombre()%>"><br>
-                                  Apellidos<br>
-                                <input class="form-control" type="text" name="txtApellidos" value="<%= c.getApellidos()%>"><br>
-                                DUI<br>
-                                <input class="form-control" type="text" name="txtDUI" value="<%= c.getDUI()%>"><br>
-                                NIT <br>
-                                <input class="form-control" type="text" name="txtNIT" value="<%= c.getNIT()%>"><br>
-                                Dirección<br>
-                                <input class="form-control" type="text" name="txtDireccion" value="<%= c.getDireccion()%>"><br>
-                                Teléfono<br>
-                                <input class="form-control" type="text" name="txtTelefono" value="<%= c.getTelefono()%>"><br>
-
-                                <input type="hidden" name="txtid" value="<%= c.getIdCliente()%>">
-                                <input class="btn btn-primary" type="submit" name="accion" value="Actualizar"> 
-                                <a href="ControladorCliente?accion=listarCliente">Regresar</a>
-
-                            </form>
+                <div class="mt-4 d-flex justify-content-center align-items-center">
+                    <div class="card col-12 col-lg-8  ">
+                        <div class="card-header">
+                            <h3>Modificar Cliente</h3>
                         </div>
-                    </div>
+                        <div class="card-body">
+                            <div >
+                                <%
+                                    ClienteDAO dao = new ClienteDAO();
+                                    int id = Integer.parseInt((String) request.getAttribute("IDCliente"));
+                                    Cliente c = (Cliente) dao.list(id);
+                                %>
+                              
+                              
+                                <form action='ControladorCliente'>
+                                    Nombres<br>
+                                    <input class="form-control" type="text" name="txtNombre" value="<%= c.getNombre()%>"><br>
+                                      Apellidos<br>
+                                    <input class="form-control" type="text" name="txtApellidos" value="<%= c.getApellidos()%>"><br>
+                                    DUI<br>
+                                    <input class="form-control" type="text" name="txtDUI" value="<%= c.getDUI()%>"><br>
+                                    NIT <br>
+                                    <input class="form-control" type="text" name="txtNIT" value="<%= c.getNIT()%>"><br>
+                                    Dirección<br>
+                                    <input class="form-control" type="text" name="txtDireccion" value="<%= c.getDireccion()%>"><br>
+                                    Teléfono<br>
+                                    <input class="form-control" type="text" name="txtTelefono" value="<%= c.getTelefono()%>"><br>
+    
+                                    <input type="hidden" name="txtid" value="<%= c.getIdCliente()%>">
+                                    <input class="btn btn-primary" type="submit" name="accion" value="Actualizar"> 
+                                    <a href="ControladorCliente?accion=listarCliente">Regresar</a>
+    
+                                </form>
+                            </div>
+                        </div>
+                      </div>
+
+                    
 
 
 

@@ -45,7 +45,7 @@ export const vendedorDashBoard=`
        <span class="tooltip">Agregar Venta</span>
      </li>
      <li>
-       <a href="ControladorVentas?accion=addVenta">
+       <a href="ControladorVentas?accion=listarVentas">
          <i class='bx bx-cart-alt' ></i>
          <span class="links_name">Ver Ventas</span>
        </a>

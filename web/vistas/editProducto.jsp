@@ -68,73 +68,78 @@
         <section class="home-section bg-white">
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center">
+                <div class="mt-3 d-flex justify-content-center align-items-center">
 
 
-                    <div class="container">
-                        <div class="col-12 mt-3">
-                            <%
-                                ProductoDAO daoProd = new ProductoDAO();
-                                int idP = Integer.parseInt((String) request.getAttribute("idProduct"));
-                                Producto pr = (Producto) daoProd.listProducto(idP);
-                            %>
-                         
-                            <form action="ControladorProducto">
-                                <h1>Editar Producto</h1>
-                                Nombre del producto:<br>
-                                <input class="form-control" type="text" name="txtProducto" value="<%=pr.getProducto()%>"><br>
-                            
-                                Descripcion:<br>
-                                <input class="form-control" type="text" name="txtDesc" value="<%=pr.getDescripcion()%>"><br>
-                                Marca:<br>
-                                <input class="form-control" type="text" name="txtMarca" value="<%=pr.getMarca()%>"><br>
-                                 Categoria:<br>
-                                <Select class="form-control mb-4" id="cat"  name="txtCat"><br>
-                                    <%
-                                        CategoriaDAO dao2 = new CategoriaDAO();
-                                        List<Categoria> list = dao2.listar();
-                                        Iterator<Categoria> iter = list.iterator();
-                                        Categoria cat = null;
-                                        while (iter.hasNext()) {
-                                            cat = iter.next();
-
-                                    %>
-
-                                    <option value="<%= cat.getIdCategoria()%>"><%= cat.getCategoria()%></option>
-                                    <%}%>
-                                </select>
-                                Costo:<br>
-                                <input class="form-control" type="text" name="txtCosto" value="<%=pr.getCosto()%>"><br>
-                                Precio venta<br>
-                                <input class="form-control" type="text" name="txtPrecioVenta" value="<%=pr.getPrecioVenta()%>"><br>
-                             
-                                Stock:<br>
-                                <input class="form-control" type="text" name="txtStock" value="<%=pr.getStock()%>"><br>
-                                   Proveedor<br>
-                                <!-- <input class="form-control" value="<%=pr.getIdProveedor()%>" type="text" name="txtIdProveedor"><br> -->
-                                    <Select class="form-control mb-4" id="prev"  name="txtIdProveedor"><br>
-                                    <%
-                                        ProveedorDAO dao3 = new ProveedorDAO();
-                                        List<Proveedor> list2 = dao3.listar();
-                                        Iterator<Proveedor> iter2 = list2.iterator();
-                                        Proveedor prov = null;
-                                        while (iter2.hasNext()) {
-                                            prov = iter2.next();
-
-                                    %>
-
-                                    <option value="<%= prov.getIdProveedor()%>"><%= prov.getNombre()%></option>
-                                    <%}%>
-                                </select>
-                          
-                               
-                                <input type="hidden" name="txtid" value="<%=pr.getIdProducto()%>">
-
-                                <input class="btn btn-primary" type="submit" name="accion" value="Actualizar">
-                                <a class="btn btn-warning" href="ControladorProducto?accion=listarProducto">Regresar</a>
-                            </form>
+                    <div class="card col-12 col-lg-8  ">
+                        <div class="card-header">
+                            <h3>Editar Producto</h3>
                         </div>
-                    </div>
+                        <div class="card-body">
+                            <div class="col-12 mt-3">
+                                <%
+                                    ProductoDAO daoProd = new ProductoDAO();
+                                    int idP = Integer.parseInt((String) request.getAttribute("idProduct"));
+                                    Producto pr = (Producto) daoProd.listProducto(idP);
+                                %>
+                             
+                                <form action="ControladorProducto">
+                                  
+                                    Nombre del producto:<br>
+                                    <input class="form-control" type="text" name="txtProducto" value="<%=pr.getProducto()%>"><br>
+                                
+                                    Descripcion:<br>
+                                    <input class="form-control" type="text" name="txtDesc" value="<%=pr.getDescripcion()%>"><br>
+                                    Marca:<br>
+                                    <input class="form-control" type="text" name="txtMarca" value="<%=pr.getMarca()%>"><br>
+                                     Categoria:<br>
+                                    <Select class="form-control mb-4" id="cat"  name="txtCat"><br>
+                                        <%
+                                            CategoriaDAO dao2 = new CategoriaDAO();
+                                            List<Categoria> list = dao2.listar();
+                                            Iterator<Categoria> iter = list.iterator();
+                                            Categoria cat = null;
+                                            while (iter.hasNext()) {
+                                                cat = iter.next();
+    
+                                        %>
+    
+                                        <option value="<%= cat.getIdCategoria()%>"><%= cat.getCategoria()%></option>
+                                        <%}%>
+                                    </select>
+                                    Costo:<br>
+                                    <input class="form-control" type="text" name="txtCosto" value="<%=pr.getCosto()%>"><br>
+                                    Precio venta<br>
+                                    <input class="form-control" type="text" name="txtPrecioVenta" value="<%=pr.getPrecioVenta()%>"><br>
+                                 
+                                    Stock:<br>
+                                    <input class="form-control" type="text" name="txtStock" value="<%=pr.getStock()%>"><br>
+                                       Proveedor<br>
+                                    <!-- <input class="form-control" value="<%=pr.getIdProveedor()%>" type="text" name="txtIdProveedor"><br> -->
+                                        <Select class="form-control mb-4" id="prev"  name="txtIdProveedor"><br>
+                                        <%
+                                            ProveedorDAO dao3 = new ProveedorDAO();
+                                            List<Proveedor> list2 = dao3.listar();
+                                            Iterator<Proveedor> iter2 = list2.iterator();
+                                            Proveedor prov = null;
+                                            while (iter2.hasNext()) {
+                                                prov = iter2.next();
+    
+                                        %>
+    
+                                        <option value="<%= prov.getIdProveedor()%>"><%= prov.getNombre()%></option>
+                                        <%}%>
+                                    </select>
+                              
+                                   
+                                    <input type="hidden" name="txtid" value="<%=pr.getIdProducto()%>">
+    
+                                    <input class="btn btn-primary" type="submit" name="accion" value="Actualizar">
+                                    <a class="btn btn-warning" href="ControladorProducto?accion=listarProducto">Regresar</a>
+                                </form>
+                            </div>
+                        </div>
+                      </div>
 
 
 

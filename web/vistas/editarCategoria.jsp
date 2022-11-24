@@ -60,7 +60,7 @@
 
                     <div class="card w-50">
                         <div class="card-header  ">
-                            <strong class="fs-4 " >Agregar categoria</strong>
+                            <strong class="fs-4 " >Actualizar categoria</strong>
                         </div>
                      
                         <%
@@ -82,7 +82,7 @@
 
                             <div class="col-12 mt-2 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary" name='accion' value="Actualizar"
-                                        type='submit'>Registrar</button>
+                                        type='submit'>Actualizar</button>
                             </div>
                         </form>
 

@@ -61,13 +61,13 @@
         <section class="home-section bg-white ">
 
             <div>
-                <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
+                <div class="mt-2 d-flex justify-content-center align-items-center flex-column">
                     <%
                         EmpleadoDAO dao = new EmpleadoDAO();
                         int id = Integer.parseInt((String) request.getAttribute("idEmp"));
                         Empleado em = (Empleado) dao.list(id);
                     %>
-                    <div class="card w-100">
+                    <div class="card col-12 col-lg-8  ">
                         <div class="card-header mb-2">
                             <strong>Editar Empleado</strong>
                         </div>
